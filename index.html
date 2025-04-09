@@ -27,6 +27,7 @@
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       width: 300px;
+      max-width: 100%;
     }
 
     h1 {
@@ -91,6 +92,33 @@
       background-color: #00b894;
     }
 
+    /* Note Button */
+    .note-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #f39c12;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .note-btn:hover {
+      background-color: #e67e22;
+    }
+
+    /* Motivational Posts */
+    .motivational-posts {
+      margin-top: 30px;
+      font-size: 16px;
+      color: #2d3436;
+    }
+
+    .motivational-posts p {
+      margin: 5px 0;
+    }
+
     /* Privacy Policy Modal */
     .modal {
       display: none;
@@ -146,6 +174,15 @@
     <!-- History Button -->
     <button class="history-btn" onclick="viewHistory()">View History</button>
 
+    <!-- Note Button -->
+    <button class="note-btn" onclick="openNotes()">Write a Reflection</button>
+
+    <!-- Motivational Posts Section -->
+    <div class="motivational-posts">
+      <p><strong>Motivational Tip:</strong> "Take it one step at a time, and you'll see progress!"</p>
+      <p><strong>Mental Health Tip:</strong> "Don't be afraid to ask for help. You're not alone."</p>
+    </div>
+
     <!-- Privacy Policy Link -->
     <p class="privacy-link" onclick="showPrivacyPolicy()">Privacy Policy</p>
   </div>
@@ -162,7 +199,8 @@
 
   <script>
     let currentMood = '';
-    
+    let currentNotes = localStorage.getItem('userNotes') || '';
+
     // Set the mood
     function setMood(mood) {
       currentMood = mood;
@@ -206,6 +244,15 @@
       });
 
       alert(historyText);
+    }
+
+    // Note taking functionality
+    function openNotes() {
+      const userNotes = prompt("Write your daily reflection:", currentNotes);
+      if (userNotes !== null) {
+        currentNotes = userNotes;
+        localStorage.setItem('userNotes', currentNotes);
+      }
     }
 
     // Privacy Policy Modal
