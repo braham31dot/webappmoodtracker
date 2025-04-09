@@ -26,19 +26,18 @@
     .container {
       text-align: center;
       background-color: #333;
-      padding: 40px;
+      padding: 20px;
       border-radius: 12px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
       width: 90%;
-      max-width: 350px; /* Limit max width */
+      max-width: 350px;
       margin: 10px;
     }
 
     h1 {
-      font-size: 30px;
+      font-size: 26px;
       margin-bottom: 20px;
       color: gold;
-      word-wrap: break-word; /* Ensure the title doesn't break on small screens */
     }
 
     .emoji {
@@ -82,27 +81,27 @@
       background-color: #f39c12;
     }
 
-    /* Floating Note Button */
-    .floating-note-btn, .floating-calendar-btn {
+    /* Floating Buttons */
+    .floating-btn {
       position: fixed;
       bottom: 20px;
       background-color: gold;
       color: black;
       border: none;
       border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      font-size: 30px;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
       cursor: pointer;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s ease;
     }
 
-    .floating-note-btn:hover, .floating-calendar-btn:hover {
+    .floating-btn:hover {
       transform: scale(1.2);
     }
 
-    /* Note Box */
+    /* Notes Box */
     .note-box {
       display: none;
       position: fixed;
@@ -112,7 +111,7 @@
       padding: 20px;
       border-radius: 12px;
       width: 80%;
-      max-width: 300px; /* Ensure the note box doesn't take up too much space on small screens */
+      max-width: 300px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
       color: #fff;
     }
@@ -130,7 +129,7 @@
 
     .note-history-btn,
     .save-note-btn,
-    .privacy-btn {
+    .clear-all-btn {
       margin-top: 15px;
       padding: 10px 25px;
       background-color: gold;
@@ -144,7 +143,7 @@
 
     .note-history-btn:hover,
     .save-note-btn:hover,
-    .privacy-btn:hover {
+    .clear-all-btn:hover {
       background-color: #f39c12;
     }
 
@@ -247,13 +246,20 @@
       }
 
       .note-history-btn,
-      .save-note-btn {
+      .save-note-btn,
+      .clear-all-btn {
         width: 100%;
         font-size: 14px;
       }
 
       .history-container {
         width: 90%;
+      }
+
+      .floating-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
       }
     }
   </style>
@@ -277,34 +283,31 @@
     <button class="btn" onclick="saveMood()">Save Mood</button>
   </div>
 
-  <!-- Floating Note Button -->
-  <button class="floating-note-btn" onclick="toggleNoteBox()">📝</button>
-  
-  <!-- Floating Calendar Button -->
-  <button class="floating-calendar-btn" onclick="openCalendar()">📅</button>
+  <!-- Floating Buttons -->
+  <button class="floating-btn" onclick="openCalendar()">📅</button>
+  <button class="floating-btn" onclick="toggleNoteBox()">📝</button>
 
   <!-- Notes Box -->
   <div class="note-box" id="noteBox">
-    <textarea id="noteText" placeholder="Write your reflection here..."></textarea>
+    <textarea id="noteText" placeholder="Write your note here..."></textarea>
     <button class="save-note-btn" onclick="saveNote()">Save Note</button>
-    <button class="note-history-btn" onclick="viewNoteHistory()">Read Note History</button>
+    <button class="note-history-btn" onclick="viewNoteHistory()">View Note History</button>
+    <button class="clear-all-btn" onclick="clearAllNotes()">Clear All Notes</button>
   </div>
 
-  <!-- Notes History -->
+  <!-- Notes History Container -->
   <div class="history-container" id="historyContainer">
-    <h2>Notes History</h2>
+    <button class="close" onclick="closeNoteHistory()">X</button>
     <div id="notesHistory"></div>
-    <button class="note-history-btn" onclick="closeNoteHistory()">Close</button>
   </div>
 
   <!-- Privacy Policy Modal -->
-  <button class="privacy-btn" onclick="openPrivacyPolicy()">Privacy Policy</button>
+  <button class="btn" onclick="openPrivacyPolicy()">Privacy Policy</button>
   <div id="privacyModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closePrivacyPolicy()">&times;</span>
       <h2>Privacy Policy</h2>
       <p>This is where your privacy policy content goes.</p>
-      <p>It should be detailed and address how user data is handled, what information is stored, and how it is used. This helps to inform users of your practices and legal requirements.</p>
     </div>
   </div>
 
@@ -353,6 +356,12 @@
       document.getElementById('historyContainer').style.display = 'none';
     }
 
+    function clearAllNotes() {
+      localStorage.removeItem('notes');
+      notes.length = 0;
+      alert('All notes cleared!');
+    }
+
     function openPrivacyPolicy() {
       document.getElementById('privacyModal').style.display = 'block';
     }
@@ -361,9 +370,9 @@
       document.getElementById('privacyModal').style.display = 'none';
     }
 
-    // Calendar feature (simple alert for now)
+    // Calendar feature: Redirect to phone's calendar
     function openCalendar() {
-      alert("Open your favorite calendar app or integrate one here.");
+      window.location.href = "calshow:";
     }
   </script>
 </body>
