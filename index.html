@@ -20,6 +20,7 @@
       height: 100vh;
       flex-direction: column;
       font-size: 16px;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
     }
 
     .container {
@@ -28,18 +29,20 @@
       padding: 40px;
       border-radius: 12px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      width: 350px;
-      max-width: 100%;
+      width: 90%;
+      max-width: 350px; /* Limit max width */
+      margin: 10px;
     }
 
     h1 {
       font-size: 30px;
       margin-bottom: 20px;
       color: gold;
+      word-wrap: break-word; /* Ensure the title doesn't break on small screens */
     }
 
     .emoji {
-      font-size: 70px;
+      font-size: 50px;
       cursor: pointer;
       margin: 10px;
       transition: transform 0.3s ease, filter 0.3s ease, text-shadow 0.3s ease;
@@ -80,10 +83,9 @@
     }
 
     /* Floating Note Button */
-    .floating-note-btn {
+    .floating-note-btn, .floating-calendar-btn {
       position: fixed;
       bottom: 20px;
-      right: 20px;
       background-color: gold;
       color: black;
       border: none;
@@ -96,7 +98,7 @@
       transition: transform 0.3s ease;
     }
 
-    .floating-note-btn:hover {
+    .floating-note-btn:hover, .floating-calendar-btn:hover {
       transform: scale(1.2);
     }
 
@@ -109,7 +111,8 @@
       background-color: #222;
       padding: 20px;
       border-radius: 12px;
-      width: 300px;
+      width: 80%;
+      max-width: 300px; /* Ensure the note box doesn't take up too much space on small screens */
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
       color: #fff;
     }
@@ -126,7 +129,8 @@
     }
 
     .note-history-btn,
-    .save-note-btn {
+    .save-note-btn,
+    .privacy-btn {
       margin-top: 15px;
       padding: 10px 25px;
       background-color: gold;
@@ -139,7 +143,8 @@
     }
 
     .note-history-btn:hover,
-    .save-note-btn:hover {
+    .save-note-btn:hover,
+    .privacy-btn:hover {
       background-color: #f39c12;
     }
 
@@ -215,6 +220,40 @@
       text-decoration: none;
       cursor: pointer;
     }
+
+    /* Media Query for small screens */
+    @media (max-width: 480px) {
+      .emoji {
+        font-size: 40px;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      .feedback {
+        font-size: 16px;
+      }
+
+      .btn {
+        width: 100%;
+        font-size: 16px;
+      }
+
+      .note-box {
+        width: 90%;
+      }
+
+      .note-history-btn,
+      .save-note-btn {
+        width: 100%;
+        font-size: 14px;
+      }
+
+      .history-container {
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -228,6 +267,9 @@
       <span class="emoji" data-mood="anxious" onclick="setMood('anxious')">😰</span>
       <span class="emoji" data-mood="stressed" onclick="setMood('stressed')">😣</span>
       <span class="emoji" data-mood="depressed" onclick="setMood('depressed')">😔</span>
+      <span class="emoji" data-mood="excited" onclick="setMood('excited')">😃</span>
+      <span class="emoji" data-mood="love" onclick="setMood('love')">❤️</span>
+      <span class="emoji" data-mood="surprised" onclick="setMood('surprised')">😲</span>
     </div>
     <div class="feedback" id="feedback">Feeling good? Let us know!</div>
     <button class="btn" onclick="saveMood()">Save Mood</button>
@@ -235,6 +277,9 @@
 
   <!-- Floating Note Button -->
   <button class="floating-note-btn" onclick="toggleNoteBox()">📝</button>
+  
+  <!-- Calendar Button -->
+  <button class="floating-calendar-btn" onclick="openCalendar()">📅</button>
 
   <!-- Notes Box -->
   <div class="note-box" id="noteBox">
@@ -251,12 +296,12 @@
   </div>
 
   <!-- Privacy Policy Modal -->
+  <button class="privacy-btn" onclick="openPrivacyPolicy()">Privacy Policy</button>
   <div id="privacyModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closePrivacyPolicy()">&times;</span>
       <h2>Privacy Policy</h2>
-      <p>Your privacy is important to us. This app does not collect or store any personal data. The mood you select is stored locally on your device only, using your browser's local storage. We do not share or transfer your mood data to any third parties.</p>
-      <p>If you have any concerns or questions, feel free to contact us at webdev031@gmail.com.</p>
+      <p>Your privacy is important to us. This app does not collect or store any personal data...</p>
     </div>
   </div>
 
@@ -267,44 +312,33 @@
     function setMood(mood) {
       currentMood = mood;
       const feedback = document.getElementById('feedback');
-      const moodFeedback = {
-        happy: "That's awesome! You're feeling happy!",
-        neutral: "Okay, you're feeling neutral.",
-        sad: "Sorry you're feeling down. Hang in there!",
-        anxious: "You're feeling anxious, take a deep breath.",
-        stressed: "Take it easy, you're feeling stressed.",
-        depressed: "Sorry you're feeling this way, take care of yourself."
-      };
-
-      feedback.textContent = moodFeedback[mood] || "How are you feeling today?";
+      feedback.innerHTML = `You are feeling ${mood} today!`;
     }
 
     function saveMood() {
-      if (currentMood === '') {
-        alert("Please select a mood first!");
+      if (!currentMood) {
+        alert("Please select a mood!");
         return;
       }
       const date = new Date().toLocaleString();
       localStorage.setItem('mood', currentMood);
-      alert(`Mood saved! ${currentMood} on ${date}`);
+      alert(`Mood saved: ${currentMood}`);
     }
 
     function toggleNoteBox() {
       const noteBox = document.getElementById('noteBox');
-      noteBox.style.display = noteBox.style.display === 'block' ? 'none' : 'block';
+      noteBox.style.display = noteBox.style.display === 'none' ? 'block' : 'none';
     }
 
     function saveNote() {
       const noteText = document.getElementById('noteText').value;
-      if (noteText === '') {
-        alert("Please write a note first!");
-        return;
+      if (noteText) {
+        const date = new Date().toLocaleString();
+        notes.push({ date, text: noteText });
+        localStorage.setItem('notes', JSON.stringify(notes));
+        alert('Note saved!');
+        document.getElementById('noteText').value = '';
       }
-      const note = { text: noteText, date: new Date().toLocaleString() };
-      notes.push(note);
-      localStorage.setItem('notes', JSON.stringify(notes));
-      document.getElementById('noteText').value = '';
-      alert("Note saved!");
     }
 
     function viewNoteHistory() {
@@ -312,30 +346,28 @@
       const notesHistory = document.getElementById('notesHistory');
       notesHistory.innerHTML = '';
       notes.forEach(note => {
-        const noteElement = document.createElement('div');
-        noteElement.classList.add('note-entry');
-        noteElement.innerHTML = `<p>${note.text}</p><p class="date">${note.date}</p>`;
-        notesHistory.appendChild(noteElement);
+        notesHistory.innerHTML += `<div class="note-entry"><p>${note.text}</p><span class="date">${note.date}</span></div>`;
       });
       historyContainer.style.display = 'block';
     }
 
     function closeNoteHistory() {
-      const historyContainer = document.getElementById('historyContainer');
-      historyContainer.style.display = 'none';
+      document.getElementById('historyContainer').style.display = 'none';
+    }
+
+    function openPrivacyPolicy() {
+      document.getElementById('privacyModal').style.display = 'block';
     }
 
     function closePrivacyPolicy() {
-      const privacyModal = document.getElementById('privacyModal');
-      privacyModal.style.display = 'none';
+      document.getElementById('privacyModal').style.display = 'none';
     }
 
-    window.onclick = function(event) {
-      const privacyModal = document.getElementById('privacyModal');
-      if (event.target === privacyModal) {
-        privacyModal.style.display = 'none';
-      }
+    // Calendar feature
+    function openCalendar() {
+      alert("Open your favorite calendar app or integrate one here.");
     }
   </script>
 </body>
 </html>
+
