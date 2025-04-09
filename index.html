@@ -75,6 +75,22 @@
       cursor: pointer;
     }
 
+    /* History Button */
+    .history-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #55efc4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .history-btn:hover {
+      background-color: #00b894;
+    }
+
     /* Privacy Policy Modal */
     .modal {
       display: none;
@@ -120,9 +136,15 @@
       <span class="emoji" data-mood="happy" onclick="setMood('happy')">😊</span>
       <span class="emoji" data-mood="neutral" onclick="setMood('neutral')">😐</span>
       <span class="emoji" data-mood="sad" onclick="setMood('sad')">😞</span>
+      <span class="emoji" data-mood="anxious" onclick="setMood('anxious')">😰</span>
+      <span class="emoji" data-mood="stressed" onclick="setMood('stressed')">😣</span>
+      <span class="emoji" data-mood="depressed" onclick="setMood('depressed')">😔</span>
     </div>
     <div class="feedback" id="feedback">Feeling good? Let us know!</div>
     <button class="btn" onclick="saveMood()">Save Mood</button>
+
+    <!-- History Button -->
+    <button class="history-btn" onclick="viewHistory()">View History</button>
 
     <!-- Privacy Policy Link -->
     <p class="privacy-link" onclick="showPrivacyPolicy()">Privacy Policy</p>
@@ -141,26 +163,49 @@
   <script>
     let currentMood = '';
     
+    // Set the mood
     function setMood(mood) {
       currentMood = mood;
       const feedback = document.getElementById('feedback');
       
-      if (mood === 'happy') {
-        feedback.textContent = "That's awesome! You're feeling happy!";
-      } else if (mood === 'neutral') {
-        feedback.textContent = "Okay, you're feeling neutral.";
-      } else if (mood === 'sad') {
-        feedback.textContent = "Sorry you're feeling down. Hang in there!";
-      }
+      const moodFeedback = {
+        happy: "That's awesome! You're feeling happy!",
+        neutral: "Okay, you're feeling neutral.",
+        sad: "Sorry you're feeling down. Hang in there!",
+        anxious: "You're feeling anxious, take a deep breath.",
+        stressed: "Take it easy, you're feeling stressed.",
+        depressed: "Sorry you're feeling this way, take care of yourself."
+      };
+
+      feedback.textContent = moodFeedback[mood] || "How are you feeling today?";
     }
 
+    // Save the mood to local storage
     function saveMood() {
       if (currentMood === '') {
         alert("Please select a mood first!");
       } else {
         alert(`Your mood has been saved as: ${currentMood}`);
-        localStorage.setItem('mood', currentMood);
+        let history = JSON.parse(localStorage.getItem('moodHistory')) || [];
+        history.push({ mood: currentMood, date: new Date().toLocaleDateString() });
+        localStorage.setItem('moodHistory', JSON.stringify(history));
       }
+    }
+
+    // View the history of moods
+    function viewHistory() {
+      const history = JSON.parse(localStorage.getItem('moodHistory')) || [];
+      if (history.length === 0) {
+        alert("No mood history available.");
+        return;
+      }
+
+      let historyText = "Your Mood History:\n\n";
+      history.forEach(entry => {
+        historyText += `${entry.date}: ${entry.mood}\n`;
+      });
+
+      alert(historyText);
     }
 
     // Privacy Policy Modal
