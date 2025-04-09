@@ -261,6 +261,12 @@
         height: 45px;
         font-size: 20px;
       }
+
+      .button-group {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
     }
   </style>
 </head>
@@ -281,17 +287,19 @@
     </div>
     <div class="feedback" id="feedback">Feeling good? Let us know!</div>
     <button class="btn" onclick="saveMood()">Save Mood</button>
+    
+    <!-- Button group for mood history, notes, and privacy policy -->
+    <div class="button-group">
+      <button class="btn note-history-btn" onclick="viewNoteHistory()">View Mood History</button>
+      <button class="btn" onclick="toggleNoteBox()">Notes</button>
+      <button class="btn" onclick="openPrivacyPolicy()">Privacy Policy</button>
+    </div>
   </div>
-
-  <!-- Floating Buttons -->
-  <button class="floating-btn" onclick="openCalendar()">📅</button>
-  <button class="floating-btn" onclick="toggleNoteBox()">📝</button>
 
   <!-- Notes Box -->
   <div class="note-box" id="noteBox">
     <textarea id="noteText" placeholder="Write your note here..."></textarea>
     <button class="save-note-btn" onclick="saveNote()">Save Note</button>
-    <button class="note-history-btn" onclick="viewNoteHistory()">View Note History</button>
     <button class="clear-all-btn" onclick="clearAllNotes()">Clear All Notes</button>
   </div>
 
@@ -302,12 +310,13 @@
   </div>
 
   <!-- Privacy Policy Modal -->
-  <button class="btn" onclick="openPrivacyPolicy()">Privacy Policy</button>
   <div id="privacyModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closePrivacyPolicy()">&times;</span>
       <h2>Privacy Policy</h2>
-      <p>This is where your privacy policy content goes.</p>
+      <p>We are committed to protecting your privacy. Your personal data, including mood information and notes, are stored locally on your device and not shared with third parties.</p>
+      <p>We may collect non-personally identifiable information to improve the app's user experience, such as app usage data, device type, and browser information.</p>
+      <p>By using this app, you agree to the collection and use of your data in accordance with this privacy policy.</p>
     </div>
   </div>
 
@@ -368,11 +377,6 @@
 
     function closePrivacyPolicy() {
       document.getElementById('privacyModal').style.display = 'none';
-    }
-
-    // Calendar feature: Redirect to phone's calendar
-    function openCalendar() {
-      window.location.href = "calshow:";
     }
   </script>
 </body>
