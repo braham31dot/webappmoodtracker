@@ -3,8 +3,7 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/logo.png',
-  '/logic.js'    
+  '/logo.png',   
 ];
 
 // Cache files on install
