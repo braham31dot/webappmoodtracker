@@ -85,8 +85,8 @@
         }
 
         .fixed-button {
-            background-color: #4CAF50;
-            color: white;
+            background-color: gold; /* Changed to gold */
+            color: black;
             border: none;
             padding: 15px 30px;
             text-align: center;
@@ -100,7 +100,7 @@
         }
 
         .fixed-button:hover {
-            background-color: #45a049;
+            background-color: #fdd835; /* Slightly darker gold for hover */
         }
 
         #moodDataModal {
@@ -357,7 +357,7 @@
     <div class="motivational-message" id="motivationalMessage">It's a neutral day. Stay balanced!</div>
 
     <div class="btn-container">
-        <button class="btn" onclick="saveMood()">Save Mood</button>
+        <button class="btn" onclick="saveMoodAndOpenData()">Save Mood</button>
     </div>
 
     <div class="fixed-button-container">
@@ -433,6 +433,12 @@
             moodData.push({ date: currentDate, mood: mood });
             localStorage.setItem('moodData', JSON.stringify(moodData));
             alert(`Your mood, "${mood}", has been saved.`);
+        }
+
+        function saveMoodAndOpenData() {
+            saveMood();
+            checkMoodData();
+            moodDataModal.style.display = 'block';
         }
 
         function viewNotesHistory() {
