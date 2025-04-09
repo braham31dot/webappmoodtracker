@@ -2,7 +2,7 @@
   "name": "Mood Tracker",
   "short_name": "MoodTracker",
   "description": "An app to track your mood daily.",
-  "start_url": "/index.html",  
+  "start_url": "/index.html/", 
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0984e3",
