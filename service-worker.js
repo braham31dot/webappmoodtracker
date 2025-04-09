@@ -51,6 +51,7 @@ self.addEventListener('activate', (event) => {
       })
   );
 });
+
 // Initialize current mood and notes
 let currentMood = '';
 let currentNotes = localStorage.getItem('userNotes') || '';
@@ -100,14 +101,66 @@ function viewHistory() {
     alert(historyText);
 }
 
-// Function to open a prompt where the user can write a daily reflection or note
-function openNotes() {
-    const userNotes = prompt("Write your daily reflection:", currentNotes);
-    if (userNotes !== null) {
-        currentNotes = userNotes;
-        localStorage.setItem('userNotes', currentNotes);
+document.addEventListener("DOMContentLoaded", () => {
+  const saveButton = document.getElementById("save-note");
+  const clearButton = document.getElementById("clear-notes");
+  const noteInput = document.getElementById("note-input");
+  const notesList = document.getElementById("notes-list");
+
+  // Load saved notes from localStorage (if any)
+  loadNotes();
+
+  // Event listener for saving the note
+  saveButton.addEventListener("click", () => {
+    const noteText = noteInput.value.trim();
+
+    if (noteText === "") {
+      alert("Please write something in the note.");
+      return;
     }
-}
+
+    // Save the note in localStorage
+    saveNoteToLocalStorage(noteText);
+
+    // Clear the input field
+    noteInput.value = "";
+
+    // Reload the notes
+    loadNotes();
+  });
+
+  // Event listener for clearing all notes
+  clearButton.addEventListener("click", () => {
+    if (confirm("Are you sure you want to delete all notes?")) {
+      localStorage.removeItem("notes");
+      loadNotes(); // Reload the notes (empty)
+    }
+  });
+
+  // Function to save a note to localStorage
+  function saveNoteToLocalStorage(noteText) {
+    const notes = getNotesFromLocalStorage();
+    notes.push(noteText);
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }
+
+  // Function to get notes from localStorage
+  function getNotesFromLocalStorage() {
+    const notes = localStorage.getItem("notes");
+    return notes ? JSON.parse(notes) : [];
+  }
+
+  // Function to load notes from localStorage and display them
+  function loadNotes() {
+    const notes = getNotesFromLocalStorage();
+    notesList.innerHTML = "";
+    notes.forEach((note, index) => {
+      const li = document.createElement("li");
+      li.textContent = note;
+      notesList.appendChild(li);
+    });
+  }
+});
 
 // Function to show the Privacy Policy Modal
 function showPrivacyPolicy() {
@@ -141,4 +194,5 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
+
 
