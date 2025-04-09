@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood Tracker App</title>
+  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    /* Base styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f4f8;
+      color: #333;
+    }
+
+    .container {
+      text-align: center;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .emoji {
+      font-size: 50px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .emoji:hover {
+      transform: scale(1.2);
+    }
+
+    .feedback {
+      font-size: 16px;
+      margin-top: 15px;
+      color: #555;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #0984e3;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #0652dd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Mood Tracker</h1>
+    <p>Select your mood today:</p>
+    <div>
+      <span class="emoji" data-mood="happy" onclick="setMood('happy')">😊</span>
+      <span class="emoji" data-mood="neutral" onclick="setMood('neutral')">😐</span>
+      <span class="emoji" data-mood="sad" onclick="setMood('sad')">😞</span>
+    </div>
+    <div class="feedback" id="feedback">Feeling good? Let us know!</div>
+    <button class="btn" onclick="saveMood()">Save Mood</button>
+  </div>
+
+  <script>
+    let currentMood = '';
+    
+    function setMood(mood) {
+      currentMood = mood;
+      const feedback = document.getElementById('feedback');
+      
+      if (mood === 'happy') {
+        feedback.textContent = "That's awesome! You're feeling happy!";
+      } else if (mood === 'neutral') {
+        feedback.textContent = "Okay, you're feeling neutral.";
+      } else if (mood === 'sad') {
+        feedback.textContent = "Sorry you're feeling down. Hang in there!";
+      }
+    }
+
+    function saveMood() {
+      if (currentMood === '') {
+        alert("Please select a mood first!");
+      } else {
+        alert(`Your mood has been saved as: ${currentMood}`);
+        localStorage.setItem('mood', currentMood);
+      }
+    }
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then((registration) => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch((error) => {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
