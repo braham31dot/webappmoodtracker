@@ -1,66 +1,63 @@
 const CACHE_NAME = 'mood-tracker-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/logo.png',
-  '/service-worker.js',
+    '/',
+    '/index.html',
+    '/manifest.json',
+    '/logo.png',
+    '/service-worker.js',
 ];
 
 // Cache files on install
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
-  );
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then((cache) => {
+                console.log('Opened cache');
+                return cache.addAll(urlsToCache);
+            })
+    );
 });
 
 // Serve cached files or fetch from the network
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // If the resource is found in the cache, serve it. Otherwise, fetch it from the network.
-        return response || fetch(event.request).then((fetchResponse) => {
-          // Optionally, cache the response here for later use
-          return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, fetchResponse.clone());
-            return fetchResponse;
-          });
-        });
-      })
-  );
+    event.respondWith(
+        caches.match(event.request)
+            .then((response) => {
+                return response || fetch(event.request).then((fetchResponse) => {
+                    return caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, fetchResponse.clone());
+                        return fetchResponse;
+                    });
+                });
+            })
+    );
 });
 
 // Clean up old caches when activating
 self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
-    caches.keys()
-      .then((cacheNames) => {
-        return Promise.all(
-          cacheNames.map((cacheName) => {
-            if (!cacheWhitelist.includes(cacheName)) {
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      })
-  );
+    const cacheWhitelist = [CACHE_NAME];
+    event.waitUntil(
+        caches.keys()
+            .then((cacheNames) => {
+                return Promise.all(
+                    cacheNames.map((cacheName) => {
+                        if (!cacheWhitelist.includes(cacheName)) {
+                            return caches.delete(cacheName);
+                        }
+                    })
+                );
+            })
+    );
 });
 
-// Initialize current mood and notes
+// JavaScript logic for the Mood Tracker App
 let currentMood = '';
-let currentNotes = localStorage.getItem('userNotes') || '';
 
 // Function to set the selected mood and display feedback
 function setMood(mood) {
     currentMood = mood;
     const feedback = document.getElementById('feedback');
-    
+
     const moodFeedback = {
         happy: "That's awesome! You're feeling happy!",
         neutral: "Okay, you're feeling neutral.",
@@ -102,64 +99,71 @@ function viewHistory() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const saveButton = document.getElementById("save-note");
-  const clearButton = document.getElementById("clear-notes");
-  const noteInput = document.getElementById("note-input");
-  const notesList = document.getElementById("notes-list");
+    const openNotesButton = document.getElementById('open-notes');
+    const notesContainer = document.getElementById('notes-container');
+    const noteInput = document.getElementById('note-input');
+    const saveNoteButton = document.getElementById('save-note');
+    const notesHistoryButton = document.getElementById('notes-history');
+    const notesList = document.getElementById('notes-list');
 
-  // Load saved notes from localStorage (if any)
-  loadNotes();
-
-  // Event listener for saving the note
-  saveButton.addEventListener("click", () => {
-    const noteText = noteInput.value.trim();
-
-    if (noteText === "") {
-      alert("Please write something in the note.");
-      return;
-    }
-
-    // Save the note in localStorage
-    saveNoteToLocalStorage(noteText);
-
-    // Clear the input field
-    noteInput.value = "";
-
-    // Reload the notes
+    // Load saved notes from localStorage (if any)
     loadNotes();
-  });
+    displayNotes(); // Call it on load to show any existing notes
 
-  // Event listener for clearing all notes
-  clearButton.addEventListener("click", () => {
-    if (confirm("Are you sure you want to delete all notes?")) {
-      localStorage.removeItem("notes");
-      loadNotes(); // Reload the notes (empty)
-    }
-  });
-
-  // Function to save a note to localStorage
-  function saveNoteToLocalStorage(noteText) {
-    const notes = getNotesFromLocalStorage();
-    notes.push(noteText);
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }
-
-  // Function to get notes from localStorage
-  function getNotesFromLocalStorage() {
-    const notes = localStorage.getItem("notes");
-    return notes ? JSON.parse(notes) : [];
-  }
-
-  // Function to load notes from localStorage and display them
-  function loadNotes() {
-    const notes = getNotesFromLocalStorage();
-    notesList.innerHTML = "";
-    notes.forEach((note, index) => {
-      const li = document.createElement("li");
-      li.textContent = note;
-      notesList.appendChild(li);
+    // Event listener to show the notes container
+    openNotesButton.addEventListener('click', () => {
+        notesContainer.style.display = 'block';
     });
-  }
+
+    // Event listener for saving the note
+    saveNoteButton.addEventListener('click', () => {
+        const noteText = noteInput.value.trim();
+        if (noteText !== "") {
+            saveNoteToLocalStorage(noteText);
+            noteInput.value = "";
+            loadNotes();
+        } else {
+            alert("Please enter a note.");
+        }
+    });
+
+    // Event listener for viewing notes history
+    notesHistoryButton.addEventListener('click', () => {
+        notesContainer.style.display = 'block'; // Ensure container is visible
+        displayNotes();
+    });
+
+    // Function to save a note to localStorage
+    function saveNoteToLocalStorage(noteText) {
+        const notes = getNotesFromLocalStorage();
+        notes.push(noteText);
+        localStorage.setItem("notes", JSON.stringify(notes));
+    }
+
+    // Function to get notes from localStorage
+    function getNotesFromLocalStorage() {
+        const notes = localStorage.getItem("notes");
+        return notes ? JSON.parse(notes) : [];
+    }
+
+    // Function to load notes from localStorage and display them
+    function loadNotes() {
+        const notes = getNotesFromLocalStorage();
+        notesList.innerHTML = "";
+        if (notes.length === 0) {
+            notesList.innerHTML = "<li>No notes saved.</li>";
+        } else {
+            notes.forEach((note, index) => {
+                const li = document.createElement("li");
+                li.textContent = note;
+                notesList.appendChild(li);
+            });
+        }
+    }
+
+    function displayNotes() {
+        loadNotes(); // Just call loadNotes to update the display
+    }
 });
 
 // Function to show the Privacy Policy Modal
@@ -175,7 +179,7 @@ function closePrivacyPolicy() {
 }
 
 // Close the privacy policy modal if the user clicks outside of it
-window.onclick = function(event) {
+window.onclick = function (event) {
     const modal = document.getElementById('privacyModal');
     if (event.target === modal) {
         modal.style.display = "none";
@@ -194,5 +198,3 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
-
-
