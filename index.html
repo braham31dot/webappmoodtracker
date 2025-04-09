@@ -1,291 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mood Tracker App</title>
-  <link rel="icon" href="logo.png" type="image/png">
-  <link rel="manifest" href="manifest.json">
-  <style>
-    /* Base styles */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f0f4f8;
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker App</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f4f8;
+            color: #333;
+        }
 
-    .container {
-      text-align: center;
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      width: 300px;
-      max-width: 100%;
-    }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            max-width: 100%;
+        }
 
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
 
-    .emoji {
-      font-size: 50px;
-      cursor: pointer;
-      margin: 10px;
-      transition: transform 0.2s ease;
-    }
+        .emoji {
+            font-size: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s ease;
+        }
 
-    .emoji:hover {
-      transform: scale(1.2);
-    }
+        .emoji:hover {
+            transform: scale(1.2);
+        }
 
-    .feedback {
-      font-size: 16px;
-      margin-top: 15px;
-      color: #555;
-    }
+        .feedback {
+            font-size: 16px;
+            margin-top: 15px;
+            color: #555;
+        }
 
-    .btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #0984e3;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s ease;
-    }
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0984e3;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
 
-    .btn:hover {
-      background-color: #0652dd;
-    }
+        .btn:hover {
+            background-color: #0652dd;
+        }
 
-    /* History Button */
-    .history-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #55efc4;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-    }
+        /* History Button */
+        .history-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #55efc4;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-    .history-btn:hover {
-      background-color: #00b894;
-    }
+        .history-btn:hover {
+            background-color: #00b894;
+        }
 
-    /* Note Button */
-    .note-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #f39c12;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-    }
+        /* Note Button */
+        .note-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-    .note-btn:hover {
-      background-color: #e67e22;
-    }
+        .note-btn:hover {
+            background-color: #e67e22;
+        }
 
-    /* Motivational Posts */
-    .motivational-posts {
-      margin-top: 30px;
-      font-size: 16px;
-      color: #2d3436;
-    }
+        /* Motivational Posts */
+        .motivational-posts {
+            margin-top: 30px;
+            font-size: 16px;
+            color: #2d3436;
+        }
 
-    .motivational-posts p {
-      margin: 5px 0;
-    }
+        .motivational-posts p {
+            margin: 5px 0;
+        }
 
-    /* Privacy Policy Link */
-    .privacy-link {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #0984e3;
-      cursor: pointer;
-    }
+        /* Privacy Policy Link */
+        .privacy-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #0984e3;
+            cursor: pointer;
+        }
 
-    /* Privacy Policy Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.4);
-    }
+        /* Privacy Policy Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
 
-    .modal-content {
-      background-color: white;
-      margin: 15% auto;
-      padding: 20px;
-      border-radius: 10px;
-      width: 80%;
-      max-width: 600px;
-    }
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+        }
 
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-  </style>
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* New Styles for Notes Section */
+        .notes-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: none; /* Initially hidden */
+        }
+
+        #note-input {
+            width: 95%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        #save-note {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #save-note:hover {
+            background-color: #45a049;
+        }
+
+        #notes-history {
+            background-color: #008CBA;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        #notes-history:hover {
+            background-color: #0077a3;
+        }
+
+        #notes-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        #notes-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        #notes-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Mood Tracker</h1>
-    <p>Select your mood today:</p>
-    <div>
-      <span class="emoji" data-mood="happy" onclick="setMood('happy')">😊</span>
-      <span class="emoji" data-mood="neutral" onclick="setMood('neutral')">😐</span>
-      <span class="emoji" data-mood="sad" onclick="setMood('sad')">😞</span>
-      <span class="emoji" data-mood="anxious" onclick="setMood('anxious')">😰</span>
-      <span class="emoji" data-mood="stressed" onclick="setMood('stressed')">😣</span>
-      <span class="emoji" data-mood="depressed" onclick="setMood('depressed')">😔</span>
+    <div class="container">
+        <h1>Mood Tracker</h1>
+        <p>Select your mood today:</p>
+        <div>
+            <span class="emoji" data-mood="happy" onclick="setMood('happy')">😊</span>
+            <span class="emoji" data-mood="neutral" onclick="setMood('neutral')">😐</span>
+            <span class="emoji" data-mood="sad" onclick="setMood('sad')">😞</span>
+            <span class="emoji" data-mood="anxious" onclick="setMood('anxious')">😰</span>
+            <span class="emoji" data-mood="stressed" onclick="setMood('stressed')">😣</span>
+            <span class="emoji" data-mood="depressed" onclick="setMood('depressed')">😔</span>
+        </div>
+        <div class="feedback" id="feedback">Feeling good? Let us know!</div>
+        <button class="btn" onclick="saveMood()">Save Mood</button>
+
+        <button class="history-btn" onclick="viewHistory()">View History</button>
+
+        <button class="note-btn" id="open-notes">Write a Reflection</button>
+
+        <div class="notes-container" id="notes-container">
+            <textarea id="note-input" placeholder="Write your reflection here..."></textarea>
+            <button id="save-note">Save Reflection</button>
+            <button id="notes-history">Notes History</button>
+            <ul id="notes-list"></ul>
+        </div>
+
+        <div class="motivational-posts">
+            <p><strong>Motivational Tip:</strong> "Take it one step at a time, and you'll see progress!"</p>
+            <p><strong>Mental Health Tip:</strong> "Don't be afraid to ask for help. You're not alone."</p>
+        </div>
+
+        <p class="privacy-link" onclick="showPrivacyPolicy()">Privacy Policy</p>
     </div>
-    <div class="feedback" id="feedback">Feeling good? Let us know!</div>
-    <button class="btn" onclick="saveMood()">Save Mood</button>
 
-    <!-- History Button -->
-    <button class="history-btn" onclick="viewHistory()">View History</button>
-
-    <!-- Note Button -->
-    <button class="note-btn" onclick="openNotes()">Write a Reflection</button>
-
-    <!-- Motivational Posts Section -->
-    <div class="motivational-posts">
-      <p><strong>Motivational Tip:</strong> "Take it one step at a time, and you'll see progress!"</p>
-      <p><strong>Mental Health Tip:</strong> "Don't be afraid to ask for help. You're not alone."</p>
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePrivacyPolicy()">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p>Your privacy is important to us. This app does not collect or store any personal data. The mood you select is stored locally on your device only, using your browser's local storage. We do not share or transfer your mood data to any third parties.</p>
+            <p>If you have any concerns or questions, feel free to contact us at webdev031@gmail.com.</p>
+        </div>
     </div>
 
-    <!-- Privacy Policy Link -->
-    <p class="privacy-link" onclick="showPrivacyPolicy()">Privacy Policy</p>
-  </div>
+    <script>
+        let currentMood = '';
+        let currentNotes = localStorage.getItem('userNotes') || '';
 
-  <!-- Privacy Policy Modal -->
-  <div id="privacyModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closePrivacyPolicy()">&times;</span>
-      <h2>Privacy Policy</h2>
-      <p>Your privacy is important to us. This app does not collect or store any personal data. The mood you select is stored locally on your device only, using your browser's local storage. We do not share or transfer your mood data to any third parties.</p>
-      <p>If you have any concerns or questions, feel free to contact us at webdev031@gmail.com.</p>
-    </div>
-  </div>
+        // Get DOM elements for notes
+        const openNotesButton = document.getElementById('open-notes');
+        const notesContainer = document.getElementById('notes-container');
+        const noteInput = document.getElementById('note-input');
+        const saveNoteButton = document.getElementById('save-note');
+        const notesHistoryButton = document.getElementById('notes-history');
+        const notesList = document.getElementById('notes-list');
 
-  <script>
-    let currentMood = '';
-    let currentNotes = localStorage.getItem('userNotes') || '';
+        // Set the mood
+        function setMood(mood) {
+            currentMood = mood;
+            const feedback = document.getElementById('feedback');
 
-    // Set the mood
-    function setMood(mood) {
-      currentMood = mood;
-      const feedback = document.getElementById('feedback');
-      
-      const moodFeedback = {
-        happy: "That's awesome! You're feeling happy!",
-        neutral: "Okay, you're feeling neutral.",
-        sad: "Sorry you're feeling down. Hang in there!",
-        anxious: "You're feeling anxious, take a deep breath.",
-        stressed: "Take it easy, you're feeling stressed.",
-        depressed: "Sorry you're feeling this way, take care of yourself."
-      };
+            const moodFeedback = {
+                happy: "That's awesome! You're feeling happy!",
+                neutral: "Okay, you're feeling neutral.",
+                sad: "Sorry you're feeling down. Hang in there!",
+                anxious: "You're feeling anxious, take a deep breath.",
+                stressed: "Take it easy, you're feeling stressed.",
+                depressed: "Sorry you're feeling this way, take care of yourself."
+            };
 
-      feedback.textContent = moodFeedback[mood] || "How are you feeling today?";
-    }
+            feedback.textContent = moodFeedback[mood] || "How are you feeling today?";
+        }
 
-    // Save the mood to local storage
-    function saveMood() {
-      if (currentMood === '') {
-        alert("Please select a mood first!");
-      } else {
-        alert(`Your mood has been saved as: ${currentMood}`);
-        let history = JSON.parse(localStorage.getItem('moodHistory')) || [];
-        history.push({ mood: currentMood, date: new Date().toLocaleDateString() });
-        localStorage.setItem('moodHistory', JSON.stringify(history));
-      }
-    }
+        // Save the mood to local storage
+        function saveMood() {
+            if (currentMood === '') {
+                alert("Please select a mood first!");
+            } else {
+                alert(`Your mood has been saved as: ${currentMood}`);
+                let history = JSON.parse(localStorage.getItem('moodHistory')) || [];
+                history.push({
+                    mood: currentMood,
+                    date: new Date().toLocaleDateString()
+                });
+                localStorage.setItem('moodHistory', JSON.stringify(history));
+            }
+        }
 
-    // View the history of moods
-    function viewHistory() {
-      const history = JSON.parse(localStorage.getItem('moodHistory')) || [];
-      if (history.length === 0) {
-        alert("No mood history available.");
-        return;
-      }
+        // View the history of moods
+        function viewHistory() {
+            const history = JSON.parse(localStorage.getItem('moodHistory')) || [];
+            if (history.length === 0) {
+                alert("No mood history available.");
+                return;
+            }
 
-      let historyText = "Your Mood History:\n\n";
-      history.forEach(entry => {
-        historyText += `${entry.date}: ${entry.mood}\n`;
-      });
+            let historyText = "Your Mood History:\n\n";
+            history.forEach(entry => {
+                historyText += `${entry.date}: ${entry.mood}\n`;
+            });
 
-      alert(historyText);
-    }
+            alert(historyText);
+        }
 
-    // Note taking functionality
-    function openNotes() {
-      const userNotes = prompt("Write your daily reflection:", currentNotes);
-      if (userNotes !== null) {
-        currentNotes = userNotes;
-        localStorage.setItem('userNotes', currentNotes);
-      }
-    }
+        // Note taking functionality
+        openNotesButton.addEventListener('click', () => {
+            notesContainer.style.display = 'block';
+        });
 
-    // Privacy Policy Modal
-    function showPrivacyPolicy() {
-      const modal = document.getElementById('privacyModal');
-      modal.style.display = "block";
-    }
+        saveNoteButton.addEventListener('click', () => {
+            const noteText = noteInput.value.trim();
+            if (noteText !== "") {
+                saveNote(noteText);
+                noteInput.value = "";
+                displayNotes();
+            } else {
+                alert("Please enter a note.");
+            }
+        });
 
-    function closePrivacyPolicy() {
-      const modal = document.getElementById('privacyModal');
-      modal.style.display = "none";
-    }
+        notesHistoryButton.addEventListener('click', displayNotes);
 
-    // Close modal when user clicks outside
-    window.onclick = function(event) {
-      const modal = document.getElementById('privacyModal');
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    };
+        function saveNote(note) {
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes.push(note);
+            localStorage.setItem('notes', JSON.stringify(notes));
+        }
 
-    // Register Service Worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then((registration) => {
-            console.log('Service Worker registered with scope:', registration.scope);
-          })
-          .catch((error) => {
-            console.error('Service Worker registration failed:', error);
-          });
-      });
-    }
-  </script>
+        function displayNotes() {
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notesList.innerHTML = "";
+            if (notes.length === 0) {
+                notesList.innerHTML = "<li>No notes saved.</li>";
+            } else {
+                notes.forEach((note, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = note;
+                    notesList.appendChild(li);
+                });
+            }
+            notesContainer.style.display = 'block'; // Ensure it's visible
+        }
+
+        // Privacy Policy Modal
+        function showPrivacyPolicy() {
+            const modal = document.getElementById('privacyModal');
+            modal.style.display = "block";
+        }
+
+        function closePrivacyPolicy() {
+            const modal = document.getElementById('privacyModal');
+            modal.style.display = "none";
+        }
+
+        // Close modal when user clicks outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('privacyModal');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
 </body>
+
 </html>
