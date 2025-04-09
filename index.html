@@ -205,6 +205,8 @@
       border-radius: 10px;
       width: 80%;
       max-width: 600px;
+      max-height: 80%;
+      overflow-y: auto;
     }
 
     .close {
@@ -278,7 +280,7 @@
   <!-- Floating Note Button -->
   <button class="floating-note-btn" onclick="toggleNoteBox()">📝</button>
   
-  <!-- Calendar Button -->
+  <!-- Floating Calendar Button -->
   <button class="floating-calendar-btn" onclick="openCalendar()">📅</button>
 
   <!-- Notes Box -->
@@ -301,28 +303,24 @@
     <div class="modal-content">
       <span class="close" onclick="closePrivacyPolicy()">&times;</span>
       <h2>Privacy Policy</h2>
-      <p>Your privacy is important to us. This app does not collect or store any personal data...</p>
+      <p>This is where your privacy policy content goes.</p>
+      <p>It should be detailed and address how user data is handled, what information is stored, and how it is used. This helps to inform users of your practices and legal requirements.</p>
     </div>
   </div>
 
   <script>
-    let currentMood = '';
-    let notes = JSON.parse(localStorage.getItem('notes')) || [];
+    let mood = localStorage.getItem('mood') || 'neutral';
+    const feedback = document.getElementById('feedback');
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
 
-    function setMood(mood) {
-      currentMood = mood;
-      const feedback = document.getElementById('feedback');
-      feedback.innerHTML = `You are feeling ${mood} today!`;
+    function setMood(selectedMood) {
+      mood = selectedMood;
+      localStorage.setItem('mood', mood);
+      feedback.innerHTML = `You are feeling ${mood}!`;
     }
 
     function saveMood() {
-      if (!currentMood) {
-        alert("Please select a mood!");
-        return;
-      }
-      const date = new Date().toLocaleString();
-      localStorage.setItem('mood', currentMood);
-      alert(`Mood saved: ${currentMood}`);
+      alert(`Your mood, "${mood}", has been saved.`);
     }
 
     function toggleNoteBox() {
@@ -363,11 +361,10 @@
       document.getElementById('privacyModal').style.display = 'none';
     }
 
-    // Calendar feature
+    // Calendar feature (simple alert for now)
     function openCalendar() {
       alert("Open your favorite calendar app or integrate one here.");
     }
   </script>
 </body>
 </html>
-
