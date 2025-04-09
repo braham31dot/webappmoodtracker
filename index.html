@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mood Tracker</title>
     <link rel="manifest" href="manifest.json">
-
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
             margin: 0;
-            min-height: 100vh; /* Changed to min-height for better content flow */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align items to the start to push buttons up */
+            justify-content: flex-start;
             background-color: black;
             color: white;
         }
@@ -28,31 +27,31 @@
         .mood-selection {
             display: flex;
             justify-content: center;
-            gap: 15px; /* Slightly reduced gap */
+            gap: 15px;
             margin-top: 20px;
             flex-wrap: wrap;
         }
 
         .emoji {
-            font-size: 2.5rem; /* Slightly smaller emojis */
+            font-size: 2.5rem;
             cursor: pointer;
             transition: transform 0.2s, text-shadow 0.2s;
             color: gold;
         }
 
         .emoji:hover {
-            transform: scale(1.1); /* Reduced scale on hover */
-            text-shadow: 0 0 8px gold, 0 0 16px gold; /* Reduced shadow intensity */
+            transform: scale(1.1);
+            text-shadow: 0 0 8px gold, 0 0 16px gold;
         }
 
         .feedback {
             margin-top: 10px;
-            font-size: 1.2rem; /* Slightly smaller feedback */
+            font-size: 1.2rem;
         }
 
         .motivational-message {
-            margin-top: 15px; /* Increased margin */
-            font-size: 1rem; /* Slightly smaller message */
+            margin-top: 15px;
+            font-size: 1rem;
             font-style: italic;
             color: gold;
         }
@@ -60,8 +59,8 @@
         .btn-container {
             display: flex;
             justify-content: center;
-            gap: 10px; /* Reduced gap between buttons */
-            margin-top: 15px; /* Adjusted margin to be under motivational message */
+            gap: 10px;
+            margin-top: 15px;
             flex-wrap: wrap;
         }
 
@@ -69,26 +68,113 @@
             background-color: gold;
             color: black;
             border: none;
-            padding: 8px 16px; /* Smaller buttons */
-            font-size: 0.9rem; /* Smaller font */
+            padding: 8px 16px;
+            font-size: 0.9rem;
             cursor: pointer;
             border-radius: 5px;
         }
 
-        .note-btn, .privacy-btn {
+        .fixed-button-container {
             position: fixed;
             bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .fixed-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .fixed-button:hover {
+            background-color: #45a049;
+        }
+
+        #moodDataModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            z-index: 1001;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        #moodDataModal h2 {
+            color: #fdd835;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .mood-data-entry {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 5px 15px;
+            align-items: center;
+        }
+
+        .mood-data-entry:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-weight: bold;
+            color: #fdd835;
+            margin-right: 5px;
+        }
+
+        #moodDataModal .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .note-btn, .privacy-btn {
+            position: fixed;
+            bottom: 70px;
             border: none;
             background-color: gold;
             color: black;
-            padding: 8px; /* Further reduced padding */
-            font-size: 1.2rem; /* Slightly smaller font for icons */
+            padding: 8px;
+            font-size: 1.2rem;
             cursor: pointer;
             border-radius: 50%;
-            z-index: 1000;
-            width: 40px; /* Fixed width */
-            height: 40px; /* Fixed height */
-            line-height: 40px; /* Center the icon */
+            z-index: 999;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
             text-align: center;
             display: flex;
             justify-content: center;
@@ -106,32 +192,32 @@
         .note-box {
             display: none;
             position: fixed;
-            bottom: 70px; /* Adjusted position */
+            bottom: 110px;
             left: 20px;
-            background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+            background-color: rgba(255, 255, 255, 0.95);
             color: black;
-            border: 1px solid #555; /* Darker border */
-            padding: 15px; /* Adjusted padding */
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* More prominent shadow */
-            z-index: 999;
-            max-width: 280px; /* Slightly smaller max-width */
-            border-radius: 8px; /* More rounded corners */
+            border: 1px solid #555;
+            padding: 15px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            z-index: 998;
+            max-width: 280px;
+            border-radius: 8px;
         }
 
         .note-box textarea {
             width: 100%;
-            height: 80px; /* Reduced height */
+            height: 80px;
             margin-bottom: 10px;
             padding: 8px;
-            font-size: 0.9rem; /* Smaller font */
+            font-size: 0.9rem;
             border-radius: 5px;
             border: 1px solid #777;
-            background-color: #f9f9f9; /* Light background */
+            background-color: #f9f9f9;
             color: black;
         }
 
         .note-box .btn {
-            padding: 8px 12px; /* Smaller button in note box */
+            padding: 8px 12px;
             font-size: 0.8rem;
         }
 
@@ -140,13 +226,13 @@
             position: fixed;
             top: 0;
             left: 0;
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+            background-color: rgba(0, 0, 0, 0.7);
             width: 100%;
             height: 100%;
             z-index: 999;
             justify-content: center;
             align-items: center;
-            overflow-y: auto; /* Enable scrolling for long histories */
+            overflow-y: auto;
         }
 
         .history-container .note-entry {
@@ -188,7 +274,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+            background-color: rgba(0, 0, 0, 0.7);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -202,7 +288,7 @@
             width: 80%;
             max-width: 500px;
             text-align: left;
-            position: relative; /* To position the close button */
+            position: relative;
         }
 
         .modal-content h2 {
@@ -221,7 +307,6 @@
             border: none;
         }
 
-        /* Responsive Design Adjustments */
         @media (max-width: 600px) {
             .emoji {
                 font-size: 2rem;
@@ -242,6 +327,14 @@
             .note-box {
                 max-width: 90%;
                 left: 5%;
+            }
+            .fixed-button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .fixed-button {
+                width: 90%;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -266,7 +359,21 @@
     <div class="btn-container">
         <button class="btn" onclick="saveMood()">Save Mood</button>
     </div>
- <button class="btn" onclick="viewNoteHistory()">Check notes History</button>
+
+    <div class="fixed-button-container">
+        <button class="fixed-button" onclick="viewNotesHistory()">View Notes History</button>
+        <button class="fixed-button" onclick="checkMoodData()">Check Mood Data</button>
+    </div>
+
+    <div id="moodDataModal" class="modal">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeMoodDataModal()">×</button>
+            <h2>Mood Data</h2>
+            <div id="moodDataDisplay">
+                </div>
+        </div>
+    </div>
+
     <button class="note-btn" onclick="toggleNoteBox()">📒</button>
     <button class="privacy-btn" onclick="openPrivacyPolicy()">⚖️</button>
 
@@ -292,10 +399,17 @@
     </div>
 
     <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./service-worker.js');
+        }
+
         let mood = localStorage.getItem('mood') || 'neutral';
         const feedback = document.getElementById('feedback');
         const motivationalMessage = document.getElementById('motivationalMessage');
         const notes = JSON.parse(localStorage.getItem('notes')) || [];
+        const moodData = JSON.parse(localStorage.getItem('moodData')) || [];
+        const moodDataDisplay = document.getElementById('moodDataDisplay');
+        const moodDataModal = document.getElementById('moodDataModal');
 
         const motivationalMessages = {
             happy: "You are feeling happy today! Maybe go out and enjoy some sunshine?",
@@ -315,15 +429,18 @@
         }
 
         function saveMood() {
+            const currentDate = new Date().toLocaleString();
+            moodData.push({ date: currentDate, mood: mood });
+            localStorage.setItem('moodData', JSON.stringify(moodData));
             alert(`Your mood, "${mood}", has been saved.`);
         }
 
-        function viewNoteHistory() {
+        function viewNotesHistory() {
             const historyContainer = document.getElementById('historyContainer');
             const notesHistory = document.getElementById('notesHistory');
             notesHistory.innerHTML = '';
             notes.forEach(note => {
-                notesHistory.innerHTML += `<div class="note-entry"><p>${note.text}</p><span class="date">${note.date}</span></div>`;
+                notesHistory.innerHTML += `<div class="note-entry"><p><span class="math-inline">\{note\.text\}</p\><span class\="date"\></span>{note.date}</span></div>`;
             });
             historyContainer.style.display = 'block';
         }
