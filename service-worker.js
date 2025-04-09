@@ -1,9 +1,9 @@
 const CACHE_NAME = 'mood-tracker-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/logo.png',   
+  '/',                     // Ensure the root path is cached
+  '/index.html',            // Cache the HTML page
+  '/manifest.json',         // Cache the manifest for PWA features
+  '/logo.png',              // Cache the logo image
 ];
 
 // Cache files on install
