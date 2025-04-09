@@ -66,6 +66,50 @@
     .btn:hover {
       background-color: #0652dd;
     }
+
+    /* Privacy Policy Link */
+    .privacy-link {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #0984e3;
+      cursor: pointer;
+    }
+
+    /* Privacy Policy Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -79,6 +123,19 @@
     </div>
     <div class="feedback" id="feedback">Feeling good? Let us know!</div>
     <button class="btn" onclick="saveMood()">Save Mood</button>
+
+    <!-- Privacy Policy Link -->
+    <p class="privacy-link" onclick="showPrivacyPolicy()">Privacy Policy</p>
+  </div>
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacyModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePrivacyPolicy()">&times;</span>
+      <h2>Privacy Policy</h2>
+      <p>Your privacy is important to us. This app does not collect or store any personal data. The mood you select is stored locally on your device only, using your browser's local storage. We do not share or transfer your mood data to any third parties.</p>
+      <p>If you have any concerns or questions, feel free to contact us at [email@example.com].</p>
+    </div>
   </div>
 
   <script>
@@ -105,9 +162,27 @@
         localStorage.setItem('mood', currentMood);
       }
     }
-  </script>
 
-  <script>
+    // Privacy Policy Modal
+    function showPrivacyPolicy() {
+      const modal = document.getElementById('privacyModal');
+      modal.style.display = "block";
+    }
+
+    function closePrivacyPolicy() {
+      const modal = document.getElementById('privacyModal');
+      modal.style.display = "none";
+    }
+
+    // Close modal when user clicks outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('privacyModal');
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    // Register Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')
