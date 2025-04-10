@@ -330,18 +330,13 @@
         <p>Your selected mood: <span id="selectedMood">None</span></p>
     </div>
 
-    <div class="motivational-message">
-        <p>“Remember, your mood today doesn’t define you. You have the power to shift it at any moment.”</p>
+    <div class="motivational-message" id="motivationalMessage">
+        <p>Click the button below to get some motivational advice.</p>
     </div>
 
     <div class="btn-container">
         <button class="btn" onclick="showMoodData()">View Mood History</button>
         <button class="btn" onclick="showNotesHistory()">View Notes History</button>
-    </div>
-
-    <div class="fixed-button-container">
-        <button class="fixed-button" onclick="showMoodData()">View Mood History</button>
-        <button class="fixed-button" onclick="showNotesHistory()">View Notes History</button>
     </div>
 
     <!-- Modal for mood data -->
@@ -380,6 +375,13 @@
         let moodHistory = [];
         let notesHistory = [];
         let currentMood = "";
+
+        const motivationalQuotes = [
+            "Stay positive, work hard, make it happen.",
+            "Believe you can and you're halfway there.",
+            "Don't wait for opportunity. Create it.",
+            "Success is the sum of small efforts, repeated day in and day out."
+        ];
 
         function setMood(mood) {
             currentMood = mood;
@@ -448,8 +450,15 @@
         function closePrivacyPolicy() {
             document.getElementById("privacyModal").style.display = "none";
         }
+
+        function showMotivationalQuote() {
+            const randomIndex = Math.floor(Math.random() * motivationalQuotes.length);
+            const quote = motivationalQuotes[randomIndex];
+            document.getElementById("motivationalMessage").innerHTML = `<p>${quote}</p>`;
+        }
+
+        document.querySelector('.motivational-message').addEventListener('click', showMotivationalQuote);
     </script>
 </body>
 
 </html>
-
