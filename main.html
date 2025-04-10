@@ -8,386 +8,443 @@
     <link rel="icon" href="logo.png" type="image/png">
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
-      window.OneSignalDeferred = window.OneSignalDeferred || [];
-      OneSignalDeferred.push(async function(OneSignal) {
-        try {
-          await OneSignal.init({
-            appId: "7fd3ea2f-54d4-45ff-9836-31c881c8dc82",
-            safari_web_id: "web.onesignal.auto.37bbdda8-1be5-416a-8d2a-3d51b0669a43",
-            notifyButton: {
-              enable: true,
-              size: 'large',
-              theme: 'inverse',
-              offset: { bottom: '30px', left: '30px' },
-              prenotify: true,
-            },
-          });
-          console.log("OneSignal SDK initialized.");
-        } catch (error) {
-          console.error("Error initializing OneSignal SDK:", error);
-        }
-      });
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+            try {
+                await OneSignal.init({
+                    appId: "7fd3ea2f-54d4-45ff-9836-31c881c8dc82",
+                    safari_web_id: "web.onesignal.auto.37bbdda8-1be5-416a-8d2a-3d51b0669a43",
+                    notifyButton: {
+                        enable: true,
+                        size: 'large',
+                        theme: 'inverse',
+                        offset: { bottom: '30px', left: '30px' },
+                        prenotify: true,
+                    },
+                });
+                console.log("OneSignal SDK initialized.");
+            } catch (error) {
+                console.error("Error initializing OneSignal SDK:", error);
+            }
+        });
     </script>
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding: 20px;
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        background-color: black;
-        color: white;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: black;
+            color: white;
+        }
 
-    h1 {
-        margin-top: 0;
-        color: gold;
-    }
+        h1 {
+            margin-top: 0;
+            color: gold;
+        }
 
-    .mood-selection {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        margin-top: 20px;
-        flex-wrap: wrap;
-    }
+        .mood-selection {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
 
-    .emoji {
-        font-size: 2.5rem;
-        cursor: pointer;
-        transition: transform 0.2s, text-shadow 0.2s;
-        color: gold;
-    }
+        .emoji {
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: transform 0.2s, text-shadow 0.2s;
+            color: gold;
+        }
 
-    .emoji:hover {
-        transform: scale(1.1);
-        text-shadow: 0 0 8px gold, 0 0 16px gold;
-    }
+        .emoji:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 8px gold, 0 0 16px gold;
+        }
 
-    .feedback {
-        margin-top: 10px;
-        font-size: 1.2rem;
-    }
+        .feedback {
+            margin-top: 10px;
+            font-size: 1.2rem;
+        }
 
-    .motivational-message {
-        margin-top: 15px;
-        font-size: 1rem;
-        font-style: italic;
-        color: gold;
-    }
+        .motivational-message {
+            margin-top: 15px;
+            font-size: 1rem;
+            font-style: italic;
+            color: gold;
+        }
 
-    .btn-container {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 15px;
-        flex-wrap: wrap;
-    }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
 
-    .btn {
-        background-color: gold;
-        color: black;
-        border: none;
-        padding: 8px 16px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        border-radius: 5px;
-    }
+        .btn {
+            background-color: gold;
+            color: black;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
 
-    .fixed-button-container {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 20px;
-        z-index: 1000;
-    }
+        .fixed-button-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
 
-    .fixed-button {
-        background-color: gold;
-        color: black;
-        border: none;
-        padding: 15px 30px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.3s ease;
-    }
+        .fixed-button {
+            background-color: gold;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
 
-    .fixed-button:hover {
-        background-color: #fdd835;
-    }
+        .fixed-button:hover {
+            background-color: #fdd835;
+        }
 
-    #moodDataModal {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 30px;
-        border-radius: 15px;
-        z-index: 1001;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-        width: 80%;
-        max-width: 600px;
-        max-height: 80vh;
-        overflow-y: auto;
-        text-align: left;
-    }
+        #moodDataModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            z-index: 1001;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            text-align: left;
+        }
 
-    #moodDataModal h2 {
-        color: #fdd835;
-        margin-top: 0;
-        margin-bottom: 15px;
-        text-align: center;
-    }
+        #moodDataModal h2 {
+            color: #fdd835;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+        }
 
-    .mood-data-entry {
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 5px 15px;
-        align-items: center;
-    }
+        .mood-data-entry {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 5px 15px;
+            align-items: center;
+        }
 
-    .mood-data-entry:last-child {
-        border-bottom: none;
-    }
+        .mood-data-entry:last-child {
+            border-bottom: none;
+        }
 
-    .data-label {
-        font-weight: bold;
-        color: #fdd835;
-        margin-right: 5px;
-    }
+        .data-label {
+            font-weight: bold;
+            color: #fdd835;
+            margin-right: 5px;
+        }
 
-    #moodDataModal .close-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        color: #fff;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-        background: none;
-        border: none;
-    }
+        #moodDataModal .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
 
-    .note-btn,
-    .privacy-btn {
-        position: fixed;
-        bottom: 70px;
-        border: none;
-        background-color: gold;
-        color: black;
-        padding: 8px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        border-radius: 50%;
-        z-index: 999;
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        .note-btn,
+        .privacy-btn {
+            position: fixed;
+            bottom: 70px;
+            border: none;
+            background-color: gold;
+            color: black;
+            padding: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 999;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .note-btn {
-        left: 20px;
-    }
+        .note-btn {
+            left: 20px;
+        }
 
-    .privacy-btn {
-        right: 20px;
-    }
+        .privacy-btn {
+            right: 20px;
+        }
 
-    .note-box {
-        display: none;
-        position: fixed;
-        bottom: 110px;
-        left: 20px;
-        background-color: rgba(255, 255, 255, 0.95);
-        color: black;
-        border: 1px solid #555;
-        padding: 15px;
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-        z-index: 998;
-        max-width: 280px;
-        border-radius: 8px;
-    }
+        .note-box {
+            display: none;
+            position: fixed;
+            bottom: 110px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: black;
+            border: 1px solid #555;
+            padding: 15px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            z-index: 998;
+            max-width: 280px;
+            border-radius: 8px;
+        }
 
-    .note-box textarea {
-        width: 100%;
-        height: 80px;
-        margin-bottom: 10px;
-        padding: 8px;
-        font-size: 0.9rem;
-        border-radius: 5px;
-        border: 1px solid #777;
-        background-color: #f9f9f9;
-        color: black;
-    }
+        .note-box textarea {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            border: 1px solid #777;
+            background-color: #f9f9f9;
+            color: black;
+        }
 
-    .note-box .btn {
-        padding: 8px 12px;
-        font-size: 0.8rem;
-    }
+        .note-box .btn {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+        }
 
-    .history-container {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.7);
-        width: 100%;
-        height: 100%;
-        z-index: 999;
-        justify-content: center;
-        align-items: center;
-        overflow-y: auto;
-    }
+        .history-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
 
-    .history-container .note-entry {
-        background-color: white;
-        color: black;
-        padding: 15px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        width: 80%;
-        max-width: 400px;
-        text-align: left;
-    }
+        .history-container .note-entry {
+            background-color: white;
+            color: black;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+            text-align: left;
+        }
 
-    .history-container .note-entry .date {
-        display: block;
-        font-size: 0.8rem;
-        color: #777;
-        margin-top: 5px;
-    }
+        .history-container .note-entry .date {
+            display: block;
+            font-size: 0.8rem;
+            color: #777;
+            margin-top: 5px;
+        }
 
-    .history-container button.close {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background-color: red;
-        color: white;
-        border-radius: 5px;
-        padding: 8px 12px;
-        cursor: pointer;
-        font-size: 1rem;
-        z-index: 1001;
-    }
+        .history-container button.close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: red;
+            color: white;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            z-index: 1001;
+        }
 
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-    .modal-content {
-        background-color: black;
-        color: red;
-        padding: 20px;
-        border-radius: 10px;
-        width: 80%;
-        max-width: 500px;
-        text-align: left;
-        position: relative;
-    }
+        .modal-content {
+            background-color: black;
+            color: red;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            text-align: left;
+            position: relative;
+        }
 
-    .modal-content h2 {
-        margin-top: 0;
-        color: red;
-    }
+        .modal-content h2 {
+            margin-top: 0;
+            color: red;
+        }
 
-    .modal-content .close {
-        cursor: pointer;
-        color: red;
-        font-size: 1.5rem;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: none;
-        border: none;
-    }
+        .modal-content .close {
+            cursor: pointer;
+            color: red;
+            font-size: 1.5rem;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+        }
 
-    /* 7-Day Recap Modal Styling */
-    #recapModal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
+        /* 7-Day Recap Modal Styling */
+        #recapModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-    #recapModal .modal-content {
-        background-color: black;
-        color: gold;
-        padding: 25px;
-        border-radius: 12px;
-        width: 80%;
-        max-width: 400px;
-        text-align: center;
-        position: relative;
-    }
+        #recapModal .modal-content {
+            background-color: black;
+            color: gold;
+            padding: 25px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
 
-    #recapModal .close {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        color: red;
-        font-size: 1.5rem;
-        font-weight: bold;
-        cursor: pointer;
-    }
+        #recapModal .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: red;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-    @keyframes popIn {
-        0% { transform: scale(0.5); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-</style>
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-    <div id="recapModal" class="modal"></div>
+    <div id="recapModal" class="modal">
+        <div class="modal-content">
+            <h2>Weekly Mood Recap</h2>
+            <p id="recapMessage"></p>
+            <button class="close" onclick="closeRecapModal()">×</button>
+        </div>
+    </div>
     <button class="privacy-btn" onclick="showPrivacyPolicy()">🔒</button>
-    <div id="privacyPolicyModal" style="display:none;"></div>
+    <div id="privacyPolicyModal" style="display:none;">
+        <div class="modal-content">
+            <h2>Privacy Policy</h2>
+            <p><strong>Effective Date:</strong> [04/09/2025]</p>
+            <p>At <strong>Mood Tracker</strong>, we value and respect your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information when you use our web app. By using our app, you agree to the collection and use of information in accordance with this policy.</p>
+
+            <h3>1. Information We Collect</h3>
+            <p>We collect the following types of information when you use our app:</p>
+            <ul>
+                <li><strong>Mood Data:</strong> We collect your mood selections (e.g., happy, sad, excited) that you choose through the app to help you track your mood history.</li>
+                <li><strong>Notes:</strong> If you choose to write notes about your mood, we will store the content of those notes and the date they were written.</li>
+                <li><strong>Anonymous Usage Data:</strong> We may collect basic information about how you use the app (such as how often you access it or what features you use) to improve our app’s functionality.</li>
+            </ul>
+
+            <h3>2. How We Use Your Information</h3>
+            <p>We use the collected information in the following ways:</p>
+            <ul>
+                <li><strong>Mood History:</strong> To allow you to track your mood over time and display your mood history.</li>
+                <li><strong>Note Storage:</strong> To store and display the notes you write about your mood.</li>
+                <li><strong>App Improvement:</strong> To improve the functionality and performance of our app based on how users interact with it.</li>
+            </ul>
+
+            <h3>3. Data Retention</h3>
+            <p>Your mood data and notes will be stored locally on your device or in your browser's local storage. We do not collect or store any personal information on our servers.</p>
+
+            <h3>4. Cookies and Tracking Technologies</h3>
+            <p>Our app may use cookies or other tracking technologies to improve user experience. These cookies are stored in your browser and can be disabled through your browser settings.</p>
+
+            <h3>5. Security</h3>
+            <p>We take reasonable precautions to protect your data, but please note that no method of transmission over the internet or electronic storage is 100% secure. We cannot guarantee absolute security.</p>
+
+            <h3>6. Your Rights</h3>
+            <p>You have the right to:</p>
+            <ul>
+                <li><strong>Access:</strong> You may view your mood history and notes at any time.</li>
+                <li><strong>Delete:</strong> You can clear your mood history and notes through the app’s interface.</li>
+                <li><strong>Control:</strong> You have control over whether or not you share notes or moods. No data is shared with third parties unless specified.</li>
+            </ul>
+
+            <h3>7. Third-Party Services</h3>
+            <p>We do not share your data with third parties. Your data stays private and is only used for the purpose of tracking your mood history and notes.</p>
+
+            <h3>8. Changes to This Privacy Policy</h3>
+            <p>We reserve the right to update or change this privacy policy at any time. Any changes will be posted on this page, and the effective date will be updated accordingly.</p>
+
+            <h3>9. Contact Us</h3>
+            <p>If you have any questions about this privacy policy, please contact us at:</p>
+            <p><strong>website:</strong> securewebsolutions.ink</p>
+
+            <button class="close" onclick="closePrivacyPolicy()">Close</button>
+        </div>
+    </div>
     <nav>
-        <a href="#" onclick="logout()">Logout</a> |
+        <a href="#" id="logoutLink">Logout</a> |
     </nav>
     <h1>Mood Tracker</h1>
     <div class="mood-selection">
-        <span class="emoji" id="happy" onclick="setMood('happy')">😊</span>
-        <span class="emoji" id="sad" onclick="setMood('sad')">😢</span>
-        <span class="emoji" id="angry" onclick="setMood('angry')">😡</span>
-        <span class="emoji" id="neutral" onclick="setMood('neutral')">😐</span>
-        <span class="emoji" id="excited" onclick="setMood('excited')">😆</span>
-        <span class="emoji" id="surprised" onclick="setMood('surprised')">😲</span>
-        <span class="emoji" id="love" onclick="setMood('love')">😍</span>
+        <span class="emoji" id="happy" data-mood="happy">😊</span>
+        <span class="emoji" id="sad" data-mood="sad">😢</span>
+        <span class="emoji" id="angry" data-mood="angry">😡</span>
+        <span class="emoji" id="neutral" data-mood="neutral">😐</span>
+        <span class="emoji" id="excited" data-mood="excited">😆</span>
+        <span class="emoji" id="surprised" data-mood="surprised">😲</span>
+        <span class="emoji" id="love" data-mood="love">😍</span>
     </div>
     <div class="feedback">
         <p>Your selected mood: <span id="selectedMood">None</span></p>
@@ -476,19 +533,59 @@
     </div>
 </body>
 <script>
-    window.onload = function () {
-        try {
-            const loggedInUser = JSON.parse(localStorage.getItem("savedLogin"));
-            if (!loggedInUser) {
-                alert("You must be logged in to access this page.");
-                window.location.href = "index.html";
-                return;
-            }
+   <script>
+  window.onload = function () {
+    // 🔐 All your variable definitions and other logic (login check, moodHistory, etc.)
+    const loggedInUser = JSON.parse(localStorage.getItem("savedLogin"));
+    if (!loggedInUser) {
+      alert("You must be logged in to access this page.");
+      window.location.href = "index.html";
+      return;
+    }
 
-            let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
-            let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
-            let currentMood = "";
+    let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
+    let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
+    let currentMood = "";
 
+    // 💥 DEFINE GLOBAL FUNCTIONS HERE
+    window.setMood = function (mood) {
+      try {
+        currentMood = mood;
+        document.getElementById("selectedMood").textContent = mood;
+        showMotivationalQuote(mood);
+
+        if (moodHistory.length >= 10) moodHistory.shift();
+        moodHistory.push({ mood, date: new Date().toLocaleString(), message: `You’re feeling ${mood}.` });
+
+        saveLocalData();
+
+        if (moodHistory.length >= 7 && moodHistory.length % 7 === 0) {
+          getWeeklyMoodRecap();
+        }
+
+        showWeeklyNotification();
+      } catch (error) {
+        console.error("Error setting mood:", error);
+      }
+    };
+
+    window.logout = function () {
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    };
+
+    window.toggleNoteBox = function () {
+      try {
+        const noteBox = document.querySelector(".note-box");
+        noteBox.style.display = noteBox.style.display === "none" ? "block" : "none";
+      } catch (error) {
+        console.error("Error toggling note box:", error);
+      }
+    };
+
+    window.showPrivacyPolicy = function () {
+      document.getElementById("privacyPolicyModal").style.display = "block";
+    };
             const motivationalQuotes = {
                 happy: [
                     "Happiness is not something ready made. It comes from your own actions.",
