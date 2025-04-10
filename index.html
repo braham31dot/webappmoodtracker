@@ -7,6 +7,44 @@
     <title>Mood Tracker</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="logo.png" type="image/png">
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "7fd3ea2f-54d4-45ff-9836-31c881c8dc82",
+          safari_web_id: "web.onesignal.auto.37bbdda8-1be5-416a-8d2a-3d51b0669a43",
+          notifyButton: {
+            enable: true,
+            size: 'large',
+            theme: 'inverse',
+            offset: {
+              bottom: '30px',
+              left: '30px',
+            },
+            prenotify: true,
+          },
+        });
+
+        async function isUserSubscribed() { /* ... */ }
+        async function subscribeToNotifications() { /* ... */ }
+        async function getOneSignalUserId() { /* ... */ }
+        async function initializeNotifications() { /* ... */ }
+
+        initializeNotifications();
+        console.log("OneSignal SDK initialized.");
+      });
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const customSubscribeButton = document.getElementById('custom-subscribe-button');
+        if (customSubscribeButton) {
+          customSubscribeButton.addEventListener('click', async function() { /* ... */ });
+          window.OneSignalDeferred[0](window.OneSignal).then(initializeNotifications);
+        } else {
+          console.log("Custom subscribe button not found. Using OneSignal's notifyButton.");
+        }
+      });
+    </script>
     <style>
     body {
         font-family: Arial, sans-serif;
