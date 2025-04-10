@@ -107,13 +107,11 @@
       const userData = { email, username, password };
       localStorage.setItem("user", JSON.stringify(userData));
       alert("Registered successfully!");
-      window.location.href = "main.html";
+      <a href="/moodtracker.pro/main.html">Go to Main</a>
     }
-    <script>
+    <script>     
   document.getElementById("loginBtn").addEventListener("click", function () {
-  
     localStorage.setItem("rememberedUser", "true");
-
     window.location.href = "/moodtracker.pro/main.html"; 
   });
 </script>
