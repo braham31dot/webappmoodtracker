@@ -98,21 +98,16 @@
     <p>Already have an account? <button id="loginBtn">Login</button></p>
   </div>
   <script>
-    function registerUser() {
-  const email = document.getElementById("email").value;
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-
-  const userData = { email, username, password };
-  localStorage.setItem("user", JSON.stringify(userData));
-  alert("Registered successfully!");
-  window.location.href = "/moodtracker.pro/main.html"; 
-}
- <script>     
-  document.getElementById("loginBtn").addEventListener("click", function () {
-    localStorage.setItem("rememberedUser", "true");
-    window.location.href = "/moodtracker.pro/main.html"; 
-  });
+  function registerUser() {
+    const email = document.getElementById("email").value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const userData = { email, username, password };
+  
+    localStorage.setItem("user", JSON.stringify(userData));
+    alert("Registered successfully!");
+    window.location.href = "login.html"; 
+  }
 </script>
 </body>
 </html>
