@@ -537,12 +537,11 @@
     </div>
 </body>
 <script>
-  window.onload = function () {
+       window.onload = function () {
     const loggedInUser = JSON.parse(localStorage.getItem("savedLogin"));
-
     if (!loggedInUser) {
         alert("You must be logged in to access this page.");
-        window.location.href = "index.html";  // Redirect to login page
+        window.location.href = "login.html"; // Corrected redirection to login page
     } else {
         let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
         let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
@@ -711,7 +710,6 @@
             window.location.href = "login.html"; // Replace with your actual login page URL
         }
 
-        // Auto-delete data after 7 days
         function checkDataExpiration() {
             const moodHistoryTimestamp = localStorage.getItem("moodHistoryTimestamp");
             if (moodHistoryTimestamp) {
@@ -728,7 +726,7 @@
             }
         }
 
-        // Call checkDataExpiration function on load to check if data is expired
+        // Call checkDataExpiration function on load
         checkDataExpiration();
     }
 };
