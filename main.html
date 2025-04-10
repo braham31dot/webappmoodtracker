@@ -207,7 +207,82 @@ h1 {
 }
 
 .privacy-btn {
+    position: fixed;
+    bottom: 20px;
     right: 20px;
+    background-color: gold;
+    color: black;
+    border: none;
+    padding: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.privacy-btn:hover {
+    background-color: #fdd835;
+}
+
+/* Modal Styling */
+.modal {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    text-align: left;
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: gold;
+}
+
+.modal-content .close {
+    cursor: pointer;
+    color: gold;
+    font-size: 2rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+}
+
+/* Logout Link */
+.logout-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.logout-link a {
+    color: gold;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.logout-link a:hover {
+    text-decoration: underline;
 }
 
 .note-box {
@@ -450,7 +525,7 @@ h1 {
     <div id="motivationalMessage"></div>
   </div>
 
-  <!-- Privacy Policy -->
+ <!-- Privacy Policy Modal -->
 <div id="privacyPolicyModal" class="modal">
     <div class="modal-content">
         <button class="close" onclick="closePrivacyPolicy()">×</button>
@@ -506,16 +581,16 @@ h1 {
       <p>Your privacy is respected. Nothing is shared with anyone. Ever.</p>
       </div>
     <button onclick="closePrivacyPolicy()">Close</button>
+      <div class="main-wrapper">
+        <div class="logout-link">
+    <a href="javascript:void(0)" onclick="logout()">Log Out</a>
 </div>
   </div>
 
-  <!-- Dashboard Footer or Extra Section -->
-  <div class="main-wrapper">
-
-      
     <h2>Mood Tracker Dashboard</h2>
   </div>
 </body>
+<script>
 <script>
 window.onload = function () {
     const loggedInUser = JSON.parse(localStorage.getItem("savedLogin"));
@@ -529,39 +604,40 @@ window.onload = function () {
     let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
     let currentMood = "";
 
-// Motivational messages by mood
-const motivationalQuotes = {
-  happy: "Keep spreading that joy like confetti! 🎉",
-  sad: "It's okay to feel down. Storms make trees take deeper roots. 🌧️🌳",
-  angry: "Take a deep breath. You're in control. You've got this. 😤🧘",
-  neutral: "Balance is beautiful. Stay grounded and keep going. ⚖️✨",
-  excited: "Use that energy to chase your goals! 🚀🔥",
-  surprised: "Every surprise is a new door. Embrace it! 🚪🎁",
-  love: "Your heart is full. Let that love ripple outwards. 💖🌊"
-};
+    // Motivational messages by mood
+    const motivationalQuotes = {
+        happy: "Keep spreading that joy like confetti! 🎉",
+        sad: "It's okay to feel down. Storms make trees take deeper roots. 🌧️🌳",
+        angry: "Take a deep breath. You're in control. You've got this. 😤🧘",
+        neutral: "Balance is beautiful. Stay grounded and keep going. ⚖️✨",
+        excited: "Use that energy to chase your goals! 🚀🔥",
+        surprised: "Every surprise is a new door. Embrace it! 🚪🎁",
+        love: "Your heart is full. Let that love ripple outwards. 💖🌊"
+    };
 
-// Function to handle mood selection
-function handleMoodClick(e) {
-  const mood = e.target.getAttribute('data-mood');
-  if (!mood) return;
+    // Function to handle mood selection
+    function handleMoodClick(e) {
+        const mood = e.target.getAttribute('data-mood');
+        if (!mood) return;
 
-  // Save mood to localStorage with timestamp
-  const currentDate = new Date().toISOString().split("T")[0];
-  const moodData = { mood, date: currentDate };
-  localStorage.setItem("latestMood", JSON.stringify(moodData));
+        // Save mood to localStorage with timestamp
+        const currentDate = new Date().toISOString().split("T")[0];
+        const moodData = { mood, date: currentDate };
+        localStorage.setItem("latestMood", JSON.stringify(moodData));
 
-  // Update feedback section
-  document.getElementById("selectedMood").textContent = mood;
+        // Update feedback section
+        document.getElementById("selectedMood").textContent = mood;
 
-  // Show motivational message
-  const message = motivationalQuotes[mood] || "Keep going, you're doing great! 💪";
-  document.getElementById("motivationalMessage").innerHTML = `<p>${message}</p>`;
-}
+        // Show motivational message
+        const message = motivationalQuotes[mood] || "Keep going, you're doing great! 💪";
+        document.getElementById("motivationalMessage").innerHTML = `<p>${message}</p>`;
+    }
 
-// Attach click listeners to all emoji elements
-document.querySelectorAll('.emoji').forEach(emoji => {
-  emoji.addEventListener('click', handleMoodClick);
-});
+    // Attach click listeners to all emoji elements
+    document.querySelectorAll('.emoji').forEach(emoji => {
+        emoji.addEventListener('click', handleMoodClick);
+    });
+
     // 💾 Save to localStorage
     function saveLocalData() {
         try {
@@ -598,17 +674,19 @@ document.querySelectorAll('.emoji').forEach(emoji => {
             console.error("Error setting mood:", error);
         }
     };
-function showMotivationalQuote(mood) {
-    const quoteEl = document.getElementById("motivationalMessage");
-    const quotes = motivationalQuotes[mood];
-    const quote = quotes[Math.floor(Math.random() * quotes.length)];
-    
-    quoteEl.style.animation = "none"; // reset animation
-    void quoteEl.offsetWidth; // reflow to retrigger
-    quoteEl.style.animation = "popIn 0.5s ease forwards";
 
-    quoteEl.textContent = quote;
-}
+    function showMotivationalQuote(mood) {
+        const quoteEl = document.getElementById("motivationalMessage");
+        const quotes = motivationalQuotes[mood];
+        const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+        quoteEl.style.animation = "none"; // reset animation
+        void quoteEl.offsetWidth; // reflow to retrigger
+        quoteEl.style.animation = "popIn 0.5s ease forwards";
+
+        quoteEl.textContent = quote;
+    }
+
     // 📅 Weekly Mood Recap
     function getWeeklyMoodRecap() {
         try {
@@ -649,7 +727,7 @@ function showMotivationalQuote(mood) {
     // 🔓 Logout
     window.logout = function () {
         alert("You have been logged out.");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
     };
 
     // 📝 Toggle Note Box
@@ -682,94 +760,35 @@ function showMotivationalQuote(mood) {
         }
     });
 
-   // Open Mood History
-document.getElementById("viewMoodHistory").addEventListener("click", function () {
-    try {
-        const moodDataModal = document.getElementById("historyContainer");
-        const moodDataList = document.getElementById("notesHistory");
+    // 📜 Privacy Policy
+    window.showPrivacyPolicy = function () {
+        document.getElementById("privacyPolicyModal").style.display = "flex";
+    };
 
-        moodDataList.innerHTML = "";
-        moodHistory.forEach(entry => {
-            const listItem = document.createElement("div");
-            listItem.textContent = `${entry.date} - ${entry.mood}: ${entry.message}`;
-            moodDataList.appendChild(listItem);
-        });
+    window.closePrivacyPolicy = function () {
+        document.getElementById("privacyPolicyModal").style.display = "none";
+    };
 
-        moodDataModal.style.display = "block";
-    } catch (error) {
-        console.error("Error showing mood history:", error);
-    }
-});
-
-// Close Mood History Container
-window.closeHistoryContainer = function () {
-    document.getElementById("historyContainer").style.display = "none";
-};
-
-   // 📜 Show Notes History
-document.getElementById("viewNotesHistory").addEventListener("click", function () {
-    try {
-        const notesHistoryModal = document.getElementById("historyContainer");
-        const notesHistoryContainer = document.getElementById("notesHistory");
-
-        // Ensure notesHistory is loaded from localStorage or initialized as an empty array
-        const notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
-
-        notesHistoryContainer.innerHTML = "";
-        notesHistory.forEach(entry => {
-            const noteItem = document.createElement("div");
-            noteItem.textContent = `${entry.date}: ${entry.note}`;
-            notesHistoryContainer.appendChild(noteItem);
-        });
-
-        notesHistoryModal.style.display = "block";
-    } catch (error) {
-        console.error("Error showing notes history:", error);
-    }
-});
-
-// 📕 Close Modals
-window.closeRecapModal = function () {
-    document.getElementById("recapModal").style.display = "none";
-};
-
-window.closeMoodDataModal = function () {
-    document.getElementById("moodDataModal").style.display = "none";
-};
-
-window.closeHistoryContainer = function () {
-    document.getElementById("historyContainer").style.display = "none";
-};
-
-// 📜 Privacy Policy
-window.showPrivacyPolicy = function () {
-    document.getElementById("privacyPolicyModal").style.display = "flex";
-};
-
-window.closePrivacyPolicy = function () {
-    document.getElementById("privacyPolicyModal").style.display = "none";
-};
-
-// 🧼 Auto-clear data after 7 days
-function checkDataExpiration() {
-    try {
-        const timestamp = localStorage.getItem("moodHistoryTimestamp");
-        if (timestamp) {
-            const savedDate = new Date(timestamp);
-            const daysPassed = (new Date() - savedDate) / (1000 * 60 * 60 * 24);
-            if (daysPassed >= 7) {
-                localStorage.removeItem("moodHistory");
-                localStorage.removeItem("notesHistory");
-                localStorage.removeItem("moodHistoryTimestamp");
-                alert("Your data has been deleted after 7 days.");
+    // 🧼 Auto-clear data after 7 days
+    function checkDataExpiration() {
+        try {
+            const timestamp = localStorage.getItem("moodHistoryTimestamp");
+            if (timestamp) {
+                const savedDate = new Date(timestamp);
+                const daysPassed = (new Date() - savedDate) / (1000 * 60 * 60 * 24);
+                if (daysPassed >= 7) {
+                    localStorage.removeItem("moodHistory");
+                    localStorage.removeItem("notesHistory");
+                    localStorage.removeItem("moodHistoryTimestamp");
+                    alert("Your data has been deleted after 7 days.");
+                }
             }
+        } catch (err) {
+            console.error("Error checking data expiration:", err);
         }
-    } catch (err) {
-        console.error("Error checking data expiration:", err);
     }
-}
 
-checkDataExpiration(); // 🧼 Run on page load
+    checkDataExpiration(); // 🧼 Run on page load
 };
 </script>
 </body>
