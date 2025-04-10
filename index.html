@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,7 +87,7 @@
         }
 
         .fixed-button {
-            background-color: gold; /* Changed to gold */
+            background-color: gold;
             color: black;
             border: none;
             padding: 15px 30px;
@@ -101,7 +102,7 @@
         }
 
         .fixed-button:hover {
-            background-color: #fdd835; /* Slightly darker gold for hover */
+            background-color: #fdd835;
         }
 
         #moodDataModal {
@@ -162,7 +163,8 @@
             border: none;
         }
 
-        .note-btn, .privacy-btn {
+        .note-btn,
+        .privacy-btn {
             position: fixed;
             bottom: 70px;
             border: none;
@@ -308,40 +310,10 @@
             border: none;
         }
 
-        @media (max-width: 600px) {
-            .emoji {
-                font-size: 2rem;
-            }
-            .btn-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .btn {
-                width: 100%;
-            }
-            .note-btn, .privacy-btn {
-                font-size: 1rem;
-                width: 35px;
-                height: 35px;
-                line-height: 35px;
-            }
-            .note-box {
-                max-width: 90%;
-                left: 5%;
-            }
-            .fixed-button-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .fixed-button {
-                width: 90%;
-                margin-bottom: 10px;
-            }
-        }
     </style>
 </head>
-<body>
 
+<body>
     <h1>Mood Tracker</h1>
 
     <div class="mood-selection">
@@ -354,137 +326,130 @@
         <span class="emoji" id="love" onclick="setMood('love')">😍</span>
     </div>
 
-    <div class="feedback" id="feedback">You are feeling neutral!</div>
-    <div class="motivational-message" id="motivationalMessage">It's a neutral day. Stay balanced!</div>
+    <div class="feedback">
+        <p>Your selected mood: <span id="selectedMood">None</span></p>
+    </div>
+
+    <div class="motivational-message">
+        <p>“Remember, your mood today doesn’t define you. You have the power to shift it at any moment.”</p>
+    </div>
 
     <div class="btn-container">
-        <button class="btn" onclick="saveMoodAndOpenData()">Save Mood</button>
+        <button class="btn" onclick="showMoodData()">View Mood History</button>
+        <button class="btn" onclick="showNotesHistory()">View Notes History</button>
     </div>
 
     <div class="fixed-button-container">
-        <button class="fixed-button" onclick="viewNotesHistory()">View Notes History</button>
-        <button class="fixed-button" onclick="checkMoodData()">Check Mood Data</button>
+        <button class="fixed-button" onclick="showMoodData()">View Mood History</button>
+        <button class="fixed-button" onclick="showNotesHistory()">View Notes History</button>
     </div>
 
-    <div id="moodDataModal" class="modal">
-        <div class="modal-content">
-            <button class="close-button" onclick="closeMoodDataModal()">×</button>
-            <h2>Mood Data</h2>
-            <div id="moodDataDisplay">
-                </div>
-        </div>
+    <!-- Modal for mood data -->
+    <div id="moodDataModal">
+        <button class="close-button" onclick="closeMoodDataModal()">×</button>
+        <h2>Mood History</h2>
+        <div id="moodDataList"></div>
     </div>
 
-    <button class="note-btn" onclick="toggleNoteBox()">📒</button>
-    <button class="privacy-btn" onclick="openPrivacyPolicy()">⚖️</button>
-
-    <div class="note-box" id="noteBox">
-        <textarea id="noteText" placeholder="Write your note here..."></textarea>
+    <!-- Note button and box -->
+    <button class="note-btn" onclick="toggleNoteBox()">📝</button>
+    <div class="note-box">
+        <textarea id="noteText" placeholder="Write a note about your mood..."></textarea>
         <button class="btn" onclick="saveNote()">Save Note</button>
-        <button class="btn" onclick="clearAllNotes()">Clear All Notes</button>
     </div>
 
+    <!-- Notes History Modal -->
     <div class="history-container" id="historyContainer">
-        <button class="close" onclick="closeNoteHistory()">X</button>
+        <button class="close" onclick="closeHistoryContainer()">Close</button>
         <div id="notesHistory"></div>
     </div>
 
-    <div id="privacyModal" class="modal">
+    <!-- Privacy Policy Button -->
+    <button class="privacy-btn" onclick="showPrivacyPolicy()">🔒</button>
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal" id="privacyModal">
         <div class="modal-content">
-            <button class="close" onclick="closePrivacyPolicy()">×</button>
             <h2>Privacy Policy</h2>
-            <p>We are committed to protecting your privacy. Your personal data, including mood information and notes, are stored locally on your device and not shared with third parties.</p>
-            <p>We may collect non-personally identifiable information to improve the app's user experience, such as app usage data, device type, and browser information.</p>
-            <p>By using this app, you agree to the collection and use of your data in accordance with this privacy policy.</p>
+            <p>Your privacy is important to us. We do not collect, store, or share any personal information.</p>
+            <button class="close" onclick="closePrivacyPolicy()">Close</button>
         </div>
     </div>
 
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./service-worker.js');
+        let moodHistory = [];
+        let notesHistory = [];
+        let currentMood = "";
+
+        function setMood(mood) {
+            currentMood = mood;
+            document.getElementById("selectedMood").textContent = mood;
+            let message = "You’re feeling " + mood + ".";
+            if (moodHistory.length >= 10) moodHistory.shift();
+            moodHistory.push({ mood: mood, date: new Date().toLocaleString(), message: message });
         }
 
-        let mood = localStorage.getItem('mood') || 'neutral';
-        const feedback = document.getElementById('feedback');
-        const motivationalMessage = document.getElementById('motivationalMessage');
-        const notes = JSON.parse(localStorage.getItem('notes')) || [];
-        const moodData = JSON.parse(localStorage.getItem('moodData')) || [];
-        const moodDataDisplay = document.getElementById('moodDataDisplay');
-        const moodDataModal = document.getElementById('moodDataModal');
-
-        const motivationalMessages = {
-            happy: "You are feeling happy today! Maybe go out and enjoy some sunshine?",
-            sad: "It's okay to feel sad. Take some time for yourself and relax.",
-            angry: "You're feeling angry. Try to calm down and find some peace.",
-            neutral: "It's a neutral day. Stay balanced and take a deep breath.",
-            excited: "You're feeling excited! Channel that energy into something fun.",
-            surprised: "You're feeling surprised! Embrace the unexpected!",
-            love: "You're feeling loved! Spread kindness and warmth to those around you."
-        };
-
-        function setMood(selectedMood) {
-            mood = selectedMood;
-            localStorage.setItem('mood', mood);
-            feedback.innerHTML = `You are feeling ${mood}!`;
-            motivationalMessage.innerHTML = motivationalMessages[mood];
-        }
-
-        function saveMood() {
-            const currentDate = new Date().toLocaleString();
-            moodData.push({ date: currentDate, mood: mood });
-            localStorage.setItem('moodData', JSON.stringify(moodData));
-            alert(`Your mood, "${mood}", has been saved.`);
-        }
-
-        function saveMoodAndOpenData() {
-            saveMood();
-            checkMoodData();
-            moodDataModal.style.display = 'block';
-        }
-
-        function viewNotesHistory() {
-            const historyContainer = document.getElementById('historyContainer');
-            const notesHistory = document.getElementById('notesHistory');
-            notesHistory.innerHTML = '';
-            notes.forEach(note => {
-                notesHistory.innerHTML += `<div class="note-entry"><p><span class="math-inline">\{note\.text\}</p\><span class\="date"\></span>{note.date}</span></div>`;
+        function showMoodData() {
+            let modal = document.getElementById("moodDataModal");
+            let moodDataList = document.getElementById("moodDataList");
+            moodDataList.innerHTML = "";
+            moodHistory.forEach(entry => {
+                let div = document.createElement("div");
+                div.innerHTML = `<strong>${entry.mood}</strong> on <span class="date">${entry.date}</span><br>${entry.message}`;
+                moodDataList.appendChild(div);
             });
-            historyContainer.style.display = 'block';
+            modal.style.display = "flex";
+        }
+
+        function closeMoodDataModal() {
+            document.getElementById("moodDataModal").style.display = "none";
+        }
+
+        function showNotesHistory() {
+            let historyContainer = document.getElementById("historyContainer");
+            let notesHistoryDiv = document.getElementById("notesHistory");
+            notesHistoryDiv.innerHTML = "";
+            notesHistory.forEach(entry => {
+                let div = document.createElement("div");
+                div.classList.add("note-entry");
+                div.innerHTML = `${entry.note} <span class="date">${entry.date}</span>`;
+                notesHistoryDiv.appendChild(div);
+            });
+            historyContainer.style.display = "flex";
+        }
+
+        function closeHistoryContainer() {
+            document.getElementById("historyContainer").style.display = "none";
         }
 
         function toggleNoteBox() {
-            const noteBox = document.getElementById('noteBox');
-            noteBox.style.display = noteBox.style.display === 'none' ? 'block' : 'none';
+            let noteBox = document.querySelector(".note-box");
+            noteBox.style.display = (noteBox.style.display === "none" || noteBox.style.display === "") ? "block" : "none";
         }
 
         function saveNote() {
-            const noteText = document.getElementById('noteText').value;
-            if (noteText) {
-                const date = new Date().toLocaleString();
-                notes.push({ date, text: noteText });
-                localStorage.setItem('notes', JSON.stringify(notes));
-                alert('Note saved!');
-                document.getElementById('noteText').value = '';
+            let noteText = document.getElementById("noteText").value;
+            if (noteText.trim() !== "") {
+                let note = {
+                    note: noteText,
+                    date: new Date().toLocaleString()
+                };
+                notesHistory.push(note);
+                document.getElementById("noteText").value = "";
+                toggleNoteBox();
+                alert("Note saved!");
             }
         }
 
-        function closeNoteHistory() {
-            document.getElementById('historyContainer').style.display = 'none';
-        }
-
-        function clearAllNotes() {
-            localStorage.removeItem('notes');
-            notes.length = 0;
-            alert('All notes cleared!');
-        }
-
-        function openPrivacyPolicy() {
-            document.getElementById('privacyModal').style.display = 'block';
+        function showPrivacyPolicy() {
+            document.getElementById("privacyModal").style.display = "flex";
         }
 
         function closePrivacyPolicy() {
-            document.getElementById('privacyModal').style.display = 'none';
+            document.getElementById("privacyModal").style.display = "none";
         }
     </script>
 </body>
+
 </html>
+
