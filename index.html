@@ -108,39 +108,44 @@
     <p>Don’t have an account? <a href="register.html">Register</a></p>
   </div>
 
-  <script>
-    function loginUser() {
-      const storedUser = JSON.parse(localStorage.getItem("user"));
-      const inputUsername = document.getElementById("username").value;
-      const inputPassword = document.getElementById("password").value;
-      const rememberMe = document.getElementById("rememberMe").checked;
+<script>
+  function loginUser() {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const inputUsername = document.getElementById("username").value;
+    const inputPassword = document.getElementById("password").value;
+    const rememberMe = document.getElementById("rememberMe").checked;
 
-      if (
-        storedUser &&
-        storedUser.username === inputUsername &&
-        storedUser.password === inputPassword
-      ) {
-       if (rememberMe) {
-  localStorage.setItem("rememberedUser", "true");
-  localStorage.setItem("savedLogin", JSON.stringify({ username: inputUsername, password: inputPassword }));
-}
-window.location.href = "main.html";
-        }
-        alert("Login successful!");
-        window.location.href = "main.html";
-      } else {
-        alert("Invalid username or password.");
+    if (
+      storedUser &&
+      storedUser.username === inputUsername &&
+      storedUser.password === inputPassword
+    ) {
+      if (rememberMe) {
+        localStorage.setItem("rememberedUser", "true");
+        localStorage.setItem(
+          "savedLogin",
+          JSON.stringify({
+            username: inputUsername,
+            password: inputPassword
+          })
+        );
       }
+
+      alert("Login successful!");
+      window.location.href = "main.html";
+    } else {
+      alert("Invalid username or password.");
     }
+  }
 
-    window.onload = function () {
-      const remembered = JSON.parse(localStorage.getItem("rememberedUser"));
-      if (remembered) {
-        document.getElementById("username").value = remembered.username;
-        document.getElementById("password").value = remembered.password;
-        document.getElementById("rememberMe").checked = true;
-      }
-    };
-  </script>
+  window.onload = function () {
+    const remembered = JSON.parse(localStorage.getItem("savedLogin"));
+    if (remembered) {
+      document.getElementById("username").value = remembered.username;
+      document.getElementById("password").value = remembered.password;
+      document.getElementById("rememberMe").checked = true;
+    }
+  };
+</script>
 </body>
 </html>
