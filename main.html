@@ -541,7 +541,7 @@
     const loggedInUser = JSON.parse(localStorage.getItem("savedLogin"));
     if (!loggedInUser) {
         alert("You must be logged in to access this page.");
-        window.location.href = "login.html"; // Corrected redirection to login page
+        window.location.href = "index.html"; 
     } else {
         let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
         let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
