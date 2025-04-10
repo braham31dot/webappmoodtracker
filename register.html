@@ -87,7 +87,7 @@
   </style>
 </head>
 <body>
-  <div class="auth-container">
+   <div class="auth-container">
     <h1>Create Account</h1>
     <form onsubmit="registerUser(); return false;">
       <input type="email" id="email" placeholder="Email" required>
@@ -95,21 +95,20 @@
       <input type="password" id="password" placeholder="Password" required>
       <button type="submit">Register</button>
     </form>
-    <p>Already have an account? <a href="index.html">Log in</a></p>
+    <p>Already have an account? <button id="loginBtn">Login</button></p>
   </div>
-
   <script>
     function registerUser() {
-      const email = document.getElementById("email").value;
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-      const userData = { email, username, password };
-      localStorage.setItem("user", JSON.stringify(userData));
-      alert("Registered successfully!");
-      <a href="/moodtracker.pro/main.html">Go to Main</a>
-    }
-    <script>     
+  const userData = { email, username, password };
+  localStorage.setItem("user", JSON.stringify(userData));
+  alert("Registered successfully!");
+  window.location.href = "/moodtracker.pro/main.html"; 
+}
+ <script>     
   document.getElementById("loginBtn").addEventListener("click", function () {
     localStorage.setItem("rememberedUser", "true");
     window.location.href = "/moodtracker.pro/main.html"; 
