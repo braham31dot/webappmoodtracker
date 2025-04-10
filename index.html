@@ -747,25 +747,40 @@ function showNotesHistory() {
     // Close the privacy policy modal
     function closePrivacyPolicy() {
         document.getElementById("privacyPolicyModal").style.display = "none";
+ // Weekly notification for recap
+    function showWeeklyNotification() {
+        const notification = document.getElementById("weeklyNotification");
+        notification.style.display = "flex";
+
+        setTimeout(() => {
+            notification.style.display = "none";
+        }, 5000); // Hide after 5 seconds
     }
+
     function setMood(mood) {
-    // ... your existing setMood code ...
-    saveLocalData();
-    if (moodHistory.length >= 7 && moodHistory.length % 7 === 0) {
-        getWeeklyMoodRecap();
+        currentMood = mood;
+        document.getElementById("selectedMood").textContent = mood;
+        showMotivationalQuote(mood);
+
+        if (moodHistory.length >= 10) moodHistory.shift();
+        moodHistory.push({ mood, date: new Date().toLocaleString(), message: `You’re feeling ${mood}.` });
+
+        saveLocalData();
+        // Consider triggering recap less frequently
+        if (moodHistory.length >= 7 && moodHistory.length % 7 === 0) {
+            getWeeklyMoodRecap();
+        }
+        // Call showWeeklyNotification after a mood is recorded
+        showWeeklyNotification();
     }
-    // Optionally show the notification after recording a mood
-    // showWeeklyNotification();
-}
-        window.onload = () => {
+
+    window.onload = () => {
         displayNoteHistory(); // Ensure notes history is displayed if any
         // Optionally trigger initial recap if enough data exists
         if (moodHistory.length >= 7) {
             getWeeklyMoodRecap();
         }
     };
-</script>
-        
+</script>      
 </body>
-    
 </html>
