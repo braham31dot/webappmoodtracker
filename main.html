@@ -477,59 +477,59 @@
     </div>
 </body>
 <script>
-  window.onload = function () {
-    // 🔐 All your variable definitions and other logic (login check, moodHistory, etc.)
-    const loggedInUser = JSON.parse(localStorage.getItem("savedLogin"));
-    if (!loggedInUser) {
-      alert("You must be logged in to access this page.");
-      window.location.href = "index.html";
-      return;
-    }
+window.onload = function () {
+    // 🔐 All your variable definitions and other logic (login check, moodHistory, etc.)
+    const loggedInUser = JSON.parse(localStorage.getItem("savedLogin"));
+    if (!loggedInUser) {
+      alert("You must be logged in to access this page.");
+      window.location.href = "index.html";
+      return;
+    }
 
-    let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
-    let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
-    let currentMood = "";
+    let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
+    let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
+    let currentMood = "";
 
-    // 💥 DEFINE GLOBAL FUNCTIONS HERE
-    window.setMood = function (mood) {
-      try {
-        currentMood = mood;
-        document.getElementById("selectedMood").textContent = mood;
-        showMotivationalQuote(mood);
+    // 💥 DEFINE GLOBAL FUNCTIONS HERE
+    window.setMood = function (mood) {
+      try {
+        currentMood = mood;
+        document.getElementById("selectedMood").textContent = mood;
+        showMotivationalQuote(mood);
 
-        if (moodHistory.length >= 10) moodHistory.shift();
-        moodHistory.push({ mood, date: new Date().toLocaleString(), message: `You’re feeling ${mood}.` });
+        if (moodHistory.length >= 10) moodHistory.shift();
+        moodHistory.push({ mood, date: new Date().toLocaleString(), message: `You’re feeling ${mood}.` });
 
-        saveLocalData();
+        saveLocalData();
 
-        if (moodHistory.length >= 7 && moodHistory.length % 7 === 0) {
-          getWeeklyMoodRecap();
-        }
+        if (moodHistory.length >= 7 && moodHistory.length % 7 === 0) {
+          getWeeklyMoodRecap();
+        }
 
-        showWeeklyNotification();
-      } catch (error) {
-        console.error("Error setting mood:", error);
-      }
-    };
+        showWeeklyNotification();
+      } catch (error) {
+        console.error("Error setting mood:", error);
+      }
+    };
 
-    window.logout = function () {
-      alert("You have been logged out.");
-      window.location.href = "login.html";
-    };
+    window.logout = function () {
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    };
 
-    window.toggleNoteBox = function () {
-      try {
-        const noteBox = document.querySelector(".note-box");
-        noteBox.style.display = noteBox.style.display === "none" ? "block" : "none";
-      } catch (error) {
-        console.error("Error toggling note box:", error);
-      }
-    };
+    window.toggleNoteBox = function () {
+      try {
+        const noteBox = document.querySelector(".note-box");
+        noteBox.style.display = noteBox.style.display === "none" ? "block" : "none";
+      } catch (error) {
+        console.error("Error toggling note box:", error);
+      }
+    };
 
-    window.showPrivacyPolicy = function () {
-      document.getElementById("privacyPolicyModal").style.display = "block";
-    };
-            const motivationalQuotes = {
+    window.showPrivacyPolicy = function () {
+      document.getElementById("privacyPolicyModal").style.display = "block";
+    };
+            const motivationalQuotes = {
                 happy: [
                     "Happiness is not something ready made. It comes from your own actions.",
                     "The only way to do great work is to love what you do."
