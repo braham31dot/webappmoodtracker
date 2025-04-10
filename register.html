@@ -85,9 +85,8 @@
       font-weight: 600;
     }
   </style>
-</head>
 <body>
-   <div class="auth-container">
+  <div class="auth-container">
     <h1>Create Account</h1>
     <form onsubmit="registerUser(); return false;">
       <input type="email" id="email" placeholder="Email" required>
@@ -97,17 +96,27 @@
     </form>
     <p>Already have an account? <button id="loginBtn">Login</button></p>
   </div>
+
   <script>
-  function registerUser() {
-    const email = document.getElementById("email").value;
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const userData = { email, username, password };
+    function registerUser() {
+      const email = document.getElementById("email").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const userData = { email, username, password };
   
-    localStorage.setItem("user", JSON.stringify(userData));
-    alert("Registered successfully!");
-    window.location.href = "main.html"; // No need for a leading slash unless in a subfolder 
-  }
-</script>
+      // Store the user data in localStorage
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      // Notify the user that the registration was successful
+      alert("Registered successfully!");
+
+      // Redirect to the main page
+      window.location.href = "main.html"; // Ensure main.html is in the same directory
+    }
+    document.getElementById("loginBtn").addEventListener("click", function() {
+  window.location.href = "index.html"; // assuming index.html is your login page
+});
+  </script>
 </body>
 </html>
