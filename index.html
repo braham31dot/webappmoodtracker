@@ -376,19 +376,54 @@
         let notesHistory = [];
         let currentMood = "";
 
-        const motivationalQuotes = [
-            "Stay positive, work hard, make it happen.",
-            "Believe you can and you're halfway there.",
-            "Don't wait for opportunity. Create it.",
-            "Success is the sum of small efforts, repeated day in and day out."
-        ];
+        const motivationalQuotes = {
+            happy: [
+                "Happiness is not something ready made. It comes from your own actions.",
+                "The only way to do great work is to love what you do."
+            ],
+            sad: [
+                "Tears are words that need to be written.",
+                "It's okay to not be okay."
+            ],
+            angry: [
+                "Anger is one letter short of danger.",
+                "Take a deep breath and think before you react."
+            ],
+            neutral: [
+                "Sometimes it's okay to not have an opinion.",
+                "Neutrality is the highest form of strength."
+            ],
+            excited: [
+                "The future belongs to those who believe in the beauty of their dreams.",
+                "Excitement is the feeling you get when your dreams come true."
+            ],
+            surprised: [
+                "Life is full of surprises, embrace the unexpected.",
+                "The best things in life come as a surprise."
+            ],
+            love: [
+                "Love is not about finding someone to live with. It's about finding someone you can't live without.",
+                "Love is the only reality, and it is not a mere sentiment. It is the ultimate truth at the heart of creation."
+            ]
+        };
 
         function setMood(mood) {
             currentMood = mood;
             document.getElementById("selectedMood").textContent = mood;
             let message = "You’re feeling " + mood + ".";
+
+            // Set motivational message based on the selected mood
+            showMotivationalQuote(mood);
+
             if (moodHistory.length >= 10) moodHistory.shift();
             moodHistory.push({ mood: mood, date: new Date().toLocaleString(), message: message });
+        }
+
+        function showMotivationalQuote(mood) {
+            const quotes = motivationalQuotes[mood];
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quote = quotes[randomIndex];
+            document.getElementById("motivationalMessage").innerHTML = `<p>${quote}</p>`;
         }
 
         function showMoodData() {
@@ -450,14 +485,6 @@
         function closePrivacyPolicy() {
             document.getElementById("privacyModal").style.display = "none";
         }
-
-        function showMotivationalQuote() {
-            const randomIndex = Math.floor(Math.random() * motivationalQuotes.length);
-            const quote = motivationalQuotes[randomIndex];
-            document.getElementById("motivationalMessage").innerHTML = `<p>${quote}</p>`;
-        }
-
-        document.querySelector('.motivational-message').addEventListener('click', showMotivationalQuote);
     </script>
 </body>
 
