@@ -353,36 +353,43 @@
             position: relative;
         }
 
-        #recapModal .close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            color: red;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        @keyframes popIn {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1;
-              .emoji {
-  cursor: pointer;
-  font-size: 2rem;
-  margin: 0.5rem;
-  transition: transform 0.2s ease;
+#recapModal .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: red;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
 }
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.emoji {
+    cursor: pointer;
+    font-size: 2rem;
+    margin: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
 .emoji:hover {
-  transform: scale(1.2);
+    transform: scale(1.2);
 }
-            }
-        }
+
+#motivationalMessage {
+    animation: popIn 0.5s ease forwards;
+    transition: color 0.3s ease;
+}
+      }
     </style>
 </head>
 <body>
@@ -600,18 +607,17 @@ document.querySelectorAll('.emoji').forEach(emoji => {
             console.error("Error setting mood:", error);
         }
     };
+function showMotivationalQuote(mood) {
+    const quoteEl = document.getElementById("motivationalMessage");
+    const quotes = motivationalQuotes[mood];
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    
+    quoteEl.style.animation = "none"; // reset animation
+    void quoteEl.offsetWidth; // reflow to retrigger
+    quoteEl.style.animation = "popIn 0.5s ease forwards";
 
-    // 📜 Show Motivational Quote
-    function showMotivationalQuote(mood) {
-        try {
-            const quotes = motivationalQuotes[mood];
-            const quote = quotes[Math.floor(Math.random() * quotes.length)];
-            document.getElementById("motivationalMessage").textContent = quote;
-        } catch (error) {
-            console.error("Error showing motivational quote:", error);
-        }
-    }
-
+    quoteEl.textContent = quote;
+}
     // 📅 Weekly Mood Recap
     function getWeeklyMoodRecap() {
         try {
