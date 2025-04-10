@@ -8,355 +8,362 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="logo.png" type="image/png">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            background-color: black;
-            color: white;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color: black;
+        color: white;
+    }
 
-        h1 {
-            margin-top: 0;
-            color: gold;
-        }
+    h1 {
+        margin-top: 0;
+        color: gold;
+    }
 
-        .mood-selection {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
+    .mood-selection {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
 
-        .emoji {
-            font-size: 2.5rem;
-            cursor: pointer;
-            transition: transform 0.2s, text-shadow 0.2s;
-            color: gold;
-        }
+    .emoji {
+        font-size: 2.5rem;
+        cursor: pointer;
+        transition: transform 0.2s, text-shadow 0.2s;
+        color: gold;
+    }
 
-        .emoji:hover {
-            transform: scale(1.1);
-            text-shadow: 0 0 8px gold, 0 0 16px gold;
-        }
+    .emoji:hover {
+        transform: scale(1.1);
+        text-shadow: 0 0 8px gold, 0 0 16px gold;
+    }
 
-        .feedback {
-            margin-top: 10px;
-            font-size: 1.2rem;
-        }
+    .feedback {
+        margin-top: 10px;
+        font-size: 1.2rem;
+    }
 
-        .motivational-message {
-            margin-top: 15px;
-            font-size: 1rem;
-            font-style: italic;
-            color: gold;
-        }
+    .motivational-message {
+        margin-top: 15px;
+        font-size: 1rem;
+        font-style: italic;
+        color: gold;
+    }
 
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
 
-        .btn {
-            background-color: gold;
-            color: black;
-            border: none;
-            padding: 8px 16px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+    .btn {
+        background-color: gold;
+        color: black;
+        border: none;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
-        .fixed-button-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 1000;
-        }
+    .fixed-button-container {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        z-index: 1000;
+    }
 
-        .fixed-button {
-            background-color: gold;
-            color: black;
-            border: none;
-            padding: 15px 30px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease;
-        }
+    .fixed-button {
+        background-color: gold;
+        color: black;
+        border: none;
+        padding: 15px 30px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease;
+    }
 
-        .fixed-button:hover {
-            background-color: #fdd835;
-        }
+    .fixed-button:hover {
+        background-color: #fdd835;
+    }
 
-        #moodDataModal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            z-index: 1001;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-            width: 80%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            text-align: left;
-        }
+    #moodDataModal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        z-index: 1001;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        width: 80%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        text-align: left;
+    }
 
-        #moodDataModal h2 {
-            color: #fdd835;
-            margin-top: 0;
-            margin-bottom: 15px;
-            text-align: center;
-        }
+    #moodDataModal h2 {
+        color: #fdd835;
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-align: center;
+    }
 
-        .mood-data-entry {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 5px 15px;
-            align-items: center;
-        }
+    .mood-data-entry {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 5px 15px;
+        align-items: center;
+    }
 
-        .mood-data-entry:last-child {
-            border-bottom: none;
-        }
+    .mood-data-entry:last-child {
+        border-bottom: none;
+    }
 
-        .data-label {
-            font-weight: bold;
-            color: #fdd835;
-            margin-right: 5px;
-        }
+    .data-label {
+        font-weight: bold;
+        color: #fdd835;
+        margin-right: 5px;
+    }
 
-        #moodDataModal .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: #fff;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
+    #moodDataModal .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
 
-        .note-btn,
-        .privacy-btn {
-            position: fixed;
-            bottom: 70px;
-            border: none;
-            background-color: gold;
-            color: black;
-            padding: 8px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            border-radius: 50%;
-            z-index: 999;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .note-btn,
+    .privacy-btn {
+        position: fixed;
+        bottom: 70px;
+        border: none;
+        background-color: gold;
+        color: black;
+        padding: 8px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border-radius: 50%;
+        z-index: 999;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .note-btn {
-            left: 20px;
-        }
+    .note-btn {
+        left: 20px;
+    }
 
-        .privacy-btn {
-            right: 20px;
-        }
+    .privacy-btn {
+        right: 20px;
+    }
 
-        .note-box {
-            display: none;
-            position: fixed;
-            bottom: 110px;
-            left: 20px;
-            background-color: rgba(255, 255, 255, 0.95);
-            color: black;
-            border: 1px solid #555;
-            padding: 15px;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-            z-index: 998;
-            max-width: 280px;
-            border-radius: 8px;
-        }
+    .note-box {
+        display: none;
+        position: fixed;
+        bottom: 110px;
+        left: 20px;
+        background-color: rgba(255, 255, 255, 0.95);
+        color: black;
+        border: 1px solid #555;
+        padding: 15px;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        z-index: 998;
+        max-width: 280px;
+        border-radius: 8px;
+    }
 
-        .note-box textarea {
-            width: 100%;
-            height: 80px;
-            margin-bottom: 10px;
-            padding: 8px;
-            font-size: 0.9rem;
-            border-radius: 5px;
-            border: 1px solid #777;
-            background-color: #f9f9f9;
-            color: black;
-        }
+    .note-box textarea {
+        width: 100%;
+        height: 80px;
+        margin-bottom: 10px;
+        padding: 8px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        border: 1px solid #777;
+        background-color: #f9f9f9;
+        color: black;
+    }
 
-        .note-box .btn {
-            padding: 8px 12px;
-            font-size: 0.8rem;
-        }
+    .note-box .btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
 
-        .history-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            width: 100%;
-            height: 100%;
-            z-index: 999;
-            justify-content: center;
-            align-items: center;
-            overflow-y: auto;
-        }
+    .history-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto;
+    }
 
-        .history-container .note-entry {
-            background-color: white;
-            color: black;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 400px;
-            text-align: left;
-        }
+    .history-container .note-entry {
+        background-color: white;
+        color: black;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 400px;
+        text-align: left;
+    }
 
-        .history-container .note-entry .date {
-            display: block;
-            font-size: 0.8rem;
-            color: #777;
-            margin-top: 5px;
-        }
+    .history-container .note-entry .date {
+        display: block;
+        font-size: 0.8rem;
+        color: #777;
+        margin-top: 5px;
+    }
 
-        .history-container button.close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: red;
-            color: white;
-            border-radius: 5px;
-            padding: 8px 12px;
-            cursor: pointer;
-            font-size: 1rem;
-            z-index: 1001;
-        }
+    .history-container button.close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: red;
+        color: white;
+        border-radius: 5px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 1rem;
+        z-index: 1001;
+    }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
 
-        .modal-content {
-            background-color: black;
-            color: red;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
-            text-align: left;
-            position: relative;
-        }
+    .modal-content {
+        background-color: black;
+        color: red;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 500px;
+        text-align: left;
+        position: relative;
+    }
 
-        .modal-content h2 {
-            margin-top: 0;
-            color: red;
-        }
+    .modal-content h2 {
+        margin-top: 0;
+        color: red;
+    }
 
-        .modal-content .close {
-            cursor: pointer;
-            color: red;
-            font-size: 1.5rem;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-        }
-/* 7-Day Recap Modal Styling */
-#recapModal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
+    .modal-content .close {
+        cursor: pointer;
+        color: red;
+        font-size: 1.5rem;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+    }
 
-#recapModal .modal-content {
-  background-color: black;
-  color: gold;
-  padding: 25px;
-  border-radius: 12px;
-  width: 80%;
-  max-width: 400px;
-  text-align: center;
-  position: relative;
-}
+    /* 7-Day Recap Modal Styling */
+    #recapModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
 
-#recapModal .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  color: red;
-  font-size: 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-}
+    #recapModal .modal-content {
+        background-color: black;
+        color: gold;
+        padding: 25px;
+        border-radius: 12px;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        position: relative;
+    }
 
-    </style>
-</head>
-<!-- 7-Day Mood Recap Modal -->
-<div id="recapModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeRecapModal()">&times;</span>
-    <h3>Your 7-Day Mood Recap</h3>
-    <p id="recapMessage"></p>
-  </div>
-</div>
+    #recapModal .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        color: red;
+        font-size: 1.5rem;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    @keyframes popIn {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+</style>
+
+<head>
+    <!-- 7-Day Mood Recap Modal -->
+    <div id="recapModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRecapModal()">&times;</span>
+            <h3>Your 7-Day Mood Recap</h3>
+            <p id="recapMessage"></p>
+        </div>
+    </div>
     <span onclick="document.getElementById('quoteModal').style.display='none'" class="close">&times;</span>
-<span onclick="document.getElementById('moodModal').style.display='none'" class="close">&times;</span>
+    <span onclick="document.getElementById('moodModal').style.display='none'" class="close">&times;</span>
 
+</head>
 <body>
     <h1>Mood Tracker</h1>
 
@@ -403,60 +410,98 @@
         <div id="notesHistory"></div>
     </div>
 
+    <!-- Weekly Notification -->
+    <div id="weeklyNotification" style="
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        z-index: 9999;
+        font-weight: bold;
+        animation: popIn 0.4s ease;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <div id="selectedMood"></div>
+        <div id="motivationalMessage"></div>
+    </div>
+
+    <div id="moodDataModal" style="display:none;">
+        <div id="moodDataList"></div>
+    </div>
+
+    <div id="historyContainer" style="display:none;">
+        <div id="notesHistory"></div>
+    </div>
+
+    <div class="note-box" style="display:none;">
+        <textarea id="noteText"></textarea>
+    </div>
+
+    <div id="privacyPolicyModal" style="display:none;"></div>
+
+    <div id="recapModal" style="display:none;">
+        <div id="recapMessage"></div>
+    </div>
+
     <!-- Privacy Policy Button -->
     <button class="privacy-btn" onclick="showPrivacyPolicy()">🔒</button>
-   <div id="privacyPolicyModal" style="display:none;">
-    <div class="modal-content">
-        <h2>Privacy Policy</h2>
-        <p><strong>Effective Date:</strong> [Insert Date]</p>
-        <p>At <strong>Mood Tracker</strong>, we value and respect your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information when you use our web app. By using our app, you agree to the collection and use of information in accordance with this policy.</p>
+    <div id="privacyPolicyModal" style="display:none;">
+        <div class="modal-content">
+            <h2>Privacy Policy</h2>
+            <p><strong>Effective Date:</strong> [04/09/2025]</p>
+            <p>At <strong>Mood Tracker</strong>, we value and respect your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information when you use our web app. By using our app, you agree to the collection and use of information in accordance with this policy.</p>
 
-        <h3>1. Information We Collect</h3>
-        <p>We collect the following types of information when you use our app:</p>
-        <ul>
-            <li><strong>Mood Data:</strong> We collect your mood selections (e.g., happy, sad, excited) that you choose through the app to help you track your mood history.</li>
-            <li><strong>Notes:</strong> If you choose to write notes about your mood, we will store the content of those notes and the date they were written.</li>
-            <li><strong>Anonymous Usage Data:</strong> We may collect basic information about how you use the app (such as how often you access it or what features you use) to improve our app’s functionality.</li>
-        </ul>
+            <h3>1. Information We Collect</h3>
+            <p>We collect the following types of information when you use our app:</p>
+            <ul>
+                <li><strong>Mood Data:</strong> We collect your mood selections (e.g., happy, sad, excited) that you choose through the app to help you track your mood history.</li>
+                <li><strong>Notes:</strong> If you choose to write notes about your mood, we will store the content of those notes and the date they were written.</li>
+                <li><strong>Anonymous Usage Data:</strong> We may collect basic information about how you use the app (such as how often you access it or what features you use) to improve our app’s functionality.</li>
+            </ul>
 
-        <h3>2. How We Use Your Information</h3>
-        <p>We use the collected information in the following ways:</p>
-        <ul>
-            <li><strong>Mood History:</strong> To allow you to track your mood over time and display your mood history.</li>
-            <li><strong>Note Storage:</strong> To store and display the notes you write about your mood.</li>
-            <li><strong>App Improvement:</strong> To improve the functionality and performance of our app based on how users interact with it.</li>
-        </ul>
+            <h3>2. How We Use Your Information</h3>
+            <p>We use the collected information in the following ways:</p>
+            <ul>
+                <li><strong>Mood History:</strong> To allow you to track your mood over time and display your mood history.</li>
+                <li><strong>Note Storage:</strong> To store and display the notes you write about your mood.</li>
+                <li><strong>App Improvement:</strong> To improve the functionality and performance of our app based on how users interact with it.</li>
+            </ul>
 
-        <h3>3. Data Retention</h3>
-        <p>Your mood data and notes will be stored locally on your device or in your browser's local storage. We do not collect or store any personal information on our servers.</p>
+            <h3>3. Data Retention</h3>
+            <p>Your mood data and notes will be stored locally on your device or in your browser's local storage. We do not collect or store any personal information on our servers.</p>
 
-        <h3>4. Cookies and Tracking Technologies</h3>
-        <p>Our app may use cookies or other tracking technologies to improve user experience. These cookies are stored in your browser and can be disabled through your browser settings.</p>
+            <h3>4. Cookies and Tracking Technologies</h3>
+            <p>Our app may use cookies or other tracking technologies to improve user experience. These cookies are stored in your browser and can be disabled through your browser settings.</p>
 
-        <h3>5. Security</h3>
-        <p>We take reasonable precautions to protect your data, but please note that no method of transmission over the internet or electronic storage is 100% secure. We cannot guarantee absolute security.</p>
+            <h3>5. Security</h3>
+            <p>We take reasonable precautions to protect your data, but please note that no method of transmission over the internet or electronic storage is 100% secure. We cannot guarantee absolute security.</p>
 
-        <h3>6. Your Rights</h3>
-        <p>You have the right to:</p>
-        <ul>
-            <li><strong>Access:</strong> You may view your mood history and notes at any time.</li>
-            <li><strong>Delete:</strong> You can clear your mood history and notes through the app’s interface.</li>
-            <li><strong>Control:</strong> You have control over whether or not you share notes or moods. No data is shared with third parties unless specified.</li>
-        </ul>
+            <h3>6. Your Rights</h3>
+            <p>You have the right to:</p>
+            <ul>
+                <li><strong>Access:</strong> You may view your mood history and notes at any time.</li>
+                <li><strong>Delete:</strong> You can clear your mood history and notes through the app’s interface.</li>
+                <li><strong>Control:</strong> You have control over whether or not you share notes or moods. No data is shared with third parties unless specified.</li>
+            </ul>
 
-        <h3>7. Third-Party Services</h3>
-        <p>We do not share your data with third parties. Your data stays private and is only used for the purpose of tracking your mood history and notes.</p>
+            <h3>7. Third-Party Services</h3>
+            <p>We do not share your data with third parties. Your data stays private and is only used for the purpose of tracking your mood history and notes.</p>
 
-        <h3>8. Changes to This Privacy Policy</h3>
-        <p>We reserve the right to update or change this privacy policy at any time. Any changes will be posted on this page, and the effective date will be updated accordingly.</p>
+            <h3>8. Changes to This Privacy Policy</h3>
+            <p>We reserve the right to update or change this privacy policy at any time. Any changes will be posted on this page, and the effective date will be updated accordingly.</p>
 
-        <h3>9. Contact Us</h3>
-        <p>If you have any questions about this privacy policy, please contact us at:</p>
-        <p><strong>Email:</strong> [Insert your contact email or support page URL]</p>
+            <h3>9. Contact Us</h3>
+            <p>If you have any questions about this privacy policy, please contact us at:</p>
+            <p><strong>Email:</strong> [Insert your contact email or support page URL]</p>
 
-        <button class="close" onclick="closePrivacyPolicy()">Close</button>
+            <button class="close" onclick="closePrivacyPolicy()">Close</button>
+        </div>
     </div>
-</div>
+</body>
     <script>
         let moodHistory = [];
         let notesHistory = [];
@@ -493,115 +538,169 @@
             ]
         };
 
-        function setMood(mood) {
-            currentMood = mood;
-            document.getElementById("selectedMood").textContent = mood;
-            let message = "You’re feeling " + mood + ".";
+       <script>
+let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
+let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
+let currentMood = "";
 
-            // Set motivational message based on the selected mood
-            showMotivationalQuote(mood);
+function saveLocalData() {
+    localStorage.setItem("moodHistory", JSON.stringify(moodHistory));
+    localStorage.setItem("notesHistory", JSON.stringify(notesHistory));
+}
 
-            if (moodHistory.length >= 10) moodHistory.shift();
-            moodHistory.push({ mood: mood, date: new Date().toLocaleString(), message: message });
-        }
+function setMood(mood) {
+    currentMood = mood;
+    document.getElementById("selectedMood").textContent = mood;
+    showMotivationalQuote(mood);
 
-        function showMotivationalQuote(mood) {
-            const quotes = motivationalQuotes[mood];
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            const quote = quotes[randomIndex];
-            document.getElementById("motivationalMessage").innerHTML = `<p>${quote}</p>`;
-        }
+    if (moodHistory.length >= 10) moodHistory.shift();
+    moodHistory.push({ mood, date: new Date().toLocaleString(), message: `You’re feeling ${mood}.` });
 
-        function showMoodData() {
-            let modal = document.getElementById("moodDataModal");
-            let moodDataList = document.getElementById("moodDataList");
-            moodDataList.innerHTML = "";
-            moodHistory.forEach(entry => {
-                let div = document.createElement("div");
-                div.innerHTML = `<strong>${entry.mood}</strong> on <span class="date">${entry.date}</span><br>${entry.message}`;
-                moodDataList.appendChild(div);
-            });
-            modal.style.display = "flex";
-        }
+    saveLocalData();
+    getWeeklyMoodRecap(); // Trigger 7-day recap check
+}
 
-        function closeMoodDataModal() {
-            document.getElementById("moodDataModal").style.display = "none";
-        }
+function showMotivationalQuote(mood) {
+    const quotes = motivationalQuotes[mood];
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById("motivationalMessage").innerHTML = `<p>${quote}</p>`;
+}
 
-        function showNotesHistory() {
-            let historyContainer = document.getElementById("historyContainer");
-            let notesHistoryDiv = document.getElementById("notesHistory");
-            notesHistoryDiv.innerHTML = "";
-            notesHistory.forEach(entry => {
-                let div = document.createElement("div");
-                div.classList.add("note-entry");
-                div.innerHTML = `${entry.note} <span class="date">${entry.date}</span>`;
-                notesHistoryDiv.appendChild(div);
-            });
-            historyContainer.style.display = "flex";
-        }
+function showMoodData() {
+    let modal = document.getElementById("moodDataModal");
+    let moodDataList = document.getElementById("moodDataList");
+    moodDataList.innerHTML = "";
+    moodHistory.forEach(entry => {
+        let div = document.createElement("div");
+        div.innerHTML = `<strong>${entry.mood}</strong> on <span class="date">${entry.date}</span><br>${entry.message}`;
+        moodDataList.appendChild(div);
+    });
+    modal.style.display = "flex";
+}
 
-        function closeHistoryContainer() {
-            document.getElementById("historyContainer").style.display = "none";
-        }
+function closeMoodDataModal() {
+    document.getElementById("moodDataModal").style.display = "none";
+}
 
-        function toggleNoteBox() {
-            let noteBox = document.querySelector(".note-box");
-            noteBox.style.display = (noteBox.style.display === "none" || noteBox.style.display === "") ? "block" : "none";
-        }
+function showNotesHistory() {
+    let historyContainer = document.getElementById("historyContainer");
+    let notesHistoryDiv = document.getElementById("notesHistory");
+    notesHistoryDiv.innerHTML = "";
+    notesHistory.forEach(entry => {
+        let div = document.createElement("div");
+        div.classList.add("note-entry");
+        div.innerHTML = `${entry.note} <span class="date">${entry.date}</span>`;
+        notesHistoryDiv.appendChild(div);
+    });
+    historyContainer.style.display = "flex";
+}
 
-        function saveNote() {
-            let noteText = document.getElementById("noteText").value;
-            if (noteText.trim() !== "") {
-                let note = {
-                    note: noteText,
-                    date: new Date().toLocaleString()
-                };
-                notesHistory.push(note);
-                document.getElementById("noteText").value = "";
-                toggleNoteBox();
-                alert("Note saved!");
-            }
-        }
+function closeHistoryContainer() {
+    document.getElementById("historyContainer").style.display = "none";
+}
 
-         function showPrivacyPolicy() {
-        document.getElementById("privacyPolicyModal").style.display = "flex";
+function toggleNoteBox() {
+    let noteBox = document.querySelector(".note-box");
+    noteBox.style.display = (noteBox.style.display === "none" || noteBox.style.display === "") ? "block" : "none";
+}
+
+function saveNote() {
+    let noteText = document.getElementById("noteText").value;
+    if (noteText.trim() !== "") {
+        notesHistory.push({ note: noteText, date: new Date().toLocaleString() });
+        document.getElementById("noteText").value = "";
+        toggleNoteBox();
+        alert("Note saved!");
+        saveLocalData();
     }
+}
 
-        function closePrivacyPolicy() {
-            document.getElementById("privacyPolicyModal").style.display = "none";
-            function closeRecapModal() {
-  document.getElementById("recapModal").style.display = "none";
+function showPrivacyPolicy() {
+    document.getElementById("privacyPolicyModal").style.display = "flex";
+}
+
+function closePrivacyPolicy() {
+    document.getElementById("privacyPolicyModal").style.display = "none";
+}
+
+function closeRecapModal() {
+    document.getElementById("recapModal").style.display = "none";
 }
 
 function showRecapMessage(message) {
-  document.getElementById("recapMessage").textContent = message;
-  document.getElementById("recapModal").style.display = "flex";
+    document.getElementById("recapMessage").textContent = message;
+    document.getElementById("recapModal").style.display = "flex";
 }
 
-// Example trigger (you probably generate `alertMessage` from mood history logic)
-if (typeof alertMessage !== 'undefined' && alertMessage) {
-  showRecapMessage(alertMessage);
+function getWeeklyMoodRecap() {
+    if (moodHistory.length < 7) return;
+
+    let last7Days = moodHistory.slice(-7);
+    let counts = {};
+
+    last7Days.forEach(entry => {
+        counts[entry.mood] = (counts[entry.mood] || 0) + 1;
+    });
+
+    let dominantMood = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+    let message = `This past week, you mostly felt: ${dominantMood.toUpperCase()}.`;
+    showRecapMessage(message);
+
+    // Archive data to file
+    exportWeeklyData(last7Days);
+    // Remove those 7 days from moodHistory
+    moodHistory = moodHistory.slice(-3); // Keep the last few entries for continuity
+    saveLocalData();
+}
+
+function exportWeeklyData(data) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `weekly_mood_data_${new Date().toISOString().split("T")[0]}.json`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    URL.revokeObjectURL(url);
+}
+        function showWeeklyNotification() {
+    const toast = document.getElementById("weeklyNotification");
+    toast.style.display = "block";
+
+    // Auto-hide after 6 seconds
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 6000);
+
+    // Click to open recap modal
+    toast.onclick = () => {
+        toast.style.display = "none";
+        showRecapMessage(document.getElementById("recapMessage").textContent);
+    };
 }
 function getWeeklyMoodRecap() {
-  if (moodHistory.length < 7) return;
+    if (moodHistory.length < 7) return;
 
-  let counts = {};
-  moodHistory.slice(-7).forEach(entry => {
-    counts[entry.mood] = (counts[entry.mood] || 0) + 1;
-  });
+    let last7Days = moodHistory.slice(-7);
+    let counts = {};
 
-  let dominantMood = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
-  let message = `This past week, you mostly felt: ${dominantMood.toUpperCase()}.`;
+    last7Days.forEach(entry => {
+        counts[entry.mood] = (counts[entry.mood] || 0) + 1;
+    });
 
-  showRecapMessage(message);
+    let dominantMood = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+    let message = `This past week, you mostly felt: ${dominantMood.toUpperCase()}.`;
+    
+    document.getElementById("recapMessage").textContent = message;
+    showWeeklyNotification(); // NEW: animated notification
+
+    exportWeeklyData(last7Days);
+    moodHistory = moodHistory.slice(-3); // keep recent
+    saveLocalData();
 }
 
-// Call this when you want to show recap (like after 7 entries)
-getWeeklyMoodRecap();
-
-        }
-    </script>
+</script>
 </body>
 
 </html>
