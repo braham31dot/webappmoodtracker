@@ -728,6 +728,15 @@ function showNotesHistory() {
     function closePrivacyPolicy() {
         document.getElementById("privacyPolicyModal").style.display = "none";
     }
+    function setMood(mood) {
+    // ... your existing setMood code ...
+    saveLocalData();
+    if (moodHistory.length >= 7 && moodHistory.length % 7 === 0) {
+        getWeeklyMoodRecap();
+    }
+    // Optionally show the notification after recording a mood
+    // showWeeklyNotification();
+}
         window.onload = () => {
         displayNoteHistory(); // Ensure notes history is displayed if any
         // Optionally trigger initial recap if enough data exists
