@@ -502,203 +502,153 @@
         </div>
     </div>
 </body>
-    <script>
-        let moodHistory = [];
-        let notesHistory = [];
-        let currentMood = "";
+   <script>
+    // Initialize moodHistory and notesHistory from localStorage or as empty arrays
+    let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
+    let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
+    let currentMood = "";
 
-        const motivationalQuotes = {
-            happy: [
-                "Happiness is not something ready made. It comes from your own actions.",
-                "The only way to do great work is to love what you do."
-            ],
-            sad: [
-                "Tears are words that need to be written.",
-                "It's okay to not be okay."
-            ],
-            angry: [
-                "Anger is one letter short of danger.",
-                "Take a deep breath and think before you react."
-            ],
-            neutral: [
-                "Sometimes it's okay to not have an opinion.",
-                "Neutrality is the highest form of strength."
-            ],
-            excited: [
-                "The future belongs to those who believe in the beauty of their dreams.",
-                "Excitement is the feeling you get when your dreams come true."
-            ],
-            surprised: [
-                "Life is full of surprises, embrace the unexpected.",
-                "The best things in life come as a surprise."
-            ],
-            love: [
-                "Love is not about finding someone to live with. It's about finding someone you can't live without.",
-                "Love is the only reality, and it is not a mere sentiment. It is the ultimate truth at the heart of creation."
-            ]
-        };
-
-       <script>
-let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
-let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
-let currentMood = "";
-
-function saveLocalData() {
-    localStorage.setItem("moodHistory", JSON.stringify(moodHistory));
-    localStorage.setItem("notesHistory", JSON.stringify(notesHistory));
-}
-
-function setMood(mood) {
-    currentMood = mood;
-    document.getElementById("selectedMood").textContent = mood;
-    showMotivationalQuote(mood);
-
-    if (moodHistory.length >= 10) moodHistory.shift();
-    moodHistory.push({ mood, date: new Date().toLocaleString(), message: `You’re feeling ${mood}.` });
-
-    saveLocalData();
-    getWeeklyMoodRecap(); // Trigger 7-day recap check
-}
-
-function showMotivationalQuote(mood) {
-    const quotes = motivationalQuotes[mood];
-    const quote = quotes[Math.floor(Math.random() * quotes.length)];
-    document.getElementById("motivationalMessage").innerHTML = `<p>${quote}</p>`;
-}
-
-function showMoodData() {
-    let modal = document.getElementById("moodDataModal");
-    let moodDataList = document.getElementById("moodDataList");
-    moodDataList.innerHTML = "";
-    moodHistory.forEach(entry => {
-        let div = document.createElement("div");
-        div.innerHTML = `<strong>${entry.mood}</strong> on <span class="date">${entry.date}</span><br>${entry.message}`;
-        moodDataList.appendChild(div);
-    });
-    modal.style.display = "flex";
-}
-
-function closeMoodDataModal() {
-    document.getElementById("moodDataModal").style.display = "none";
-}
-
-function showNotesHistory() {
-    let historyContainer = document.getElementById("historyContainer");
-    let notesHistoryDiv = document.getElementById("notesHistory");
-    notesHistoryDiv.innerHTML = "";
-    notesHistory.forEach(entry => {
-        let div = document.createElement("div");
-        div.classList.add("note-entry");
-        div.innerHTML = `${entry.note} <span class="date">${entry.date}</span>`;
-        notesHistoryDiv.appendChild(div);
-    });
-    historyContainer.style.display = "flex";
-}
-
-function closeHistoryContainer() {
-    document.getElementById("historyContainer").style.display = "none";
-}
-
-function toggleNoteBox() {
-    let noteBox = document.querySelector(".note-box");
-    noteBox.style.display = (noteBox.style.display === "none" || noteBox.style.display === "") ? "block" : "none";
-}
-
-function saveNote() {
-    let noteText = document.getElementById("noteText").value;
-    if (noteText.trim() !== "") {
-        notesHistory.push({ note: noteText, date: new Date().toLocaleString() });
-        document.getElementById("noteText").value = "";
-        toggleNoteBox();
-        alert("Note saved!");
-        saveLocalData();
-    }
-}
-
-function showPrivacyPolicy() {
-    document.getElementById("privacyPolicyModal").style.display = "flex";
-}
-
-function closePrivacyPolicy() {
-    document.getElementById("privacyPolicyModal").style.display = "none";
-}
-
-function closeRecapModal() {
-    document.getElementById("recapModal").style.display = "none";
-}
-
-function showRecapMessage(message) {
-    document.getElementById("recapMessage").textContent = message;
-    document.getElementById("recapModal").style.display = "flex";
-}
-
-function getWeeklyMoodRecap() {
-    if (moodHistory.length < 7) return;
-
-    let last7Days = moodHistory.slice(-7);
-    let counts = {};
-
-    last7Days.forEach(entry => {
-        counts[entry.mood] = (counts[entry.mood] || 0) + 1;
-    });
-
-    let dominantMood = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
-    let message = `This past week, you mostly felt: ${dominantMood.toUpperCase()}.`;
-    showRecapMessage(message);
-
-    // Archive data to file
-    exportWeeklyData(last7Days);
-    // Remove those 7 days from moodHistory
-    moodHistory = moodHistory.slice(-3); // Keep the last few entries for continuity
-    saveLocalData();
-}
-
-function exportWeeklyData(data) {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = `weekly_mood_data_${new Date().toISOString().split("T")[0]}.json`;
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
-    URL.revokeObjectURL(url);
-}
-        function showWeeklyNotification() {
-    const toast = document.getElementById("weeklyNotification");
-    toast.style.display = "block";
-
-    // Auto-hide after 6 seconds
-    setTimeout(() => {
-        toast.style.display = "none";
-    }, 6000);
-
-    // Click to open recap modal
-    toast.onclick = () => {
-        toast.style.display = "none";
-        showRecapMessage(document.getElementById("recapMessage").textContent);
+    const motivationalQuotes = {
+        happy: [
+            "Happiness is not something ready made. It comes from your own actions.",
+            "The only way to do great work is to love what you do."
+        ],
+        sad: [
+            "Tears are words that need to be written.",
+            "It's okay to not be okay."
+        ],
+        angry: [
+            "Anger is one letter short of danger.",
+            "Take a deep breath and think before you react."
+        ],
+        neutral: [
+            "Sometimes it's okay to not have an opinion.",
+            "Neutrality is the highest form of strength."
+        ],
+        excited: [
+            "The future belongs to those who believe in the beauty of their dreams.",
+            "Excitement is the feeling you get when your dreams come true."
+        ],
+        surprised: [
+            "Life is full of surprises, embrace the unexpected.",
+            "The best things in life come as a surprise."
+        ],
+        love: [
+            "Love is not about finding someone to live with. It's about finding someone you can't live without.",
+            "Love is the only reality, and it is not a mere sentiment. It is the ultimate truth at the heart of creation."
+        ]
     };
-}
-function getWeeklyMoodRecap() {
-    if (moodHistory.length < 7) return;
 
-    let last7Days = moodHistory.slice(-7);
-    let counts = {};
+    // Function to save mood and notes history to localStorage
+    function saveLocalData() {
+        localStorage.setItem("moodHistory", JSON.stringify(moodHistory));
+        localStorage.setItem("notesHistory", JSON.stringify(notesHistory));
+    }
 
-    last7Days.forEach(entry => {
-        counts[entry.mood] = (counts[entry.mood] || 0) + 1;
-    });
+    // Set the user's mood
+    function setMood(mood) {
+        currentMood = mood;
+        document.getElementById("selectedMood").textContent = mood;
+        showMotivationalQuote(mood);
 
-    let dominantMood = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
-    let message = `This past week, you mostly felt: ${dominantMood.toUpperCase()}.`;
-    
-    document.getElementById("recapMessage").textContent = message;
-    showWeeklyNotification(); // NEW: animated notification
+        if (moodHistory.length >= 10) moodHistory.shift();  // Maintain only the last 10 mood entries
+        moodHistory.push({ mood, date: new Date().toLocaleString(), message: `You’re feeling ${mood}.` });
 
-    exportWeeklyData(last7Days);
-    moodHistory = moodHistory.slice(-3); // keep recent
-    saveLocalData();
-}
+        saveLocalData();
+        getWeeklyMoodRecap();  // Trigger 7-day recap check
+    }
+
+    // Show a motivational quote based on the selected mood
+    function showMotivationalQuote(mood) {
+        const quotes = motivationalQuotes[mood];
+        const quote = quotes[Math.floor(Math.random() * quotes.length)];
+        document.getElementById("motivationalMessage").textContent = quote;
+    }
+
+    // Fetch the 7-day mood recap
+    function getWeeklyMoodRecap() {
+        // Filter moodHistory to get the last 7 days
+        const last7Days = moodHistory.filter(entry => {
+            const date = new Date(entry.date);
+            const diff = new Date() - date; // Time difference in ms
+            return diff <= 7 * 24 * 60 * 60 * 1000; // Last 7 days
+        });
+
+        // If there is mood data from the last 7 days, show a recap
+        if (last7Days.length > 0) {
+            let recapMessage = "Your 7-day mood recap:\n";
+            last7Days.forEach(entry => {
+                recapMessage += `${entry.date}: ${entry.mood}\n`;
+            });
+            document.getElementById("recapMessage").textContent = recapMessage;
+            document.getElementById("recapModal").style.display = "flex";  // Show recap modal
+        }
+    }
+
+    // Close the recap modal
+    function closeRecapModal() {
+        document.getElementById("recapModal").style.display = "none";
+    }
+
+    // Add a note for the current mood
+    function saveNote() {
+        const noteText = document.getElementById("noteText").value.trim();
+        if (noteText) {
+            notesHistory.push({
+                note: noteText,
+                mood: currentMood,
+                date: new Date().toLocaleString()
+            });
+            saveLocalData();
+            document.getElementById("noteText").value = '';  // Clear the note text
+            alert("Note saved!");
+        }
+    }
+
+    // Toggle visibility of the note box
+    function toggleNoteBox() {
+        const noteBox = document.querySelector(".note-box");
+        noteBox.style.display = noteBox.style.display === "none" ? "block" : "none";
+    }
+
+    // Show mood data modal with history
+    function showMoodData() {
+        const moodDataList = document.getElementById("moodDataList");
+        moodDataList.innerHTML = moodHistory
+            .map(entry => `<p>${entry.date}: ${entry.mood}</p>`)
+            .join('');
+        document.getElementById("moodDataModal").style.display = "block";
+    }
+
+    // Close mood data modal
+    function closeMoodDataModal() {
+        document.getElementById("moodDataModal").style.display = "none";
+    }
+
+    // Show notes history modal
+    function showNotesHistory() {
+        const notesList = document.getElementById("notesHistory");
+        notesList.innerHTML = notesHistory
+            .map(entry => `<div><p>${entry.date}: ${entry.note}</p></div>`)
+            .join('');
+        document.getElementById("historyContainer").style.display = "flex";
+    }
+
+    // Close notes history modal
+    function closeHistoryContainer() {
+        document.getElementById("historyContainer").style.display = "none";
+    }
+
+    // Show the privacy policy modal
+    function showPrivacyPolicy() {
+        document.getElementById("privacyPolicyModal").style.display = "block";
+    }
+
+    // Close the privacy policy modal
+    function closePrivacyPolicy() {
+        document.getElementById("privacyPolicyModal").style.display = "none";
+    }
+</script>
 
 </script>
 </body>
