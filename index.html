@@ -583,17 +583,109 @@
     }
 
     // Add a note for the current mood
-function saveNote() {
-    const noteText = document.getElementById("noteText").value.trim();
-    if (noteText) {
-        notesHistory.push({ mood: currentMood, note: noteText, date: new Date().toLocaleString() });
-        saveLocalData();
-        document.getElementById("noteText").value = '';  // Clear textarea after saving
-        alert('Note saved!');
-    } else {
-        alert('Please write a note before saving.');
+    // Add a note for the current mood
+    function saveNote() {
+        const noteText = document.getElementById("noteText").value.trim();
+        if (noteText) {
+            // Save note along with current mood and timestamp
+            const noteEntry = {
+                mood: currentMood,
+                note: noteText,
+                date: new Date().toLocaleString()
+            };
+
+            notesHistory.push(noteEntry);
+            saveLocalData();
+            document.getElementById("noteText").value = "";  // Clear the note text area
+
+            // Optionally, display the note in a modal or history section
+            displayNoteHistory();
+        }
     }
-}
+
+    // Display notes in the history container
+    function displayNoteHistory() {
+        const historyContainer = document.getElementById("notesHistory");
+        historyContainer.innerHTML = "";  // Clear the existing history
+
+        notesHistory.forEach(note => {
+            const noteElement = document.createElement("div");
+            noteElement.classList.add("note-entry");
+
+            noteElement.innerHTML = `
+                <p><strong>Mood:</strong> ${note.mood}</p>
+                <p><strong>Note:</strong> ${note.note}</p>
+                <span class="date">${note.date}</span>
+            `;
+
+            historyContainer.appendChild(noteElement);
+        });
+    }
+
+    // Show notes history in a modal
+    function showNotesHistory() {
+        const historyContainer = document.getElementById("historyContainer");
+        historyContainer.style.display = "flex";  // Show history modal
+        displayNoteHistory();  // Display notes when opening the modal
+    }
+
+    // Close notes history modal
+    function closeHistoryContainer() {
+        const historyContainer = document.getElementById("historyContainer");
+        historyContainer.style.display = "none";
+    }
+
+    // Toggle note box visibility
+    function toggleNoteBox() {
+        const noteBox = document.querySelector(".note-box");
+        noteBox.style.display = noteBox.style.display === "none" ? "block" : "none";
+    }
+
+    // Close privacy policy modal
+    function closePrivacyPolicy() {
+        document.getElementById("privacyPolicyModal").style.display = "none";
+    }
+
+    // Show privacy policy modal
+    function showPrivacyPolicy() {
+        document.getElementById("privacyPolicyModal").style.display = "flex";
+    }
+
+    // Show mood data modal
+    function showMoodData() {
+        const moodDataList = document.getElementById("moodDataList");
+        moodDataList.innerHTML = "";  // Clear the previous data
+
+        moodHistory.forEach(entry => {
+            const entryElement = document.createElement("div");
+            entryElement.classList.add("mood-data-entry");
+
+            entryElement.innerHTML = `
+                <span class="data-label">Mood:</span> ${entry.mood}<br>
+                <span class="data-label">Date:</span> ${entry.date}<br>
+                <span class="data-label">Message:</span> ${entry.message}
+            `;
+
+            moodDataList.appendChild(entryElement);
+        });
+
+        document.getElementById("moodDataModal").style.display = "flex";  // Show the modal
+    }
+
+    // Close mood data modal
+    function closeMoodDataModal() {
+        document.getElementById("moodDataModal").style.display = "none";
+    }
+
+    // Weekly notification for recap
+    function showWeeklyNotification() {
+        const notification = document.getElementById("weeklyNotification");
+        notification.style.display = "flex";
+
+        setTimeout(() => {
+            notification.style.display = "none";
+        }, 5000);  // Hide after 5 seconds
+    }
     // Toggle visibility of the note box
     function toggleNoteBox() {
         const noteBox = document.querySelector(".note-box");
