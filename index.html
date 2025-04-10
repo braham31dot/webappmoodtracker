@@ -402,6 +402,12 @@
     <span onclick="document.getElementById('moodModal').style.display='none'" class="close">&times;</span>
     
 <body>
+    <body>
+  <nav>
+    <a href="#" onclick="logout()">Logout</a> |
+    <a href="login.html">Login</a> |
+    <a href="register.html">Register</a>
+  </nav>
     <h1>Mood Tracker</h1>
 
     <div class="mood-selection">
@@ -518,6 +524,8 @@
 
             <button class="close" onclick="closePrivacyPolicy()">Close</button>
         </div>
+         <div class="main-wrapper">
+    <h1>Mood Tracker Dashboard</h1>
     </div>
 </body>
     
@@ -729,6 +737,13 @@ function saveNote() {
             getWeeklyMoodRecap();
         }
     };
+    
+  function logout() {
+    localStorage.removeItem("rememberedUser");
+    alert("Logged out!");
+    window.location.href = "index.html"; // back to login page
+  }
+
 </script>    
 </body>
 </html>
