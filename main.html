@@ -465,7 +465,6 @@ h1 {
         </div>
     </div>
 
-    <!-- Page Title -->
     <h1>Mood Tracker</h1>
     
     <!-- Mood Selection -->
@@ -479,12 +478,12 @@ h1 {
         <span class="emoji" data-mood="love" onclick="setMood('love')">😍</span>
     </div>
 
-    <!-- Mood Feedback -->
+    <!-- Feedback -->
     <div class="feedback">
         <p>Your selected mood: <span id="selectedMood">None</span></p>
     </div>
 
-    <!-- Motivational Message Section -->
+    <!-- Motivational Message -->
     <div class="motivational-message" id="motivationalMessage">
         <p>Click the button below to get some motivational advice.</p>
     </div>
@@ -504,10 +503,10 @@ h1 {
         </div>
     </div>
 
-    <!-- Note Button -->
+    <!-- Notes Button -->
     <button class="note-btn" onclick="toggleNoteBox()">📝</button>
 
-    <!-- Note Input Box -->
+    <!-- Note Box -->
     <div class="note-box" id="noteBox">
         <textarea id="noteText" placeholder="Write a note about your mood..."></textarea>
         <button class="btn" id="saveNoteButton">Save Note</button>
@@ -516,16 +515,11 @@ h1 {
     <!-- Notes History -->
     <div id="historyContainer">
         <div class="close" onclick="closeHistoryContainer()">X</div>
-        <div id="notesHistory">
-            <!-- Notes will be displayed here -->
-        </div>
+        <div id="notesHistory"></div>
     </div>
 
-    <!-- Weekly Notification Area -->
-    <div id="weeklyNotification" style="display: none;">
-        <div id="selectedMood"></div>
-        <div id="motivationalMessage"></div>
-    </div>
+    <!-- Privacy Policy Button -->
+    <button class="privacy-policy-btn" onclick="showPrivacyPolicy()">🔒</button>
 
     <!-- Privacy Policy Modal -->
     <div id="privacyPolicyModal" class="modal">
@@ -533,60 +527,42 @@ h1 {
             <button class="close" onclick="closePrivacyPolicy()">×</button>
             <h2>Privacy Policy</h2>
             <div class="policy-content">
-            <p><strong>Effective Date:</strong> [04/09/2025]</p>
-            <p>At <strong>Mood Tracker</strong>, we value and respect your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information when you use our web app. By using our app, you agree to the collection and use of information in accordance with this policy.</p>
-
-            <h3>1. Information We Collect</h3>
-            <p>We collect the following types of information when you use our app:</p>
-            <ul>
-                <li><strong>Mood Data:</strong> We collect your mood selections (e.g., happy, sad, excited) that you choose through the app to help you track your mood history.</li>
-                <li><strong>Notes:</strong> If you choose to write notes about your mood, we will store the content of those notes and the date they were written.</li>
-                <li><strong>Anonymous Usage Data:</strong> We may collect basic information about how you use the app (such as how often you access it or what features you use) to improve our app’s functionality.</li>
-            </ul>
-
-            <h3>2. How We Use Your Information</h3>
-            <p>We use the collected information in the following ways:</p>
-            <ul>
-                <li><strong>Mood History:</strong> To allow you to track your mood over time and display your mood history.</li>
-                <li><strong>Note Storage:</strong> To store and display the notes you write about your mood.</li>
-                <li><strong>App Improvement:</strong> To improve the functionality and performance of our app based on how users interact with it.</li>
-            </ul>
-
-            <h3>3. Data Retention</h3>
-            <p>Your mood data and notes will be stored locally on your device or in your browser's local storage. We do not collect or store any personal information on our servers.</p>
-
-            <h3>4. Cookies and Tracking Technologies</h3>
-            <p>Our app may use cookies or other tracking technologies to improve user experience. These cookies are stored in your browser and can be disabled through your browser settings.</p>
-
-            <h3>5. Security</h3>
-            <p>We take reasonable precautions to protect your data, but please note that no method of transmission over the internet or electronic storage is 100% secure. We cannot guarantee absolute security.</p>
-
-            <h3>6. Your Rights</h3>
-            <p>You have the right to:</p>
-            <ul>
-                <li><strong>Access:</strong> You may view your mood history and notes at any time.</li>
-                <li><strong>Delete:</strong> You can clear your mood history and notes through the app’s interface.</li>
-                <li><strong>Control:</strong> You have control over whether or not you share notes or moods. No data is shared with third parties unless specified.</li>
-            </ul>
-
-            <h3>7. Third-Party Services</h3>
-            <p>We do not share your data with third parties. Your data stays private and is only used for the purpose of tracking your mood history and notes.</p>
-
-            <h3>8. Changes to This Privacy Policy</h3>
-            <p>We reserve the right to update or change this privacy policy at any time. Any changes will be posted on this page, and the effective date will be updated accordingly.</p>
-
-            <h3>9. Contact Us</h3>
-            <p>If you have any questions about this privacy policy, please contact us at:</p>
-            <p><strong>website:</strong> securewebsolutions.ink</p>
-
-            <h2>Privacy Policy</h2>
-      <p>Your privacy is respected. Nothing is shared with anyone. Ever.</p>
-</div>
-<div class="main-wrapper">
-    <div class="logout-link">
-        <a href="javascript:void(0)" onclick="logout()">Log Out</a>
+                <p><strong>Effective Date:</strong> [04/09/2025]</p>
+                <p>At <strong>Mood Tracker</strong>, we value and respect your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information when you use our web app. By using our app, you agree to the collection and use of information in accordance with this policy.</p>
+                <h3>1. Information We Collect</h3>
+                <ul>
+                    <li><strong>Mood Data:</strong> We collect your mood selections (e.g., happy, sad, excited) that you choose through the app to help you track your mood history.</li>
+                    <li><strong>Notes:</strong> If you choose to write notes about your mood, we will store the content of those notes and the date they were written.</li>
+                    <li><strong>Anonymous Usage Data:</strong> We may collect basic information about how you use the app (such as how often you access it or what features you use) to improve our app’s functionality.</li>
+                </ul>
+                <h3>2. How We Use Your Information</h3>
+                <ul>
+                    <li><strong>Mood History:</strong> To allow you to track your mood over time and display your mood history.</li>
+                    <li><strong>Note Storage:</strong> To store and display the notes you write about your mood.</li>
+                    <li><strong>App Improvement:</strong> To improve the functionality and performance of our app based on how users interact with it.</li>
+                </ul>
+                <h3>3. Data Retention</h3>
+                <p>Your mood data and notes will be stored locally on your device or in your browser's local storage. We do not collect or store any personal information on our servers.</p>
+                <h3>4. Cookies and Tracking Technologies</h3>
+                <p>Our app may use cookies or other tracking technologies to improve user experience. These cookies are stored in your browser and can be disabled through your browser settings.</p>
+                <h3>5. Security</h3>
+                <p>We take reasonable precautions to protect your data, but please note that no method of transmission over the internet or electronic storage is 100% secure. We cannot guarantee absolute security.</p>
+                <h3>6. Your Rights</h3>
+                <ul>
+                    <li><strong>Access:</strong> You may view your mood history and notes at any time.</li>
+                    <li><strong>Delete:</strong> You can clear your mood history and notes through the app’s interface.</li>
+                    <li><strong>Control:</strong> You have control over whether or not you share notes or moods. No data is shared with third parties unless specified.</li>
+                </ul>
+                <h3>7. Third-Party Services</h3>
+                <p>We do not share your data with third parties. Your data stays private and is only used for the purpose of tracking your mood history and notes.</p>
+                <h3>8. Changes to This Privacy Policy</h3>
+                <p>We reserve the right to update or change this privacy policy at any time. Any changes will be posted on this page, and the effective date will be updated accordingly.</p>
+                <h3>9. Contact Us</h3>
+                <p>If you have any questions about this privacy policy, please contact us at:</p>
+                <p><strong>website:</strong> securewebsolutions.ink</p>
+            </div>
+        </div>
     </div>
-</div>
 
 <!-- Mood Tracker Dashboard -->
 <h2>Mood Tracker Dashboard</h2>
