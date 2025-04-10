@@ -719,13 +719,27 @@
         getWeeklyMoodRecap();
       }
     };
+  // Merging two onload functions
+  window.onload = function () {
+    const loggedInUser = JSON.parse(localStorage.getItem("savedLogin"));
 
-    function logout() {
-      localStorage.removeItem("rememberedUser");
-      localStorage.removeItem("savedLogin");
-      alert("Logged out!");
-      window.location.href = "index.html";
+    // If no saved login data, redirect to the login page
+    if (!loggedInUser) {
+      alert("You must be logged in to access this page.");
+      window.location.href = "index.html";  // Redirect to login page
     }
+
+    displayNoteHistory();
+    if (moodHistory.length >= 7) {
+      getWeeklyMoodRecap();
+    }
+  };
+
+  function logout() {
+    localStorage.removeItem("rememberedUser");
+    localStorage.removeItem("savedLogin");
+    alert("You have been logged out!");
+    window.location.href = "index.html";
   }
 </script>  
 </body>
