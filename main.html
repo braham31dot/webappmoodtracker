@@ -388,31 +388,17 @@
         100% { transform: scale(1); opacity: 1; }
     }
 </style>
-<head>
-    <div id="recapModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeRecapModal()">&times;</span>
-            <h3>Your 7-Day Mood Recap</h3>
-            <p id="recapMessage"></p>
-        </div>
-    </div>
-
-    <!-- Privacy Policy Button -->
-    <button class="privacy-btn" onclick="showPrivacyPolicy()">🔒</button>
-    <div id="privacyPolicyModal" style="display:none;">
-        <div class="modal-content">
-            <h2>Privacy Policy</h2>
-            <p><strong>Effective Date:</strong> [04/09/2025]</p>
-            <p>At <strong>Mood Tracker</strong>, we value and respect your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information when you use our web app. By using our app, you agree to the collection and use of information in accordance with this policy.</p>
-
-            <!-- Privacy Policy content here... -->
-            <button class="close" onclick="closePrivacyPolicy()">Close</button>
-        </div>
-    </div>
 </head>
 <body>
+    <div id="recapModal" class="modal">
+        </div>
+
+    <button class="privacy-btn" onclick="showPrivacyPolicy()">🔒</button>
+    <div id="privacyPolicyModal" style="display:none;">
+        </div>
+
     <nav>
-        <a href="#" onclick="logout()">Logout</a> | <!-- This is now a link but will trigger logout() function -->
+        <a href="#" onclick="logout()">Logout</a> |
     </nav>
     <h1>Mood Tracker</h1>
 
@@ -439,45 +425,27 @@
         <button class="btn" onclick="showNotesHistory()">View Notes History</button>
     </div>
 
-    <!-- Modal for mood data -->
     <div id="moodDataModal">
         <button class="close-button" onclick="closeMoodDataModal()">×</button>
         <h2>Mood History</h2>
         <div id="moodDataList"></div>
     </div>
 
-    <!-- Note button and box -->
     <button class="note-btn" onclick="toggleNoteBox()">📝</button>
     <div class="note-box">
         <textarea id="noteText" placeholder="Write a note about your mood..."></textarea>
         <button class="btn" onclick="saveNote()">Save Note</button>
     </div>
 
-    <!-- Notes History Modal -->
     <div class="history-container" id="historyContainer">
         <button class="close" onclick="closeHistoryContainer()">Close</button>
         <div id="notesHistory"></div>
     </div>
 
-    <!-- Weekly Notification -->
-    <div id="weeklyNotification" style="
-        display: none;
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: linear-gradient(135deg, #6e8efb, #a777e3);
-        color: white;
-        padding: 15px 20px;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.3);
-        z-index: 9999;
-        font-weight: bold;
-        animation: popIn 0.4s ease;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div id="weeklyNotification" style="display: none; ...">
         <div id="selectedMood"></div>
         <div id="motivationalMessage"></div>
     </div>
-
     <button class="privacy-btn" onclick="showPrivacyPolicy()">🔒</button>
     <div id="privacyPolicyModal" style="display:none;">
         <div class="modal-content">
