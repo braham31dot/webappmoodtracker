@@ -361,7 +361,6 @@
 
     <!-- Privacy Policy Button -->
     <button class="privacy-btn" onclick="showPrivacyPolicy()">🔒</button>
-
    <div id="privacyPolicyModal" style="display:none;">
     <div class="modal-content">
         <h2>Privacy Policy</h2>
@@ -521,12 +520,12 @@
             }
         }
 
-        function showPrivacyPolicy() {
-            document.getElementById("privacyModal").style.display = "flex";
-        }
+         function showPrivacyPolicy() {
+        document.getElementById("privacyPolicyModal").style.display = "flex";
+    }
 
         function closePrivacyPolicy() {
-            document.getElementById("privacyModal").style.display = "none";
+            document.getElementById("privacyPolicyModal").style.display = "none";
         }
     </script>
 </body>
