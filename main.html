@@ -372,6 +372,15 @@
             100% {
                 transform: scale(1);
                 opacity: 1;
+              .emoji {
+  cursor: pointer;
+  font-size: 2rem;
+  margin: 0.5rem;
+  transition: transform 0.2s ease;
+}
+.emoji:hover {
+  transform: scale(1.2);
+}
             }
         }
     </style>
@@ -388,18 +397,17 @@
 
   <!-- Page Title -->
   <h1>Mood Tracker</h1>
-
+  
   <!-- Mood Selection -->
-  <div class="mood-selection">
-    <span class="emoji" data-mood="happy">😊</span>
-    <span class="emoji" data-mood="sad">😢</span>
-    <span class="emoji" data-mood="angry">😡</span>
-    <span class="emoji" data-mood="neutral">😐</span>
-    <span class="emoji" data-mood="excited">😆</span>
-    <span class="emoji" data-mood="surprised">😲</span>
-    <span class="emoji" data-mood="love">😍</span>
-  </div>
-
+<div class="mood-selection">
+  <span class="emoji" data-mood="happy" onclick="setMood('happy')">😊</span>
+  <span class="emoji" data-mood="sad" onclick="setMood('sad')">😢</span>
+  <span class="emoji" data-mood="angry" onclick="setMood('angry')">😡</span>
+  <span class="emoji" data-mood="neutral" onclick="setMood('neutral')">😐</span>
+  <span class="emoji" data-mood="excited" onclick="setMood('excited')">😆</span>
+  <span class="emoji" data-mood="surprised" onclick="setMood('surprised')">😲</span>
+  <span class="emoji" data-mood="love" onclick="setMood('love')">😍</span>
+</div>
   <!-- Mood Feedback -->
   <div class="feedback">
     <p>Your selected mood: <span id="selectedMood">None</span></p>
@@ -523,38 +531,39 @@ window.onload = function () {
     let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
     let currentMood = "";
 
-    // 📜 MOTIVATIONAL QUOTES DICTIONARY
-    const motivationalQuotes = {
-        happy: [
-            "Happiness is not something ready made. It comes from your own actions.",
-            "The only way to do great work is to love what you do."
-        ],
-        sad: [
-            "Tears are words that need to be written.",
-            "It's okay to not be okay."
-        ],
-        angry: [
-            "Anger is one letter short of danger.",
-            "Take a deep breath and think before you react."
-        ],
-        neutral: [
-            "Sometimes it's okay to not have an opinion.",
-            "Neutrality is the highest form of strength."
-        ],
-        excited: [
-            "The future belongs to those who believe in the beauty of their dreams.",
-            "Excitement is the feeling you get when your dreams come true."
-        ],
-        surprised: [
-            "Life is full of surprises, embrace the unexpected.",
-            "The best things in life come as a surprise."
-        ],
-        love: [
-            "Love is not about finding someone to live with. It's about finding someone you can't live without.",
-            "Love is the only reality, and it is not a mere sentiment. It is the ultimate truth at the heart of creation."
-        ]
-    };
+// Motivational messages by mood
+const motivationalQuotes = {
+  happy: "Keep spreading that joy like confetti! 🎉",
+  sad: "It's okay to feel down. Storms make trees take deeper roots. 🌧️🌳",
+  angry: "Take a deep breath. You're in control. You've got this. 😤🧘",
+  neutral: "Balance is beautiful. Stay grounded and keep going. ⚖️✨",
+  excited: "Use that energy to chase your goals! 🚀🔥",
+  surprised: "Every surprise is a new door. Embrace it! 🚪🎁",
+  love: "Your heart is full. Let that love ripple outwards. 💖🌊"
+};
 
+// Function to handle mood selection
+function handleMoodClick(e) {
+  const mood = e.target.getAttribute('data-mood');
+  if (!mood) return;
+
+  // Save mood to localStorage with timestamp
+  const currentDate = new Date().toISOString().split("T")[0];
+  const moodData = { mood, date: currentDate };
+  localStorage.setItem("latestMood", JSON.stringify(moodData));
+
+  // Update feedback section
+  document.getElementById("selectedMood").textContent = mood;
+
+  // Show motivational message
+  const message = motivationalQuotes[mood] || "Keep going, you're doing great! 💪";
+  document.getElementById("motivationalMessage").innerHTML = `<p>${message}</p>`;
+}
+
+// Attach click listeners to all emoji elements
+document.querySelectorAll('.emoji').forEach(emoji => {
+  emoji.addEventListener('click', handleMoodClick);
+});
     // 💾 Save to localStorage
     function saveLocalData() {
         try {
