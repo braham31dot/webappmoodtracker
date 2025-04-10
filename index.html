@@ -309,9 +309,51 @@
             background: none;
             border: none;
         }
+/* 7-Day Recap Modal Styling */
+#recapModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#recapModal .modal-content {
+  background-color: black;
+  color: gold;
+  padding: 25px;
+  border-radius: 12px;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+#recapModal .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: red;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
 
     </style>
 </head>
+<!-- 7-Day Mood Recap Modal -->
+<div id="recapModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeRecapModal()">&times;</span>
+    <h3>Your 7-Day Mood Recap</h3>
+    <p id="recapMessage"></p>
+  </div>
+</div>
 
 <body>
     <h1>Mood Tracker</h1>
@@ -526,6 +568,36 @@
 
         function closePrivacyPolicy() {
             document.getElementById("privacyPolicyModal").style.display = "none";
+            function closeRecapModal() {
+  document.getElementById("recapModal").style.display = "none";
+}
+
+function showRecapMessage(message) {
+  document.getElementById("recapMessage").textContent = message;
+  document.getElementById("recapModal").style.display = "flex";
+}
+
+// Example trigger (you probably generate `alertMessage` from mood history logic)
+if (typeof alertMessage !== 'undefined' && alertMessage) {
+  showRecapMessage(alertMessage);
+}
+function getWeeklyMoodRecap() {
+  if (moodHistory.length < 7) return;
+
+  let counts = {};
+  moodHistory.slice(-7).forEach(entry => {
+    counts[entry.mood] = (counts[entry.mood] || 0) + 1;
+  });
+
+  let dominantMood = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+  let message = `This past week, you mostly felt: ${dominantMood.toUpperCase()}.`;
+
+  showRecapMessage(message);
+}
+
+// Call this when you want to show recap (like after 7 entries)
+getWeeklyMoodRecap();
+
         }
     </script>
 </body>
