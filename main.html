@@ -451,10 +451,11 @@ h1 {
   </div>
 
   <!-- Privacy Policy -->
-  <button class="privacy-btn" onclick="showPrivacyPolicy()">🔒</button>
-<div id="privacyPolicyModal">
-    <div class="content">
-            <h2>Privacy Policy</h2>
+<div id="privacyPolicyModal" class="modal">
+    <div class="modal-content">
+        <button class="close" onclick="closePrivacyPolicy()">×</button>
+        <h2>Privacy Policy</h2>
+        <div class="policy-content">
             <p><strong>Effective Date:</strong> [04/09/2025]</p>
             <p>At <strong>Mood Tracker</strong>, we value and respect your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information when you use our web app. By using our app, you agree to the collection and use of information in accordance with this policy.</p>
 
@@ -705,48 +706,52 @@ window.closeHistoryContainer = function () {
     document.getElementById("historyContainer").style.display = "none";
 };
 
-    // 📜 Show Notes History
-    document.getElementById("viewNotesHistory").addEventListener("click", function () {
-        try {
-            const notesHistoryModal = document.getElementById("historyContainer");
-            const notesHistoryContainer = document.getElementById("notesHistory");
+   // 📜 Show Notes History
+document.getElementById("viewNotesHistory").addEventListener("click", function () {
+    try {
+        const notesHistoryModal = document.getElementById("historyContainer");
+        const notesHistoryContainer = document.getElementById("notesHistory");
 
-            notesHistoryContainer.innerHTML = "";
-            notesHistory.forEach(entry => {
-                const noteItem = document.createElement("div");
-                noteItem.textContent = `${entry.date}: ${entry.note}`;
-                notesHistoryContainer.appendChild(noteItem);
-            });
+        // Ensure notesHistory is loaded from localStorage or initialized as an empty array
+        const notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
 
-            notesHistoryModal.style.display = "block";
-        } catch (error) {
-            console.error("Error showing notes history:", error);
-        }
-    });
+        notesHistoryContainer.innerHTML = "";
+        notesHistory.forEach(entry => {
+            const noteItem = document.createElement("div");
+            noteItem.textContent = `${entry.date}: ${entry.note}`;
+            notesHistoryContainer.appendChild(noteItem);
+        });
 
-    // 📕 Close Modals
-    window.closeRecapModal = function () {
-        document.getElementById("recapModal").style.display = "none";
-    };
+        notesHistoryModal.style.display = "block";
+    } catch (error) {
+        console.error("Error showing notes history:", error);
+    }
+});
 
-    window.closeMoodDataModal = function () {
-        document.getElementById("moodDataModal").style.display = "none";
-    };
+// 📕 Close Modals
+window.closeRecapModal = function () {
+    document.getElementById("recapModal").style.display = "none";
+};
 
-    window.closeHistoryContainer = function () {
-        document.getElementById("historyContainer").style.display = "none";
-    };
+window.closeMoodDataModal = function () {
+    document.getElementById("moodDataModal").style.display = "none";
+};
 
-    window.showPrivacyPolicy = function () {
-        document.getElementById("privacyPolicyModal").style.display = "block";
-    };
+window.closeHistoryContainer = function () {
+    document.getElementById("historyContainer").style.display = "none";
+};
 
-    window.closePrivacyPolicy = function () {
-        document.getElementById("privacyPolicyModal").style.display = "none";
-    };
+// 📜 Privacy Policy
+window.showPrivacyPolicy = function () {
+    document.getElementById("privacyPolicyModal").style.display = "flex";
+};
 
-    // 🧼 Auto-clear data after 7 days
-  function checkDataExpiration() {
+window.closePrivacyPolicy = function () {
+    document.getElementById("privacyPolicyModal").style.display = "none";
+};
+
+// 🧼 Auto-clear data after 7 days
+function checkDataExpiration() {
     try {
         const timestamp = localStorage.getItem("moodHistoryTimestamp");
         if (timestamp) {
@@ -763,7 +768,8 @@ window.closeHistoryContainer = function () {
         console.error("Error checking data expiration:", err);
     }
 }
-    checkDataExpiration(); // 🧼 Run on page load
+
+checkDataExpiration(); // 🧼 Run on page load
 };
 </script>
 </body>
