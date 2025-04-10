@@ -736,24 +736,23 @@ window.onload = function () {
     };
 
     // 🧼 Auto-clear data after 7 days
-    function checkDataExpiration() {
-        try {
-            const timestamp = localStorage.getItem("moodHistoryTimestamp");
-            if (timestamp) {
-                const savedDate = new Date(timestamp);
-                const daysPassed = (new Date() - savedDate) / (1000 * 60 * 60 * 24);
-                if (daysPassed >= 7) {
-                    localStorage.removeItem("moodHistory");
-                    localStorage.removeItem("notesHistory");
-                    localStorage.removeItem("moodHistoryTimestamp");
-                    alert("Your data has been deleted after 7 days.");
-                }
+  function checkDataExpiration() {
+    try {
+        const timestamp = localStorage.getItem("moodHistoryTimestamp");
+        if (timestamp) {
+            const savedDate = new Date(timestamp);
+            const daysPassed = (new Date() - savedDate) / (1000 * 60 * 60 * 24);
+            if (daysPassed >= 7) {
+                localStorage.removeItem("moodHistory");
+                localStorage.removeItem("notesHistory");
+                localStorage.removeItem("moodHistoryTimestamp");
+                alert("Your data has been deleted after 7 days.");
             }
-        } catch (error) {
-            console.error("Error checking data expiration:", error);
         }
+    } catch (err) {
+        console.error("Error checking data expiration:", err);
     }
-
+}
     checkDataExpiration(); // 🧼 Run on page load
 };
 </script>
