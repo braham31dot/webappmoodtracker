@@ -456,81 +456,83 @@ h1 {
     </style>
 </head>
 <body>
-  <!-- Weekly Mood Recap Modal -->
-  <div id="recapModal" class="modal">
-    <div class="modal-content">
-      <h2>Weekly Mood Recap</h2>
-      <p id="recapMessage"></p>
-      <button class="close" onclick="closeRecapModal()">×</button>
+    <!-- Weekly Mood Recap Modal -->
+    <div id="recapModal" class="modal">
+        <div class="modal-content">
+            <h2>Weekly Mood Recap</h2>
+            <p id="recapMessage"></p>
+            <button class="close" onclick="closeRecapModal()">×</button>
+        </div>
     </div>
-  </div>
 
-  <!-- Page Title -->
-  <h1>Mood Tracker</h1>
-  
-  <!-- Mood Selection -->
-<div class="mood-selection">
-  <span class="emoji" data-mood="happy" onclick="setMood('happy')">😊</span>
-  <span class="emoji" data-mood="sad" onclick="setMood('sad')">😢</span>
-  <span class="emoji" data-mood="angry" onclick="setMood('angry')">😡</span>
-  <span class="emoji" data-mood="neutral" onclick="setMood('neutral')">😐</span>
-  <span class="emoji" data-mood="excited" onclick="setMood('excited')">😆</span>
-  <span class="emoji" data-mood="surprised" onclick="setMood('surprised')">😲</span>
-  <span class="emoji" data-mood="love" onclick="setMood('love')">😍</span>
-</div>
-  <!-- Mood Feedback -->
-  <div class="feedback">
-    <p>Your selected mood: <span id="selectedMood">None</span></p>
-  </div>
-
-  <!-- Motivational Message Section -->
-  <div class="motivational-message" id="motivationalMessage">
-    <p>Click the button below to get some motivational advice.</p>
-  </div>
-
-  <!-- History Buttons -->
-  <div class="btn-container">
-    <button class="btn" id="viewMoodHistory">📊 View Mood History</button>
-    <button class="btn" id="viewNotesHistory">📖 View Notes History</button>
-  </div>
-
-  <!-- Mood History Modal -->
-  <div id="moodDataModal" class="modal">
-    <div class="modal-content">
-      <button class="close-button" onclick="closeMoodDataModal()">×</button>
-      <h2>Mood History</h2>
-      <div id="moodDataList"></div>
-    </div>
-  </div>
-
-  <!-- Note Button -->
-  <button class="note-btn" onclick="toggleNoteBox()">📝</button>
-
-  <!-- Note Input Box -->
-  <div class="note-box" id="noteBox">
-    <textarea id="noteText" placeholder="Write a note about your mood..."></textarea>
-    <button class="btn" id="saveNoteButton">Save Note</button>
-  </div>
-
-  <!-- Notes History -->
-  <div id="historyContainer">
-    <div class="close" onclick="closeHistoryContainer()">X</div>
-    <div id="notesHistory">
-        <!-- Notes will be displayed here -->
-    </div>
+    <!-- Page Title -->
+    <h1>Mood Tracker</h1>
     
-  <!-- Weekly Notification Area -->
-  <div id="weeklyNotification" style="display: none;">
-    <div id="selectedMood"></div>
-    <div id="motivationalMessage"></div>
-  </div>
+    <!-- Mood Selection -->
+    <div class="mood-selection">
+        <span class="emoji" data-mood="happy" onclick="setMood('happy')">😊</span>
+        <span class="emoji" data-mood="sad" onclick="setMood('sad')">😢</span>
+        <span class="emoji" data-mood="angry" onclick="setMood('angry')">😡</span>
+        <span class="emoji" data-mood="neutral" onclick="setMood('neutral')">😐</span>
+        <span class="emoji" data-mood="excited" onclick="setMood('excited')">😆</span>
+        <span class="emoji" data-mood="surprised" onclick="setMood('surprised')">😲</span>
+        <span class="emoji" data-mood="love" onclick="setMood('love')">😍</span>
+    </div>
 
- <!-- Privacy Policy Modal -->
-<div id="privacyPolicyModal" class="modal">
-    <div class="modal-content">
-        <button class="close" onclick="closePrivacyPolicy()">×</button>
-        <h2>Privacy Policy</h2>
-        <div class="policy-content">
+    <!-- Mood Feedback -->
+    <div class="feedback">
+        <p>Your selected mood: <span id="selectedMood">None</span></p>
+    </div>
+
+    <!-- Motivational Message Section -->
+    <div class="motivational-message" id="motivationalMessage">
+        <p>Click the button below to get some motivational advice.</p>
+    </div>
+
+    <!-- History Buttons -->
+    <div class="btn-container">
+        <button class="btn" id="viewMoodHistory">📊 View Mood History</button>
+        <button class="btn" id="viewNotesHistory">📖 View Notes History</button>
+    </div>
+
+    <!-- Mood History Modal -->
+    <div id="moodDataModal" class="modal">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeMoodDataModal()">×</button>
+            <h2>Mood History</h2>
+            <div id="moodDataList"></div>
+        </div>
+    </div>
+
+    <!-- Note Button -->
+    <button class="note-btn" onclick="toggleNoteBox()">📝</button>
+
+    <!-- Note Input Box -->
+    <div class="note-box" id="noteBox">
+        <textarea id="noteText" placeholder="Write a note about your mood..."></textarea>
+        <button class="btn" id="saveNoteButton">Save Note</button>
+    </div>
+
+    <!-- Notes History -->
+    <div id="historyContainer">
+        <div class="close" onclick="closeHistoryContainer()">X</div>
+        <div id="notesHistory">
+            <!-- Notes will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Weekly Notification Area -->
+    <div id="weeklyNotification" style="display: none;">
+        <div id="selectedMood"></div>
+        <div id="motivationalMessage"></div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyPolicyModal" class="modal">
+        <div class="modal-content">
+            <button class="close" onclick="closePrivacyPolicy()">×</button>
+            <h2>Privacy Policy</h2>
+            <div class="policy-content">
             <p><strong>Effective Date:</strong> [04/09/2025]</p>
             <p>At <strong>Mood Tracker</strong>, we value and respect your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information when you use our web app. By using our app, you agree to the collection and use of information in accordance with this policy.</p>
 
@@ -579,217 +581,215 @@ h1 {
 
             <h2>Privacy Policy</h2>
       <p>Your privacy is respected. Nothing is shared with anyone. Ever.</p>
-      </div>
-    <button onclick="closePrivacyPolicy()">Close</button>
-      <div class="main-wrapper">
-        <div class="logout-link">
-    <a href="javascript:void(0)" onclick="logout()">Log Out</a>
 </div>
-  </div>
+<div class="main-wrapper">
+    <div class="logout-link">
+        <a href="javascript:void(0)" onclick="logout()">Log Out</a>
+    </div>
+</div>
 
-    <h2>Mood Tracker Dashboard</h2>
-  </div>
-</body>
+<!-- Mood Tracker Dashboard -->
+<h2>Mood Tracker Dashboard</h2>
+
 <script>
-<script>
-window.onload = function () {
-    const loggedInUser = JSON.parse(localStorage.getItem("savedLogin"));
-    if (!loggedInUser) {
-        alert("You must be logged in to access this page.");
-        window.location.href = "index.html";
-        return;
-    }
-
-    let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
-    let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
-    let currentMood = "";
-
-    // Motivational messages by mood
-    const motivationalQuotes = {
-        happy: "Keep spreading that joy like confetti! 🎉",
-        sad: "It's okay to feel down. Storms make trees take deeper roots. 🌧️🌳",
-        angry: "Take a deep breath. You're in control. You've got this. 😤🧘",
-        neutral: "Balance is beautiful. Stay grounded and keep going. ⚖️✨",
-        excited: "Use that energy to chase your goals! 🚀🔥",
-        surprised: "Every surprise is a new door. Embrace it! 🚪🎁",
-        love: "Your heart is full. Let that love ripple outwards. 💖🌊"
-    };
-
-    // Function to handle mood selection
-    function handleMoodClick(e) {
-        const mood = e.target.getAttribute('data-mood');
-        if (!mood) return;
-
-        // Save mood to localStorage with timestamp
-        const currentDate = new Date().toISOString().split("T")[0];
-        const moodData = { mood, date: currentDate };
-        localStorage.setItem("latestMood", JSON.stringify(moodData));
-
-        // Update feedback section
-        document.getElementById("selectedMood").textContent = mood;
-
-        // Show motivational message
-        const message = motivationalQuotes[mood] || "Keep going, you're doing great! 💪";
-        document.getElementById("motivationalMessage").innerHTML = `<p>${message}</p>`;
-    }
-
-    // Attach click listeners to all emoji elements
-    document.querySelectorAll('.emoji').forEach(emoji => {
-        emoji.addEventListener('click', handleMoodClick);
-    });
-
-    // 💾 Save to localStorage
-    function saveLocalData() {
-        try {
-            localStorage.setItem("moodHistory", JSON.stringify(moodHistory));
-            localStorage.setItem("notesHistory", JSON.stringify(notesHistory));
-            localStorage.setItem("moodHistoryTimestamp", new Date().toLocaleString());
-        } catch (error) {
-            console.error("Error saving data to localStorage:", error);
+    window.onload = function () {
+        const loggedInUser = JSON.parse(localStorage.getItem("savedLogin"));
+        if (!loggedInUser) {
+            alert("You must be logged in to access this page.");
+            window.location.href = "index.html";
+            return;
         }
-    }
 
-    // 😄 Set Mood
-    window.setMood = function (mood) {
-        try {
-            currentMood = mood;
+        let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
+        let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
+        let currentMood = "";
+
+        // Motivational messages by mood
+        const motivationalQuotes = {
+            happy: "Keep spreading that joy like confetti! 🎉",
+            sad: "It's okay to feel down. Storms make trees take deeper roots. 🌧️🌳",
+            angry: "Take a deep breath. You're in control. You've got this. 😤🧘",
+            neutral: "Balance is beautiful. Stay grounded and keep going. ⚖️✨",
+            excited: "Use that energy to chase your goals! 🚀🔥",
+            surprised: "Every surprise is a new door. Embrace it! 🚪🎁",
+            love: "Your heart is full. Let that love ripple outwards. 💖🌊"
+        };
+
+        // Function to handle mood selection
+        function handleMoodClick(e) {
+            const mood = e.target.getAttribute('data-mood');
+            if (!mood) return;
+
+            // Save mood to localStorage with timestamp
+            const currentDate = new Date().toISOString().split("T")[0];
+            const moodData = { mood, date: currentDate };
+            localStorage.setItem("latestMood", JSON.stringify(moodData));
+
+            // Update feedback section
             document.getElementById("selectedMood").textContent = mood;
-            showMotivationalQuote(mood);
 
-            if (moodHistory.length >= 10) moodHistory.shift();
-            moodHistory.push({
-                mood,
-                date: new Date().toLocaleString(),
-                message: `You’re feeling ${mood}.`
-            });
-
-            saveLocalData();
-
-            if (moodHistory.length >= 7 && moodHistory.length % 7 === 0) {
-                getWeeklyMoodRecap();
-            }
-
-            showWeeklyNotification();
-        } catch (error) {
-            console.error("Error setting mood:", error);
+            // Show motivational message
+            const message = motivationalQuotes[mood] || "Keep going, you're doing great! 💪";
+            document.getElementById("motivationalMessage").innerHTML = `<p>${message}</p>`;
         }
-    };
 
-    function showMotivationalQuote(mood) {
-        const quoteEl = document.getElementById("motivationalMessage");
-        const quotes = motivationalQuotes[mood];
-        const quote = quotes[Math.floor(Math.random() * quotes.length)];
+        // Attach click listeners to all emoji elements
+        document.querySelectorAll('.emoji').forEach(emoji => {
+            emoji.addEventListener('click', handleMoodClick);
+        });
 
-        quoteEl.style.animation = "none"; // reset animation
-        void quoteEl.offsetWidth; // reflow to retrigger
-        quoteEl.style.animation = "popIn 0.5s ease forwards";
+        // 💾 Save to localStorage
+        function saveLocalData() {
+            try {
+                localStorage.setItem("moodHistory", JSON.stringify(moodHistory));
+                localStorage.setItem("notesHistory", JSON.stringify(notesHistory));
+                localStorage.setItem("moodHistoryTimestamp", new Date().toLocaleString());
+            } catch (error) {
+                console.error("Error saving data to localStorage:", error);
+            }
+        }
 
-        quoteEl.textContent = quote;
-    }
+        // 😄 Set Mood
+        window.setMood = function (mood) {
+            try {
+                currentMood = mood;
+                document.getElementById("selectedMood").textContent = mood;
+                showMotivationalQuote(mood);
 
-    // 📅 Weekly Mood Recap
-    function getWeeklyMoodRecap() {
-        try {
-            const last7Days = moodHistory.filter(entry =>
-                new Date() - new Date(entry.date) <= 7 * 24 * 60 * 60 * 1000
-            );
-
-            if (last7Days.length > 0) {
-                const moodCounts = {};
-                last7Days.forEach(entry => {
-                    moodCounts[entry.mood] = (moodCounts[entry.mood] || 0) + 1;
+                if (moodHistory.length >= 10) moodHistory.shift();
+                moodHistory.push({
+                    mood,
+                    date: new Date().toLocaleString(),
+                    message: `You’re feeling ${mood}.`
                 });
 
-                let recapMessage = "Your 7-day mood recap:\n";
-                const sortedMoods = Object.entries(moodCounts).sort(([, a], [, b]) => b - a);
-
-                if (sortedMoods.length > 0) {
-                    recapMessage += `You mostly felt **${sortedMoods[0][0]}**.`;
-                }
-
-                document.getElementById("recapMessage").textContent = recapMessage;
-                openRecapModal();
-            }
-        } catch (error) {
-            console.error("Error generating weekly mood recap:", error);
-        }
-    }
-
-    // 📬 Weekly Notification
-    function showWeeklyNotification() {
-        const weeklyNotification = document.getElementById("weeklyNotification");
-        weeklyNotification.style.display = "block";
-        setTimeout(() => {
-            weeklyNotification.style.display = "none";
-        }, 5000);
-    }
-
-    // 🔓 Logout
-    window.logout = function () {
-        alert("You have been logged out.");
-        window.location.href = "index.html";
-    };
-
-    // 📝 Toggle Note Box
-    window.toggleNoteBox = function () {
-        try {
-            const noteBox = document.querySelector(".note-box");
-            noteBox.style.display = noteBox.style.display === "none" ? "block" : "none";
-        } catch (error) {
-            console.error("Error toggling note box:", error);
-        }
-    };
-
-    // 💾 Save Note
-    document.getElementById("saveNoteButton").addEventListener("click", function () {
-        try {
-            const noteText = document.getElementById("noteText").value;
-            if (noteText.trim() !== "") {
-                notesHistory.push({
-                    note: noteText,
-                    date: new Date().toLocaleString()
-                });
                 saveLocalData();
-                alert("Note saved!");
-                document.getElementById("noteText").value = "";
-            } else {
-                alert("Please write a note.");
-            }
-        } catch (error) {
-            console.error("Error saving note:", error);
-        }
-    });
 
-    // 📜 Privacy Policy
-    window.showPrivacyPolicy = function () {
-        document.getElementById("privacyPolicyModal").style.display = "flex";
-    };
-
-    window.closePrivacyPolicy = function () {
-        document.getElementById("privacyPolicyModal").style.display = "none";
-    };
-
-    // 🧼 Auto-clear data after 7 days
-    function checkDataExpiration() {
-        try {
-            const timestamp = localStorage.getItem("moodHistoryTimestamp");
-            if (timestamp) {
-                const savedDate = new Date(timestamp);
-                const daysPassed = (new Date() - savedDate) / (1000 * 60 * 60 * 24);
-                if (daysPassed >= 7) {
-                    localStorage.removeItem("moodHistory");
-                    localStorage.removeItem("notesHistory");
-                    localStorage.removeItem("moodHistoryTimestamp");
-                    alert("Your data has been deleted after 7 days.");
+                if (moodHistory.length >= 7 && moodHistory.length % 7 === 0) {
+                    getWeeklyMoodRecap();
                 }
-            }
-        } catch (err) {
-            console.error("Error checking data expiration:", err);
-        }
-    }
 
-    checkDataExpiration(); // 🧼 Run on page load
-};
+                showWeeklyNotification();
+            } catch (error) {
+                console.error("Error setting mood:", error);
+            }
+        };
+
+        function showMotivationalQuote(mood) {
+            const quoteEl = document.getElementById("motivationalMessage");
+            const quotes = motivationalQuotes[mood];
+            const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+            quoteEl.style.animation = "none"; // reset animation
+            void quoteEl.offsetWidth; // reflow to retrigger
+            quoteEl.style.animation = "popIn 0.5s ease forwards";
+
+            quoteEl.textContent = quote;
+        }
+
+        // 📅 Weekly Mood Recap
+        function getWeeklyMoodRecap() {
+            try {
+                const last7Days = moodHistory.filter(entry =>
+                    new Date() - new Date(entry.date) <= 7 * 24 * 60 * 60 * 1000
+                );
+
+                if (last7Days.length > 0) {
+                    const moodCounts = {};
+                    last7Days.forEach(entry => {
+                        moodCounts[entry.mood] = (moodCounts[entry.mood] || 0) + 1;
+                    });
+
+                    let recapMessage = "Your 7-day mood recap:\n";
+                    const sortedMoods = Object.entries(moodCounts).sort(([, a], [, b]) => b - a);
+
+                    if (sortedMoods.length > 0) {
+                        recapMessage += `You mostly felt **${sortedMoods[0][0]}**.`;
+                    }
+
+                    document.getElementById("recapMessage").textContent = recapMessage;
+                    openRecapModal();
+                }
+            } catch (error) {
+                console.error("Error generating weekly mood recap:", error);
+            }
+        }
+
+        // 📬 Weekly Notification
+        function showWeeklyNotification() {
+            const weeklyNotification = document.getElementById("weeklyNotification");
+            weeklyNotification.style.display = "block";
+            setTimeout(() => {
+                weeklyNotification.style.display = "none";
+            }, 5000);
+        }
+
+        // 🔓 Logout
+        window.logout = function () {
+            alert("You have been logged out.");
+            window.location.href = "index.html";
+        };
+
+        // 📝 Toggle Note Box
+        window.toggleNoteBox = function () {
+            try {
+                const noteBox = document.querySelector(".note-box");
+                noteBox.style.display = noteBox.style.display === "none" ? "block" : "none";
+            } catch (error) {
+                console.error("Error toggling note box:", error);
+            }
+        };
+
+        // 💾 Save Note
+        document.getElementById("saveNoteButton").addEventListener("click", function () {
+            try {
+                const noteText = document.getElementById("noteText").value;
+                if (noteText.trim() !== "") {
+                    notesHistory.push({
+                        note: noteText,
+                        date: new Date().toLocaleString()
+                    });
+                    saveLocalData();
+                    alert("Note saved!");
+                    document.getElementById("noteText").value = "";
+                } else {
+                    alert("Please write a note.");
+                }
+            } catch (error) {
+                console.error("Error saving note:", error);
+            }
+        });
+
+        // 📜 Privacy Policy
+        window.showPrivacyPolicy = function () {
+            document.getElementById("privacyPolicyModal").style.display = "flex";
+        };
+
+        window.closePrivacyPolicy = function () {
+            document.getElementById("privacyPolicyModal").style.display = "none";
+        };
+
+        // 🧼 Auto-clear data after 7 days
+        function checkDataExpiration() {
+            try {
+                const timestamp = localStorage.getItem("moodHistoryTimestamp");
+                if (timestamp) {
+                    const savedDate = new Date(timestamp);
+                    const daysPassed = (new Date() - savedDate) / (1000 * 60 * 60 * 24);
+                    if (daysPassed >= 7) {
+                        localStorage.removeItem("moodHistory");
+                        localStorage.removeItem("notesHistory");
+                        localStorage.removeItem("moodHistoryTimestamp");
+                        alert("Your data has been deleted after 7 days.");
+                    }
+                }
+            } catch (err) {
+                console.error("Error checking data expiration:", err);
+            }
+        }
+
+        checkDataExpiration(); // 🧼 Run on page load
+    };
 </script>
 </body>
 </html>
