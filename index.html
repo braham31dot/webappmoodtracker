@@ -428,20 +428,12 @@
         <div id="selectedMood"></div>
         <div id="motivationalMessage"></div>
     </div>
-
-    <div id="moodDataModal" style="display:none;">
-        <div id="moodDataList"></div>
-    </div>
-
-    <div id="historyContainer" style="display:none;">
-        <div id="notesHistory"></div>
+    
     </div>
 
     <div class="note-box" style="display:none;">
         <textarea id="noteText"></textarea>
     </div>
-
-    <div id="privacyPolicyModal" style="display:none;"></div>
 
     <div id="recapModal" style="display:none;">
         <div id="recapMessage"></div>
@@ -503,7 +495,7 @@
     </div>
 </body>
 </script>
-    // Initialize moodHistory and notesHistory from localStorage or as empty arrays
+    
     let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
     let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
     let currentMood = "";
