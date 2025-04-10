@@ -131,14 +131,14 @@
       
       alert("Login successful!");
       
-      // Redirect to the main page after successful login
-      window.location.href = "main.html";  // Ensure this is the correct path
+ 
+     window.location.href = "main.html"; 
     } else {
       alert("Invalid username or password.");
     }
   }
 
-  // On page load, check if the user is "remembered"
+
   window.onload = function () {
     const remembered = JSON.parse(localStorage.getItem("savedLogin"));
     if (remembered) {
