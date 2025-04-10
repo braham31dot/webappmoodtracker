@@ -583,20 +583,17 @@
     }
 
     // Add a note for the current mood
-    function saveNote() {
-        const noteText = document.getElementById("noteText").value.trim();
-        if (noteText) {
-            notesHistory.push({
-                note: noteText,
-                mood: currentMood,
-                date: new Date().toLocaleString()
-            });
-            saveLocalData();
-            document.getElementById("noteText").value = '';  // Clear the note text
-            alert("Note saved!");
-        }
+function saveNote() {
+    const noteText = document.getElementById("noteText").value.trim();
+    if (noteText) {
+        notesHistory.push({ mood: currentMood, note: noteText, date: new Date().toLocaleString() });
+        saveLocalData();
+        document.getElementById("noteText").value = '';  // Clear textarea after saving
+        alert('Note saved!');
+    } else {
+        alert('Please write a note before saving.');
     }
-
+}
     // Toggle visibility of the note box
     function toggleNoteBox() {
         const noteBox = document.querySelector(".note-box");
@@ -618,13 +615,26 @@
     }
 
     // Show notes history modal
-    function showNotesHistory() {
-        const notesList = document.getElementById("notesHistory");
-        notesList.innerHTML = notesHistory
-            .map(entry => `<div><p>${entry.date}: ${entry.note}</p></div>`)
-            .join('');
-        document.getElementById("historyContainer").style.display = "flex";
+function showNotesHistory() {
+    const notesContainer = document.getElementById("notesHistory");
+    notesContainer.innerHTML = ''; // Clear current notes
+    
+    if (notesHistory.length === 0) {
+        notesContainer.innerHTML = '<p>No notes yet.</p>';
+    } else {
+        notesHistory.forEach(note => {
+            const noteElement = document.createElement("div");
+            noteElement.classList.add("note-entry");
+            noteElement.innerHTML = `
+                <p><strong>Mood:</strong> ${note.mood}</p>
+                <p><strong>Note:</strong> ${note.note}</p>
+                <p class="date">${note.date}</p>
+            `;
+            notesContainer.appendChild(noteElement);
+        });
     }
+    document.getElementById("historyContainer").style.display = "flex";  // Show history modal
+}
 
     // Close notes history modal
     function closeHistoryContainer() {
