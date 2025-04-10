@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | MoodTracker</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #000000, #1a1a1a);
+      color: #ffd700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .auth-container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+      backdrop-filter: blur(10px);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    .auth-container h1 {
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+
+    .auth-container form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-container input[type="text"],
+    .auth-container input[type="email"],
+    .auth-container input[type="password"] {
+      padding: 12px;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #2a2a2a;
+      color: #ffd700;
+      font-size: 1rem;
+    }
+
+    .auth-container input:focus,
+    .auth-container input:hover {
+      outline: none;
+      box-shadow: 0 0 8px #ffd70070;
+    }
+
+    .auth-container button {
+      background-color: #ffd700;
+      color: black;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .auth-container button:hover {
+      background-color: #e6c200;
+    }
+
+    .auth-container a {
+      color: #ffd700;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <h1>Create Account</h1>
+    <form onsubmit="registerUser(); return false;">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Log in</a></p>
+  </div>
+
+  <script>
+    function registerUser() {
+      const email = document.getElementById("email").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const userData = { email, username, password };
+      localStorage.setItem("user", JSON.stringify(userData));
+      alert("Registered successfully!");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
