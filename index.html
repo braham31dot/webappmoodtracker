@@ -538,16 +538,20 @@
     }
 
     // Set the user's mood
+   
     function setMood(mood) {
         currentMood = mood;
         document.getElementById("selectedMood").textContent = mood;
         showMotivationalQuote(mood);
 
-        if (moodHistory.length >= 10) moodHistory.shift();  // Maintain only the last 10 mood entries
+        if (moodHistory.length >= 10) moodHistory.shift();
         moodHistory.push({ mood, date: new Date().toLocaleString(), message: `You’re feeling ${mood}.` });
 
         saveLocalData();
-        getWeeklyMoodRecap();  // Trigger 7-day recap check
+        // Consider triggering recap less frequently
+        if (moodHistory.length >= 7 && moodHistory.length % 7 === 0) {
+            getWeeklyMoodRecap();
+        }
     }
 
     // Show a motivational quote based on the selected mood
@@ -558,22 +562,30 @@
     }
 
     // Fetch the 7-day mood recap
+  
     function getWeeklyMoodRecap() {
-        // Filter moodHistory to get the last 7 days
-        const last7Days = moodHistory.filter(entry => {
-            const date = new Date(entry.date);
-            const diff = new Date() - date; // Time difference in ms
-            return diff <= 7 * 24 * 60 * 60 * 1000; // Last 7 days
-        });
+        const last7Days = moodHistory.filter(entry => new Date() - new Date(entry.date) <= 7 * 24 * 60 * 60 * 1000);
 
-        // If there is mood data from the last 7 days, show a recap
         if (last7Days.length > 0) {
-            let recapMessage = "Your 7-day mood recap:\n";
+            const moodCounts = {};
             last7Days.forEach(entry => {
-                recapMessage += `${entry.date}: ${entry.mood}\n`;
+                moodCounts[entry.mood] = (moodCounts[entry.mood] || 0) + 1;
             });
+
+            let recapMessage = "Your 7-day mood recap:\n";
+            const sortedMoods = Object.entries(moodCounts).sort(([, countA], [, countB]) => countB - countA);
+
+            if (sortedMoods.length > 0) {
+                recapMessage += `You mostly felt **${sortedMoods[0][0]}** (${sortedMoods[0][1]} times).`;
+                if (sortedMoods.length > 1) {
+                    recapMessage += ` Followed by **${sortedMoods[1][0]}** (${sortedMoods[1][1]} times).`;
+                }
+            } else {
+                recapMessage = "No mood data recorded in the last 7 days.";
+            }
+
             document.getElementById("recapMessage").textContent = recapMessage;
-            document.getElementById("recapModal").style.display = "flex";  // Show recap modal
+            document.getElementById("recapModal").style.display = "flex";
         }
     }
 
@@ -583,22 +595,17 @@
     }
 
     // Add a note for the current mood
-    // Add a note for the current mood
-    function saveNote() {
+function saveNote() {
         const noteText = document.getElementById("noteText").value.trim();
         if (noteText) {
-            // Save note along with current mood and timestamp
             const noteEntry = {
-                mood: currentMood,
+                mood: currentMood, // Ensure currentMood is included
                 note: noteText,
                 date: new Date().toLocaleString()
             };
-
             notesHistory.push(noteEntry);
             saveLocalData();
-            document.getElementById("noteText").value = "";  // Clear the note text area
-
-            // Optionally, display the note in a modal or history section
+            document.getElementById("noteText").value = "";
             displayNoteHistory();
         }
     }
@@ -742,6 +749,13 @@ function showNotesHistory() {
     function closePrivacyPolicy() {
         document.getElementById("privacyPolicyModal").style.display = "none";
     }
+        window.onload = () => {
+        displayNoteHistory(); // Ensure notes history is displayed if any
+        // Optionally trigger initial recap if enough data exists
+        if (moodHistory.length >= 7) {
+            getWeeklyMoodRecap();
+        }
+    };
 </script>
     
     </script>
