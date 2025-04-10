@@ -9,8 +9,7 @@
   <title>Mood Tracker</title>
   <link rel="icon" href="logo.png" type="image/png" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="styles.css" />
-
+  
   <!-- ✅ OneSignal SDK -->
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   <script>
@@ -25,435 +24,412 @@
       });
     });
   </script>
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background-color: black;
-    color: white;
-}
-
-h1 {
-    margin-top: 0;
-    color: gold;
-}
-
-.mood-selection {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-}
-
-.emoji {
-    font-size: 2.5rem;
-    cursor: pointer;
-    transition: transform 0.2s, text-shadow 0.2s;
-    color: gold;
-}
-
-.emoji:hover {
-    transform: scale(1.1);
-    text-shadow: 0 0 8px gold, 0 0 16px gold;
-}
-
-.feedback {
-    margin-top: 10px;
-    font-size: 1.2rem;
-}
-
-.motivational-message {
-    margin-top: 15px;
-    font-size: 1rem;
-    font-style: italic;
-    color: gold;
-}
-
-.btn-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 15px;
-    flex-wrap: wrap;
-}
-
-.btn {
-    background-color: gold;
-    color: black;
-    border: none;
-    padding: 8px 16px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.fixed-button-container {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
-    z-index: 1000;
-}
-
-.fixed-button {
-    background-color: gold;
-    color: black;
-    border: none;
-    padding: 15px 30px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
-}
-
-.fixed-button:hover {
-    background-color: #fdd835;
-}
-
-#moodDataModal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 30px;
-    border-radius: 15px;
-    z-index: 1001;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    width: 80%;
-    max-width: 600px;
-    max-height: 80vh;
-    overflow-y: auto;
-    text-align: left;
-}
-
-#moodDataModal h2 {
-    color: #fdd835;
-    margin-top: 0;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.mood-data-entry {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 5px 15px;
-    align-items: center;
-}
-
-.mood-data-entry:last-child {
-    border-bottom: none;
-}
-
-.data-label {
-    font-weight: bold;
-    color: #fdd835;
-    margin-right: 5px;
-}
-
-#moodDataModal .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    background: none;
-    border: none;
-}
-
-.note-btn,
-.privacy-btn {
-    position: fixed;
-    bottom: 70px;
-    border: none;
-    background-color: gold;
-    color: black;
-    padding: 8px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    border-radius: 50%;
-    z-index: 999;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.note-btn {
-    left: 20px;
-}
-
-.privacy-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: gold;
-    color: black;
-    border: none;
-    padding: 15px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    border-radius: 50%;
-    z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.privacy-btn:hover {
-    background-color: #fdd835;
-}
-
-/* Modal Styling */
-.modal {
-    display: none; /* Initially hidden */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background-color: black;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 500px;
-    text-align: left;
-    position: relative;
-}
-
-.modal-content h2 {
-    margin-top: 0;
-    color: gold;
-}
-
-.modal-content .close {
-    cursor: pointer;
-    color: gold;
-    font-size: 2rem;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-}
-
-/* Logout Link */
-.logout-link {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.logout-link a {
-    color: gold;
-    font-size: 1.2rem;
-    text-decoration: none;
-}
-
-.logout-link a:hover {
-    text-decoration: underline;
-}
-
-.note-box {
-    display: none;
-    position: fixed;
-    bottom: 110px;
-    left: 20px;
-    background-color: rgba(255, 255, 255, 0.95);
-    color: black;
-    border: 1px solid #555;
-    padding: 15px;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-    z-index: 998;
-    max-width: 280px;
-    border-radius: 8px;
-}
-
-.note-box textarea {
-    width: 100%;
-    height: 80px;
-    margin-bottom: 10px;
-    padding: 8px;
-    font-size: 0.9rem;
-    border-radius: 5px;
-    border: 1px solid #777;
-    background-color: #f9f9f9;
-    color: black;
-}
-
-.note-box .btn {
-    padding: 8px 12px;
-    font-size: 0.8rem;
-}
-
-.history-container {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
-}
-
-.history-container .note-entry {
-    background-color: white;
-    color: black;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 400px;
-    text-align: left;
-}
-
-.history-container .note-entry .date {
-    display: block;
-    font-size: 0.8rem;
-    color: #777;
-    margin-top: 5px;
-}
-
-.history-container button.close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: red;
-    color: white;
-    border-radius: 5px;
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 1rem;
-    z-index: 1001;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background-color: black;
-    color: red;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 500px;
-    text-align: left;
-    position: relative;
-}
-
-.modal-content h2 {
-    margin-top: 0;
-    color: red;
-}
-
-.modal-content .close {
-    cursor: pointer;
-    color: red;
-    font-size: 1.5rem;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-}
-
-/* 7-Day Recap Modal Styling */
-#recapModal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-#recapModal .modal-content {
-    background-color: black;
-    color: gold;
-    padding: 25px;
-    border-radius: 12px;
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-    position: relative;
-}
-
-#recapModal .close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    color: red;
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-@keyframes popIn {
-    0% {
-        transform: scale(0.5);
-        opacity: 0;
+   <style>
+    /* General Body Styling */
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color: black;
+        color: white;
     }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
 
-#motivationalMessage {
-    animation: popIn 0.5s ease forwards;
-    transition: color 0.3s ease;
-}
-    </style>
+    h1 {
+        margin-top: 0;
+        color: gold;
+    }
+
+    /* Mood Selection */
+    .mood-selection {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .emoji {
+        font-size: 2.5rem;
+        cursor: pointer;
+        transition: transform 0.2s, text-shadow 0.2s;
+        color: gold;
+    }
+
+    .emoji:hover {
+        transform: scale(1.1);
+        text-shadow: 0 0 8px gold, 0 0 16px gold;
+    }
+
+    /* Feedback Section */
+    .feedback {
+        margin-top: 10px;
+        font-size: 1.2rem;
+    }
+
+    /* Motivational Message */
+    .motivational-message {
+        margin-top: 15px;
+        font-size: 1rem;
+        font-style: italic;
+        color: gold;
+    }
+
+    /* Button Containers */
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        background-color: gold;
+        color: black;
+        border: none;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+        background-color: #fdd835;
+        transform: translateY(-2px); /* Slight upward shift */
+    }
+
+    /* Fixed Buttons (Note & Privacy) */
+    .fixed-button-container {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        z-index: 1000;
+    }
+
+    .fixed-button {
+        background-color: gold;
+        color: black;
+        border: none;
+        padding: 15px 30px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .fixed-button:hover {
+        background-color: #fdd835;
+        transform: translateY(-2px); /* Slight upward shift */
+    }
+
+    /* Mood Data Modal */
+    #moodDataModal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        z-index: 1001;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        width: 80%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        text-align: left;
+    }
+
+    #moodDataModal h2 {
+        color: #fdd835;
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .mood-data-entry {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 5px 15px;
+        align-items: center;
+    }
+
+    .mood-data-entry:last-child {
+        border-bottom: none;
+    }
+
+    .data-label {
+        font-weight: bold;
+        color: #fdd835;
+        margin-right: 5px;
+    }
+
+    #moodDataModal .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+
+    /* Note & Privacy Buttons */
+    .note-btn,
+    .privacy-btn {
+        position: fixed;
+        bottom: 70px;
+        border: none;
+        background-color: gold;
+        color: black;
+        padding: 8px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border-radius: 50%;
+        z-index: 999;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .note-btn {
+        left: 20px;
+    }
+
+    .privacy-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: gold;
+        color: black;
+        border: none;
+        padding: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        border-radius: 50%;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .privacy-btn:hover {
+        background-color: #fdd835;
+    }
+
+    /* Modal Styling */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background-color: black;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 500px;
+        text-align: left;
+        position: relative;
+    }
+
+    .modal-content h2 {
+        margin-top: 0;
+        color: gold;
+    }
+
+    .modal-content .close {
+        cursor: pointer;
+        color: gold;
+        font-size: 2rem;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+    }
+
+    /* Logout Link */
+    .logout-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .logout-link a {
+        color: gold;
+        font-size: 1.2rem;
+        text-decoration: none;
+    }
+
+    .logout-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* Note Box */
+    .note-box {
+        display: none;
+        position: fixed;
+        bottom: 110px;
+        left: 20px;
+        background-color: rgba(255, 255, 255, 0.95);
+        color: black;
+        border: 1px solid #555;
+        padding: 15px;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        z-index: 998;
+        max-width: 280px;
+        border-radius: 8px;
+    }
+
+    .note-box textarea {
+        width: 100%;
+        height: 80px;
+        margin-bottom: 10px;
+        padding: 8px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        border: 1px solid #777;
+        background-color: #f9f9f9;
+        color: black;
+    }
+
+    .note-box .btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    /* History Section */
+    .history-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto;
+    }
+
+    .history-container .note-entry {
+        background-color: white;
+        color: black;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 400px;
+        text-align: left;
+    }
+
+    .history-container .note-entry .date {
+        display: block;
+        font-size: 0.8rem;
+        color: #777;
+        margin-top: 5px;
+    }
+
+    .history-container button.close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: red;
+        color: white;
+        border-radius: 5px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 1rem;
+        z-index: 1001;
+    }
+
+    /* Recap Modal Styling */
+    #recapModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    #recapModal .modal-content {
+        background-color: black;
+        color: gold;
+        padding: 25px;
+        border-radius: 12px;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        position: relative;
+    }
+
+    #recapModal .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        color: red;
+        font-size: 1.5rem;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    /* Animation for Motivational Message */
+    @keyframes popIn {
+        0% {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    #motivationalMessage {
+        animation: popIn 0.5s ease-out;
+    }
+</style>
 </head>
 <body>
     <!-- Weekly Mood Recap Modal -->
