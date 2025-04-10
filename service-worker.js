@@ -5,6 +5,8 @@ const urlsToCache = [
     '/manifest.json',
     '/logo.png',
     '/service-worker.js',
+    '/main.html',
+    '/register.html',
 ];
 
 // Cache files on install
