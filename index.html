@@ -110,34 +110,35 @@
 
 <script>
   function loginUser() {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedUser = JSON.parse(localStorage.getItem("user"));  // Retrieve the user data
     const inputUsername = document.getElementById("username").value;
     const inputPassword = document.getElementById("password").value;
     const rememberMe = document.getElementById("rememberMe").checked;
 
-    if (
-      storedUser &&
-      storedUser.username === inputUsername &&
-      storedUser.password === inputPassword
-    ) {
+    // Check if user data is found and if the input matches stored credentials
+    if (storedUser && storedUser.username === inputUsername && storedUser.password === inputPassword) {
       if (rememberMe) {
+        // Save the "remembered" state if checked
         localStorage.setItem("rememberedUser", "true");
         localStorage.setItem(
-          "savedLogin",
+          "savedLogin", 
           JSON.stringify({
             username: inputUsername,
             password: inputPassword
           })
         );
       }
-
+      
       alert("Login successful!");
-      window.location.href = "/moodtracker.pro/main.html";
+      
+      // Redirect to the main page after successful login
+      window.location.href = "main.html";  // Ensure this is the correct path
     } else {
       alert("Invalid username or password.");
     }
   }
 
+  // On page load, check if the user is "remembered"
   window.onload = function () {
     const remembered = JSON.parse(localStorage.getItem("savedLogin"));
     if (remembered) {
