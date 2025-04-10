@@ -687,15 +687,6 @@ function saveNote() {
         noteBox.style.display = noteBox.style.display === "none" ? "block" : "none";
     }
 
-    // Show mood data modal with history
-    function showMoodData() {
-        const moodDataList = document.getElementById("moodDataList");
-        moodDataList.innerHTML = moodHistory
-            .map(entry => `<p>${entry.date}: ${entry.mood}</p>`)
-            .join('');
-        document.getElementById("moodDataModal").style.display = "block";
-    }
-
     // Close mood data modal
     function closeMoodDataModal() {
         document.getElementById("moodDataModal").style.display = "none";
