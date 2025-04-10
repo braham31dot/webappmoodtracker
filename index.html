@@ -362,8 +362,7 @@
     </div>
     <span onclick="document.getElementById('quoteModal').style.display='none'" class="close">&times;</span>
     <span onclick="document.getElementById('moodModal').style.display='none'" class="close">&times;</span>
-
-</head>
+    
 <body>
     <h1>Mood Tracker</h1>
 
@@ -428,17 +427,6 @@
         <div id="selectedMood"></div>
         <div id="motivationalMessage"></div>
     </div>
-    
-    </div>
-
-    <div class="note-box" style="display:none;">
-        <textarea id="noteText"></textarea>
-    </div>
-
-    <div id="recapModal" style="display:none;">
-        <div id="recapMessage"></div>
-    </div>
-
     <!-- Privacy Policy Button -->
     <button class="privacy-btn" onclick="showPrivacyPolicy()">🔒</button>
     <div id="privacyPolicyModal" style="display:none;">
@@ -494,7 +482,7 @@
         </div>
     </div>
 </body>
-    </script>
+
 <script>
     let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
     let notesHistory = JSON.parse(localStorage.getItem("notesHistory")) || [];
@@ -757,9 +745,7 @@ function showNotesHistory() {
         }
     };
 </script>
-    
-    </script>
-    
+        
 </body>
     
 </html>
