@@ -1,0 +1,78 @@
+// script.js
+document.addEventListener('DOMContentLoaded', () => {
+    const emojis = document.querySelectorAll('.emoji');
+    const notesBtn = document.getElementById('notes-btn');
+    const notesSection = document.getElementById('notes-section');
+    const saveNotesBtn = document.getElementById('save-notes-btn');
+    const moodNotesTextarea = document.getElementById('mood-notes');
+    const moodFeedbackDiv = document.getElementById('mood-feedback');
+    const selfCareBtn = document.getElementById('self-care-btn');
+    const selfCareModal = document.getElementById('self-care-modal');
+    const charityBtn = document.getElementById('charity-btn');
+    const charityListModal = document.getElementById('charity-list-modal');
+    const closeButtons = document.querySelectorAll('.close-button');
+
+    const moodAdvice = {
+        'happy': "That's wonderful! Keep spreading that positive energy. 😊",
+        'sad': "It's okay to feel sad. Remember to be kind to yourself. Maybe try a comforting activity? 🫂",
+        'angry': "Take a deep breath. It's important to process anger in a healthy way. Perhaps some calming music? 🧘‍♀️",
+        'stressed': "Remember to take breaks and prioritize self-care. You've got this! 💖",
+        'excited': "Fantastic! Enjoy that energy and enthusiasm! 🎉",
+        'calm': "Ah, a peaceful feeling. Savor this moment of tranquility. 🕊️",
+        'anxious': "It's alright to feel anxious. Try some grounding exercises. You are safe. 🌱",
+        'tired': "Listen to your body and get some rest. Recharging is important. 😴",
+        'loved': "That's a beautiful feeling. Cherish those connections. ❤️",
+        'surprised': "Well, that's interesting! How do you feel about this surprise? 🤔"
+    };
+
+    emojis.forEach(emoji => {
+        emoji.addEventListener('click', function() {
+            const mood = this.dataset.mood;
+            localStorage.setItem('currentMood', mood);
+            moodFeedbackDiv.textContent = moodAdvice[mood] || "";
+            moodFeedbackDiv.classList.remove('hidden');
+            // Hide feedback after a few seconds
+            setTimeout(() => {
+                moodFeedbackDiv.classList.add('hidden');
+            }, 5000);
+        });
+    });
+
+    notesBtn.addEventListener('click', () => {
+        notesSection.classList.remove('hidden');
+    });
+
+    saveNotesBtn.addEventListener('click', () => {
+        const notes = moodNotesTextarea.value;
+        localStorage.setItem('moodNotes', notes);
+        notesSection.classList.add('hidden');
+        alert('Notes saved locally!'); // Simple feedback for now
+    });
+
+    selfCareBtn.addEventListener('click', () => {
+        selfCareModal.classList.remove('hidden');
+    });
+
+    charityBtn.addEventListener('click', () => {
+        charityListModal.classList.remove('hidden');
+    });
+
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === selfCareModal) {
+            selfCareModal.classList.add('hidden');
+        }
+        if (event.target === charityListModal) {
+            charityListModal.classList.add('hidden');
+        }
+    });
+});
