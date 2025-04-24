@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <section id="mood-selection">
+            <h2>How are you feeling?</h2>
+            <div class="emojis">
+                <span class="emoji" data-mood="happy">😊</span>
+                <span class="emoji" data-mood="sad">😞</span>
+                <span class="emoji" data-mood="angry">😠</span>
+                <span class="emoji" data-mood="stressed">😫</span>
+                <span class="emoji" data-mood="excited">🤩</span>
+                <span class="emoji" data-mood="calm">😌</span>
+                <span class="emoji" data-mood="anxious">😟</span>
+                <span class="emoji" data-mood="tired">😴</span>
+                <span class="emoji" data-mood="loved">🥰</span>
+                <span class="emoji" data-mood="surprised">😲</span>
+            </div>
+            <div id="mood-feedback" class="hidden"></div>
+        </section>
+
+        <section id="actions">
+            <button id="notes-btn">Notes</button>
+            <button id="self-care-btn">Self-Care Video</button>
+            <button id="charity-btn">Charity</button>
+            <a href="privacy.html" target="_blank"><button id="privacy-btn">Privacy Policy</button></a>
+        </section>
+
+        <section id="notes-section" class="hidden">
+            <h2>Add Notes</h2>
+            <textarea id="mood-notes" placeholder="Write your thoughts here..."></textarea>
+            <button id="save-notes-btn">Save Notes</button>
+        </section>
+
+        <section id="self-care-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h3>Self-Care Moment</h3>
+                <div class="video-container">
+                    <iframe id="self-care-video" width="560" height="315" src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="charity-list-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h3>Support a Cause</h3>
+                <ul id="charity-list">
+                    <li><a href="https://www.examplecharity1.org" target="_blank">Example Charity 1</a></li>
+                    <li><a href="https://www.examplecharity2.org" target="_blank">Example Charity 2</a></li>
+                    <li><a href="https://www.examplecharity3.org" target="_blank">Example Charity 3</a></li>
+                    </ul>
+            </div>
+        </section>
+
+        <footer id="footer">
+            <button id="about-us-btn">About Us</button>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
